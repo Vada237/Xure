@@ -1,0 +1,15 @@
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Data\bin\Debug\net5.0\Xure.Data.deps.json
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Data\bin\Debug\net5.0\Xure.Data.runtimeconfig.json
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Data\bin\Debug\net5.0\Xure.Data.runtimeconfig.dev.json
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Data\bin\Debug\net5.0\Xure.Data.dll
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Data\bin\Debug\net5.0\Xure.Data.pdb
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Data\obj\Debug\net5.0\Xure.Data.csproj.AssemblyReference.cache
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Data\obj\Debug\net5.0\Xure.Data.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Data\obj\Debug\net5.0\Xure.Data.AssemblyInfoInputs.cache
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Data\obj\Debug\net5.0\Xure.Data.AssemblyInfo.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Data\obj\Debug\net5.0\Xure.Data.csproj.CoreCompileInputs.cache
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Data\obj\Debug\net5.0\Xure.Data.dll
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Data\obj\Debug\net5.0\refint\Xure.Data.dll
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Data\obj\Debug\net5.0\Xure.Data.pdb
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Data\obj\Debug\net5.0\Xure.Data.genruntimeconfig.cache
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Data\obj\Debug\net5.0\ref\Xure.Data.dll
