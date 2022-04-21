@@ -56,3 +56,6 @@ C:\Users\denis\OneDrive\Desktop\Xure\Xure.Api\obj\Debug\net5.0\refint\Xure.Api.d
 C:\Users\denis\OneDrive\Desktop\Xure\Xure.Api\obj\Debug\net5.0\Xure.Api.pdb
 C:\Users\denis\OneDrive\Desktop\Xure\Xure.Api\obj\Debug\net5.0\Xure.Api.genruntimeconfig.cache
 C:\Users\denis\OneDrive\Desktop\Xure\Xure.Api\obj\Debug\net5.0\ref\Xure.Api.dll
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Api\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Api\bin\Debug\net5.0\Humanizer.dll
+C:\Users\denis\OneDrive\Desktop\Xure\Xure.Api\bin\Debug\net5.0\Microsoft.EntityFrameworkCore.Design.dll

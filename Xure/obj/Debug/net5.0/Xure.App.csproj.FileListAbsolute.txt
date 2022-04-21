@@ -69,3 +69,4 @@ C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Xure.App.Views.pdb
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Xure.App.csproj.CopyComplete
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Xure.App.genruntimeconfig.cache
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\ref\Xure.App.dll
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\bin\Debug\net5.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
