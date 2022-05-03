@@ -22,7 +22,7 @@ namespace Xure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Category",
+                name: "Brands",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -31,11 +31,24 @@ namespace Xure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Category", x => x.Id);
+                    table.PrimaryKey("PK_Brands", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Company",
+                name: "Categories",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Categories", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Companies",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -48,11 +61,25 @@ namespace Xure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Company", x => x.Id);
+                    table.PrimaryKey("PK_Companies", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Reason",
+                name: "Prices",
+                columns: table => new
+                {
+                    Id = table.Column<long>(type: "bigint", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Prices", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reasons",
                 columns: table => new
                 {
                     Id = table.Column<byte>(type: "tinyint", nullable: false),
@@ -61,11 +88,11 @@ namespace Xure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Reason", x => x.Id);
+                    table.PrimaryKey("PK_Reasons", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ReceptionPoint",
+                name: "ReceptionPoints",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
@@ -76,7 +103,19 @@ namespace Xure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ReceptionPoint", x => x.id);
+                    table.PrimaryKey("PK_ReceptionPoints", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Storages",
+                columns: table => new
+                {
+                    id = table.Column<byte>(type: "tinyint", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Storages", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -96,6 +135,26 @@ namespace Xure.Data.Migrations
                         name: "FK_AspNetRoleClaims_AspNetRoles_RoleId",
                         column: x => x.RoleId,
                         principalTable: "AspNetRoles",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductSpecifications",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    CategoryId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductSpecifications", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductSpecifications_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -133,9 +192,29 @@ namespace Xure.Data.Migrations
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AspNetUsers_Company_CompanyId",
+                        name: "FK_AspNetUsers_Companies_CompanyId",
                         column: x => x.CompanyId,
-                        principalTable: "Company",
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ProductSpecificationsValues",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ProductSpecificationsId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductSpecificationsValues", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductSpecificationsValues_ProductSpecifications_ProductSpecificationsId",
+                        column: x => x.ProductSpecificationsId,
+                        principalTable: "ProductSpecifications",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -226,32 +305,34 @@ namespace Xure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Message",
+                name: "Messages",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Text = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ClientId = table.Column<string>(type: "nvarchar(450)", nullable: true),
-                    SellerId = table.Column<string>(type: "nvarchar(450)", nullable: true)
+                    SellerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    MessageTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Message", x => x.Id);
+                    table.PrimaryKey("PK_Messages", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Message_AspNetUsers_ClientId",
+                        name: "FK_Messages_AspNetUsers_ClientId",
                         column: x => x.ClientId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Message_AspNetUsers_SellerId",
+                        name: "FK_Messages_AspNetUsers_SellerId",
                         column: x => x.SellerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
-                name: "Order",
+                name: "Orders",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
@@ -259,57 +340,77 @@ namespace Xure.Data.Migrations
                     ClientId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     ReceptionPointId = table.Column<int>(type: "int", nullable: false),
                     OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Status = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    StorageId = table.Column<byte>(type: "tinyint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Order", x => x.Id);
+                    table.PrimaryKey("PK_Orders", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Order_AspNetUsers_ClientId",
+                        name: "FK_Orders_AspNetUsers_ClientId",
                         column: x => x.ClientId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Order_ReceptionPoint_ReceptionPointId",
+                        name: "FK_Orders_ReceptionPoints_ReceptionPointId",
                         column: x => x.ReceptionPointId,
-                        principalTable: "ReceptionPoint",
+                        principalTable: "ReceptionPoints",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Orders_Storages_StorageId",
+                        column: x => x.StorageId,
+                        principalTable: "Storages",
                         principalColumn: "id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Product",
+                name: "Products",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    PriceId = table.Column<long>(type: "bigint", nullable: false),
+                    BrandId = table.Column<int>(type: "int", nullable: false),
                     CategoryId = table.Column<int>(type: "int", nullable: false),
                     SellerId = table.Column<string>(type: "nvarchar(450)", nullable: true),
                     Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Product", x => x.Id);
+                    table.PrimaryKey("PK_Products", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Product_AspNetUsers_SellerId",
+                        name: "FK_Products_AspNetUsers_SellerId",
                         column: x => x.SellerId,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Product_Category_CategoryId",
+                        name: "FK_Products_Brands_BrandId",
+                        column: x => x.BrandId,
+                        principalTable: "Brands",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
-                        principalTable: "Category",
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Products_Prices_PriceId",
+                        column: x => x.PriceId,
+                        principalTable: "Prices",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderReport",
+                name: "OrderReports",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -320,47 +421,48 @@ namespace Xure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderReport", x => x.Id);
+                    table.PrimaryKey("PK_OrderReports", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_OrderReport_Order_OrderId",
+                        name: "FK_OrderReports_Orders_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "Order",
+                        principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderReport_Reason_ReasonId",
+                        name: "FK_OrderReports_Reasons_ReasonId",
                         column: x => x.ReasonId,
-                        principalTable: "Reason",
+                        principalTable: "Reasons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "OrderProduct",
+                name: "OrderProducts",
                 columns: table => new
                 {
                     ProductId = table.Column<long>(type: "bigint", nullable: false),
-                    OrderId = table.Column<long>(type: "bigint", nullable: false)
+                    OrderId = table.Column<long>(type: "bigint", nullable: false),
+                    Quantity = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_OrderProduct", x => new { x.OrderId, x.ProductId });
+                    table.PrimaryKey("PK_OrderProducts", x => new { x.OrderId, x.ProductId });
                     table.ForeignKey(
-                        name: "FK_OrderProduct_Order_OrderId",
+                        name: "FK_OrderProducts_Orders_OrderId",
                         column: x => x.OrderId,
-                        principalTable: "Order",
+                        principalTable: "Orders",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_OrderProduct_Product_ProductId",
+                        name: "FK_OrderProducts_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductReport",
+                name: "ProductReports",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -371,17 +473,17 @@ namespace Xure.Data.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductReport", x => x.Id);
+                    table.PrimaryKey("PK_ProductReports", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductReport_Product_ProductId",
+                        name: "FK_ProductReports_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_ProductReport_Reason_ReasonId",
+                        name: "FK_ProductReports_Reasons_ReasonId",
                         column: x => x.ReasonId,
-                        principalTable: "Reason",
+                        principalTable: "Reasons",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -407,9 +509,9 @@ namespace Xure.Data.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Reviews_Product_ProductId",
+                        name: "FK_Reviews_Products_ProductId",
                         column: x => x.ProductId,
-                        principalTable: "Product",
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -459,59 +561,84 @@ namespace Xure.Data.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Message_ClientId",
-                table: "Message",
+                name: "IX_Messages_ClientId",
+                table: "Messages",
                 column: "ClientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Message_SellerId",
-                table: "Message",
+                name: "IX_Messages_SellerId",
+                table: "Messages",
                 column: "SellerId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Order_ClientId",
-                table: "Order",
-                column: "ClientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Order_ReceptionPointId",
-                table: "Order",
-                column: "ReceptionPointId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_OrderProduct_ProductId",
-                table: "OrderProduct",
+                name: "IX_OrderProducts_ProductId",
+                table: "OrderProducts",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderReport_OrderId",
-                table: "OrderReport",
+                name: "IX_OrderReports_OrderId",
+                table: "OrderReports",
                 column: "OrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_OrderReport_ReasonId",
-                table: "OrderReport",
+                name: "IX_OrderReports_ReasonId",
+                table: "OrderReports",
                 column: "ReasonId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_CategoryId",
-                table: "Product",
-                column: "CategoryId");
+                name: "IX_Orders_ClientId",
+                table: "Orders",
+                column: "ClientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Product_SellerId",
-                table: "Product",
-                column: "SellerId");
+                name: "IX_Orders_ReceptionPointId",
+                table: "Orders",
+                column: "ReceptionPointId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductReport_ProductId",
-                table: "ProductReport",
+                name: "IX_Orders_StorageId",
+                table: "Orders",
+                column: "StorageId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductReports_ProductId",
+                table: "ProductReports",
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_ProductReport_ReasonId",
-                table: "ProductReport",
+                name: "IX_ProductReports_ReasonId",
+                table: "ProductReports",
                 column: "ReasonId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_BrandId",
+                table: "Products",
+                column: "BrandId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_CategoryId",
+                table: "Products",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_PriceId",
+                table: "Products",
+                column: "PriceId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Products_SellerId",
+                table: "Products",
+                column: "SellerId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductSpecifications_CategoryId",
+                table: "ProductSpecifications",
+                column: "CategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductSpecificationsValues_ProductSpecificationsId",
+                table: "ProductSpecificationsValues",
+                column: "ProductSpecificationsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_ClientId",
@@ -542,16 +669,19 @@ namespace Xure.Data.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "Message");
+                name: "Messages");
 
             migrationBuilder.DropTable(
-                name: "OrderProduct");
+                name: "OrderProducts");
 
             migrationBuilder.DropTable(
-                name: "OrderReport");
+                name: "OrderReports");
 
             migrationBuilder.DropTable(
-                name: "ProductReport");
+                name: "ProductReports");
+
+            migrationBuilder.DropTable(
+                name: "ProductSpecificationsValues");
 
             migrationBuilder.DropTable(
                 name: "Reviews");
@@ -560,25 +690,37 @@ namespace Xure.Data.Migrations
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Order");
+                name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Reason");
+                name: "Reasons");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "ProductSpecifications");
 
             migrationBuilder.DropTable(
-                name: "ReceptionPoint");
+                name: "Products");
+
+            migrationBuilder.DropTable(
+                name: "ReceptionPoints");
+
+            migrationBuilder.DropTable(
+                name: "Storages");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Category");
+                name: "Brands");
 
             migrationBuilder.DropTable(
-                name: "Company");
+                name: "Categories");
+
+            migrationBuilder.DropTable(
+                name: "Prices");
+
+            migrationBuilder.DropTable(
+                name: "Companies");
         }
     }
 }
