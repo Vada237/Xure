@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xure.Data;
+using Xure.Api.Interfaces;
+using Xure.Api.Services;
 
 namespace Xure.Api
 {
@@ -28,6 +30,8 @@ namespace Xure.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(c => c.UseSqlServer(Configuration.GetConnectionString("Data")));
+            services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));           
             services.AddControllers();            
         }
         

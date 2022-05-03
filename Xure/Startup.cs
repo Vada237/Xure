@@ -10,7 +10,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Xure.Data;
-
 namespace Xure.App
 {
     public class Startup
@@ -25,6 +24,7 @@ namespace Xure.App
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Data")));
+
             services.AddControllersWithViews();
         }
 
