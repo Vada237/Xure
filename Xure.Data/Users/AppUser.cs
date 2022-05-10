@@ -15,5 +15,8 @@ namespace Xure.Data
         public string Passport { get; set; }
         public bool Confirmed { get; set; }
         public string Avatar { get; set; }
+        
+        public Sellers Seller { get; set; }        
+        public Clients Client { get; set; }
     }
 }

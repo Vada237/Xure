@@ -23,6 +23,8 @@ namespace Xure.Data
         public DbSet<Reviews> Reviews { get; set; }
         public DbSet<Storage> Storages { get; set; }
         public DbSet<Sellers> Sellers { get; set; }
+        public DbSet<Units> Units { get; set; }
+        public DbSet<PriceHistory> PriceHistories { get; set; }
 
 
         public AppDbContext(DbContextOptions<AppDbContext> dbContextOptions) : base(dbContextOptions)
@@ -33,6 +35,7 @@ namespace Xure.Data
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
             builder.Entity<Product>(
             c => {
                 c.HasOne(c => c.Category)
@@ -48,6 +51,13 @@ namespace Xure.Data
                 .WithMany(c => c.Products)
                 .HasForeignKey(c => c.PriceId);
             });
+
+            builder.Entity<Prices>(
+                c => c.HasOne(c => c.PriceHistory)
+                .WithMany(c => c.Prices)
+                .HasForeignKey(c => c.PriceHistoryId)
+                );
+
             builder.Entity<Company>(
                c =>
                   {
@@ -85,9 +95,6 @@ namespace Xure.Data
                         c => c.HasOne(c => c.Order)
                         .WithMany(c => c.OrderProducts)
                         .HasForeignKey(c => c.OrderId));
-                    c.HasOne(c => c.Storage)
-                    .WithMany(c => c.Orders)
-                    .HasForeignKey(c => c.StorageId);
                 });
             builder.Entity<Reviews>(
                 c => {
@@ -123,10 +130,41 @@ namespace Xure.Data
                 .WithMany(C => C.ProductSpecifications)
                 .HasForeignKey(c => c.CategoryId));
             builder.Entity<ProductSpecificationsValue>(
-                c => c.HasOne(c => c.ProductSpecification)
-                .WithMany(c => c.ProductSpecificationsValues)
-                .HasForeignKey(c => c.ProductSpecificationsId));
-                
+                c => {
+                    c.HasOne(c => c.ProductSpecification)
+                    .WithMany(c => c.ProductSpecificationsValues)
+                .HasForeignKey(c => c.ProductSpecificationsId);
+                    c.HasOne(c => c.Unit)
+                    .WithMany(c => c.productSpecificationsValues)
+                    .HasForeignKey(c => c.UnitId);
+                    c.HasOne(c => c.Product)
+                    .WithMany(c => c.ProductSpecificationsValues)
+                    .HasForeignKey(c => c.ProductId)
+                    .OnDelete(DeleteBehavior.NoAction);
+                }
+                );
+            builder.Entity<Sellers>(
+                c => c.HasOne(c => c.UserInfo)
+                .WithOne(c => c.Seller)
+                .HasForeignKey<Sellers>(c => c.UserId));
+            builder.Entity<Clients>(
+                c => c.HasOne(c => c.UserInfo)
+                .WithOne(c => c.Client)
+                .HasForeignKey<Clients>(c => c.UserId));
+            builder.Entity<SellerOrder>(
+                c =>
+                {
+                    c.HasOne(c => c.Delivery)
+                .WithMany(c => c.SellerOrders)
+                .HasForeignKey(c => c.DeliveryId);
+                    c.HasOne(c => c.Order)
+                    .WithMany(c => c.SellerOrders)
+                    .HasForeignKey(c => c.OrderId);
+                });
+            builder.Entity<Delivery>(
+                c => c.HasOne(c => c.storage)
+                .WithMany(c => c.Deliveries)
+                .HasForeignKey(c => c.StorageId));
         }        
     }
 }

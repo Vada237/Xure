@@ -11,9 +11,9 @@ namespace Xure.Data
         public int Id { get; set; }
         public string Text { get; set; }
         public Clients Client { get; set; }
-        public string ClientId { get; set; }
+        public int ClientId { get; set; }
         public Sellers Seller { get; set; }
-        public string SellerId { get; set; }
+        public int SellerId { get; set; }
         public DateTime MessageTime { get; set; }
 
         public string Image { get; set; }

@@ -11,7 +11,7 @@ namespace Xure.Data
         public long Id { get; set; }
 
         public Clients Client;
-        public string ClientId { get; set; }
+        public int ClientId { get; set; }
         public Product Product {get;set;}
         public long ProductId { get; set; }
         public byte Rating { get; set; }

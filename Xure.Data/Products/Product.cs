@@ -15,13 +15,13 @@ namespace Xure.Data
         public Category Category { get; set; }
         public int CategoryId { get; set; }        
         public Sellers Seller { get; set; }
-        public string SellerId { get; set; }        
+        public int SellerId { get; set; }        
         public string Image { get; set; }
         public List<Order> Orders { get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
         public List<Reviews> Reviews { get; set; }        
         public List<ProductReport> ProductReports { get; set; }
         
-
+        public List<ProductSpecificationsValue> ProductSpecificationsValues { get; set; }
     }
 }

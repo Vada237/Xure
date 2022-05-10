@@ -8,9 +8,18 @@ namespace Xure.Data
 {
     public class ProductSpecificationsValue
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int Id { get; set; }        
+        
         public ProductSpecifications ProductSpecification { get; set; }
         public int ProductSpecificationsId { get; set; }
-    }
+
+        public Product Product { get; set; }
+
+        public long ProductId { get; set; }
+        public string Value { get; set; }
+        public Units Unit { get; set; }
+
+        public int UnitId { get; set; }
+
+     }
 }

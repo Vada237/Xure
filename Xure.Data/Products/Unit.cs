@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace Xure.Data
 {
-    public class Brands
+    public class Units
     {
-        public int  Id { get; set; }
+        public int id { get; set; }
         public string Name { get; set; }
 
-        public string Country { get; set; }
-        public List<Product> Products { get; set; }
+        public List<ProductSpecificationsValue> productSpecificationsValues { get; set; }
     }
 }

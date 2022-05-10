@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 
 namespace Xure.Data
 {
-    public class Prices
+    public class PriceHistory
     {
         public long Id { get; set; }
-        public PriceHistory PriceHistory { get; set; }
-        public long PriceHistoryId { get; set; }
-        public List<Product> Products { get; set; }
+        public decimal Value { get; set; }
+        public DateTime UpdatedDate { get; set; }
+
+        public List<Prices> Prices { get; set; }
+
     }
 }

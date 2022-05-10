@@ -7,8 +7,11 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Xure.Data
 {
-    public class Sellers : AppUser
+    public class Sellers 
     {        
+        public int Id { get; set; }
+        public AppUser UserInfo { get; set; }
+        public string UserId { get; set; }
         public Company Company { get; set; }
         public long CompanyId { get; set; }        
         public List<Product> Products { get; set; }
