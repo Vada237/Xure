@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Xure.Data.Migrations
 {
-    public partial class Init : Migration
+    public partial class INit : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -65,17 +65,17 @@ namespace Xure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Prices",
+                name: "PriceHistories",
                 columns: table => new
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Price = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    UpdatedAt = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Value = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Prices", x => x.Id);
+                    table.PrimaryKey("PK_PriceHistories", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -116,6 +116,19 @@ namespace Xure.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Storages", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Units",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Units", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
@@ -165,7 +178,6 @@ namespace Xure.Data.Migrations
                 {
                     Id = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Discriminator = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Surname = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     MiddleName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Birthday = table.Column<DateTime>(type: "datetime2", nullable: true),
@@ -200,21 +212,20 @@ namespace Xure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ProductSpecificationsValues",
+                name: "Prices",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ProductSpecificationsId = table.Column<int>(type: "int", nullable: false)
+                    PriceHistoryId = table.Column<long>(type: "bigint", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ProductSpecificationsValues", x => x.Id);
+                    table.PrimaryKey("PK_Prices", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_ProductSpecificationsValues_ProductSpecifications_ProductSpecificationsId",
-                        column: x => x.ProductSpecificationsId,
-                        principalTable: "ProductSpecifications",
+                        name: "FK_Prices_PriceHistories_PriceHistoryId",
+                        column: x => x.PriceHistoryId,
+                        principalTable: "PriceHistories",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -489,6 +500,39 @@ namespace Xure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "ProductSpecificationsValues",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ProductSpecificationsId = table.Column<int>(type: "int", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    Value = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UnitId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ProductSpecificationsValues", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_ProductSpecificationsValues_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_ProductSpecificationsValues_ProductSpecifications_ProductSpecificationsId",
+                        column: x => x.ProductSpecificationsId,
+                        principalTable: "ProductSpecifications",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_ProductSpecificationsValues_Units_UnitId",
+                        column: x => x.UnitId,
+                        principalTable: "Units",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Reviews",
                 columns: table => new
                 {
@@ -601,6 +645,11 @@ namespace Xure.Data.Migrations
                 column: "StorageId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Prices_PriceHistoryId",
+                table: "Prices",
+                column: "PriceHistoryId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductReports_ProductId",
                 table: "ProductReports",
                 column: "ProductId");
@@ -636,9 +685,19 @@ namespace Xure.Data.Migrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_ProductSpecificationsValues_ProductId",
+                table: "ProductSpecificationsValues",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ProductSpecificationsValues_ProductSpecificationsId",
                 table: "ProductSpecificationsValues",
                 column: "ProductSpecificationsId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ProductSpecificationsValues_UnitId",
+                table: "ProductSpecificationsValues",
+                column: "UnitId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Reviews_ClientId",
@@ -699,6 +758,9 @@ namespace Xure.Data.Migrations
                 name: "ProductSpecifications");
 
             migrationBuilder.DropTable(
+                name: "Units");
+
+            migrationBuilder.DropTable(
                 name: "Products");
 
             migrationBuilder.DropTable(
@@ -721,6 +783,9 @@ namespace Xure.Data.Migrations
 
             migrationBuilder.DropTable(
                 name: "Companies");
+
+            migrationBuilder.DropTable(
+                name: "PriceHistories");
         }
     }
 }

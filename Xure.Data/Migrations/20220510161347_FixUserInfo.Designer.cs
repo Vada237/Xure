@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Xure.Data;
 
 namespace Xure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220510161347_FixUserInfo")]
+    partial class FixUserInfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -300,29 +302,6 @@ namespace Xure.Data.Migrations
                     b.ToTable("Companies");
                 });
 
-            modelBuilder.Entity("Xure.Data.Delivery", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("bigint")
-                        .UseIdentityColumn();
-
-                    b.Property<DateTime>("ArrivalTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<DateTime>("DepartTime")
-                        .HasColumnType("datetime2");
-
-                    b.Property<byte>("StorageId")
-                        .HasColumnType("tinyint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("StorageId");
-
-                    b.ToTable("Delivery");
-                });
-
             modelBuilder.Entity("Xure.Data.Message", b =>
                 {
                     b.Property<int>("Id")
@@ -373,11 +352,16 @@ namespace Xure.Data.Migrations
                     b.Property<string>("Status")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<byte>("StorageId")
+                        .HasColumnType("tinyint");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
 
                     b.HasIndex("ReceptionPointId");
+
+                    b.HasIndex("StorageId");
 
                     b.ToTable("Orders");
                 });
@@ -641,28 +625,6 @@ namespace Xure.Data.Migrations
                     b.ToTable("Reviews");
                 });
 
-            modelBuilder.Entity("Xure.Data.SellerOrder", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .UseIdentityColumn();
-
-                    b.Property<long>("DeliveryId")
-                        .HasColumnType("bigint");
-
-                    b.Property<long>("OrderId")
-                        .HasColumnType("bigint");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DeliveryId");
-
-                    b.HasIndex("OrderId");
-
-                    b.ToTable("SellerOrder");
-                });
-
             modelBuilder.Entity("Xure.Data.Sellers", b =>
                 {
                     b.Property<int>("Id")
@@ -800,17 +762,6 @@ namespace Xure.Data.Migrations
                     b.Navigation("UserInfo");
                 });
 
-            modelBuilder.Entity("Xure.Data.Delivery", b =>
-                {
-                    b.HasOne("Xure.Data.Storage", "storage")
-                        .WithMany("Deliveries")
-                        .HasForeignKey("StorageId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("storage");
-                });
-
             modelBuilder.Entity("Xure.Data.Message", b =>
                 {
                     b.HasOne("Xure.Data.Clients", "Client")
@@ -844,9 +795,17 @@ namespace Xure.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Xure.Data.Storage", "Storage")
+                        .WithMany("Orders")
+                        .HasForeignKey("StorageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Client");
 
                     b.Navigation("ReceptionPoint");
+
+                    b.Navigation("Storage");
                 });
 
             modelBuilder.Entity("Xure.Data.OrderProduct", b =>
@@ -1009,25 +968,6 @@ namespace Xure.Data.Migrations
                     b.Navigation("Product");
                 });
 
-            modelBuilder.Entity("Xure.Data.SellerOrder", b =>
-                {
-                    b.HasOne("Xure.Data.Delivery", "Delivery")
-                        .WithMany("SellerOrders")
-                        .HasForeignKey("DeliveryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Xure.Data.Order", "Order")
-                        .WithMany("SellerOrders")
-                        .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Delivery");
-
-                    b.Navigation("Order");
-                });
-
             modelBuilder.Entity("Xure.Data.Sellers", b =>
                 {
                     b.HasOne("Xure.Data.Company", "Company")
@@ -1071,18 +1011,11 @@ namespace Xure.Data.Migrations
                     b.Navigation("Sellers");
                 });
 
-            modelBuilder.Entity("Xure.Data.Delivery", b =>
-                {
-                    b.Navigation("SellerOrders");
-                });
-
             modelBuilder.Entity("Xure.Data.Order", b =>
                 {
                     b.Navigation("OrderProducts");
 
                     b.Navigation("OrderReports");
-
-                    b.Navigation("SellerOrders");
                 });
 
             modelBuilder.Entity("Xure.Data.PriceHistory", b =>
@@ -1132,7 +1065,7 @@ namespace Xure.Data.Migrations
 
             modelBuilder.Entity("Xure.Data.Storage", b =>
                 {
-                    b.Navigation("Deliveries");
+                    b.Navigation("Orders");
                 });
 
             modelBuilder.Entity("Xure.Data.Units", b =>

@@ -10,8 +10,8 @@ using Xure.Data;
 namespace Xure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220503232436_Init")]
-    partial class Init
+    [Migration("20220510135352_INit")]
+    partial class INit
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -387,6 +387,24 @@ namespace Xure.Data.Migrations
                     b.ToTable("OrderReports");
                 });
 
+            modelBuilder.Entity("Xure.Data.PriceHistory", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint")
+                        .UseIdentityColumn();
+
+                    b.Property<DateTime>("UpdatedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("Value")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("PriceHistories");
+                });
+
             modelBuilder.Entity("Xure.Data.Prices", b =>
                 {
                     b.Property<long>("Id")
@@ -394,13 +412,12 @@ namespace Xure.Data.Migrations
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
-
-                    b.Property<DateTime>("UpdatedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<long>("PriceHistoryId")
+                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PriceHistoryId");
 
                     b.ToTable("Prices");
                 });
@@ -498,15 +515,25 @@ namespace Xure.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
 
                     b.Property<int>("ProductSpecificationsId")
                         .HasColumnType("int");
 
+                    b.Property<int>("UnitId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Value")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("Id");
 
+                    b.HasIndex("ProductId");
+
                     b.HasIndex("ProductSpecificationsId");
+
+                    b.HasIndex("UnitId");
 
                     b.ToTable("ProductSpecificationsValues");
                 });
@@ -589,6 +616,21 @@ namespace Xure.Data.Migrations
                     b.ToTable("Storages");
                 });
 
+            modelBuilder.Entity("Xure.Data.Units", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .UseIdentityColumn();
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("id");
+
+                    b.ToTable("Units");
+                });
+
             modelBuilder.Entity("Xure.Data.Clients", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
@@ -606,10 +648,6 @@ namespace Xure.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("MiddleName")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("nvarchar(max)");
 
@@ -644,10 +682,6 @@ namespace Xure.Data.Migrations
                         .HasColumnType("bit");
 
                     b.Property<string>("MiddleName")
-                        .ValueGeneratedOnUpdateSometimes()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
                         .ValueGeneratedOnUpdateSometimes()
                         .HasColumnType("nvarchar(max)");
 
@@ -795,6 +829,17 @@ namespace Xure.Data.Migrations
                     b.Navigation("Reason");
                 });
 
+            modelBuilder.Entity("Xure.Data.Prices", b =>
+                {
+                    b.HasOne("Xure.Data.PriceHistory", "PriceHistory")
+                        .WithMany("Prices")
+                        .HasForeignKey("PriceHistoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("PriceHistory");
+                });
+
             modelBuilder.Entity("Xure.Data.Product", b =>
                 {
                     b.HasOne("Xure.Data.Brands", "Brands")
@@ -860,13 +905,29 @@ namespace Xure.Data.Migrations
 
             modelBuilder.Entity("Xure.Data.ProductSpecificationsValue", b =>
                 {
+                    b.HasOne("Xure.Data.Product", "Product")
+                        .WithMany("ProductSpecificationsValues")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("Xure.Data.ProductSpecifications", "ProductSpecification")
                         .WithMany("ProductSpecificationsValues")
                         .HasForeignKey("ProductSpecificationsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Xure.Data.Units", "Unit")
+                        .WithMany("productSpecificationsValues")
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
                     b.Navigation("ProductSpecification");
+
+                    b.Navigation("Unit");
                 });
 
             modelBuilder.Entity("Xure.Data.Reviews", b =>
@@ -921,6 +982,11 @@ namespace Xure.Data.Migrations
                     b.Navigation("OrderReports");
                 });
 
+            modelBuilder.Entity("Xure.Data.PriceHistory", b =>
+                {
+                    b.Navigation("Prices");
+                });
+
             modelBuilder.Entity("Xure.Data.Prices", b =>
                 {
                     b.Navigation("Products");
@@ -931,6 +997,8 @@ namespace Xure.Data.Migrations
                     b.Navigation("OrderProducts");
 
                     b.Navigation("ProductReports");
+
+                    b.Navigation("ProductSpecificationsValues");
 
                     b.Navigation("Reviews");
                 });
@@ -955,6 +1023,11 @@ namespace Xure.Data.Migrations
             modelBuilder.Entity("Xure.Data.Storage", b =>
                 {
                     b.Navigation("Orders");
+                });
+
+            modelBuilder.Entity("Xure.Data.Units", b =>
+                {
+                    b.Navigation("productSpecificationsValues");
                 });
 
             modelBuilder.Entity("Xure.Data.Clients", b =>
