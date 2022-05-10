@@ -31,6 +31,17 @@ namespace Xure.Api
         {
             services.AddDbContext<AppDbContext>(c => c.UseSqlServer(Configuration.GetConnectionString("Data")));
             services.AddTransient<ICategoryRepository, CategoryRepository>();
+            services.AddTransient<IUnitRepository, UnitRepository>();
+            services.AddTransient<IProductSpecificationsRepository, ProductSpecificationsRepository>();
+            services.AddTransient<IProductSpecificationsValueRepository, ProductSpecificationsValueRepository>();
+            services.AddTransient<IBrandRepository, BrandRepository>();
+            services.AddTransient<IPriceHistoryRepository, PriceHistoryRepository>();
+            services.AddTransient<IPriceRepository, PricesRepository>();
+            services.AddTransient<IReceptionPointRepository, ReceptionPointRepository>();
+            services.AddTransient<IStorageRepository, StorageRepository>();
+            services.AddTransient<IDeliveryRepository, DeliveryRepository>();
+            services.AddTransient<ISellerOrderRepository, SellerOrderRepository>();
+            services.AddTransient<IOrderRepository, OrderRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));           
             services.AddControllers();            
         }
