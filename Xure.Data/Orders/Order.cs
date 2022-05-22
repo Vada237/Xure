@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Xure.Data
 {
@@ -10,11 +11,18 @@ namespace Xure.Data
     {
         public long Id { get; set; }
         public Clients Client { get; set; }
+        [Required(ErrorMessage = "Не указан клиент")]
         public int ClientId { get; set; }        
         public ReceptionPoint ReceptionPoint { get; set; }        
-        public int ReceptionPointId { get; set; }
+
+        [Required(ErrorMessage = "Укажите пункт выдачи")]
+        public int ReceptionPointId { get; set; }        
         public DateTime OrderDate { get; set; }
-        public string Status { get; set; }
+
+        [Required(ErrorMessage = "Отсутствует статус заказа")]
+        [MaxLength(40,ErrorMessage = "Длина статуса не должна превышать 40 символов")]
+        public string Status { get; set; }        
+        public string TrackNumber { get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
         public List<Product> Products { get; set; }        
         public List<OrderReport> OrderReports { get; set; }        

@@ -37,11 +37,18 @@ namespace Xure.Api
             services.AddTransient<IBrandRepository, BrandRepository>();
             services.AddTransient<IPriceHistoryRepository, PriceHistoryRepository>();
             services.AddTransient<IPriceRepository, PricesRepository>();
-            services.AddTransient<IReceptionPointRepository, ReceptionPointRepository>();
-            services.AddTransient<IStorageRepository, StorageRepository>();
+            services.AddTransient<IReceptionPointRepository, ReceptionPointRepository>();            
             services.AddTransient<IDeliveryRepository, DeliveryRepository>();
             services.AddTransient<ISellerOrderRepository, SellerOrderRepository>();
             services.AddTransient<IOrderRepository, OrderRepository>();
+            services.AddTransient<ICompanyRepository, CompanyRepository>();
+            services.AddTransient<IOrderProductRepository, OrderProductRepository>();
+            services.AddTransient<IProductRepository, ProductRepository>();
+            services.AddTransient<IReasonRepository, ReasonRepository>();
+            services.AddTransient<IReviewsRepository, ReviewsRepository>();
+            services.AddTransient<IOrderReportRepository, OrderReportRepository>();
+            services.AddTransient<IProductReportRepository, ProductReportRepository>();
+            services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));           
             services.AddControllers();            
         }

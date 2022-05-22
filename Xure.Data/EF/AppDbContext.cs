@@ -20,8 +20,7 @@ namespace Xure.Data
         public DbSet<ProductSpecificationsValue> ProductSpecificationsValues { get; set; }
         public DbSet<Reason> Reasons { get; set; }
         public DbSet<ReceptionPoint> ReceptionPoints { get; set; }
-        public DbSet<Reviews> Reviews { get; set; }
-        public DbSet<Storage> Storages { get; set; }
+        public DbSet<Reviews> Reviews { get; set; }        
         public DbSet<Sellers> Sellers { get; set; }
         public DbSet<Units> Units { get; set; }
         public DbSet<PriceHistory> PriceHistories { get; set; }
@@ -162,9 +161,10 @@ namespace Xure.Data
                     .HasForeignKey(c => c.OrderId);
                 });
             builder.Entity<Delivery>(
-                c => c.HasOne(c => c.storage)
+                c => c.HasOne(c => c.ReceptionPoint)
                 .WithMany(c => c.Deliveries)
-                .HasForeignKey(c => c.StorageId));
+                .HasForeignKey(c => c.ReceprtionPointId)
+                .OnDelete(DeleteBehavior.NoAction));
         }        
     }
 }
