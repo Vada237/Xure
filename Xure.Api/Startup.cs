@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using Xure.Data;
 using Xure.Api.Interfaces;
 using Xure.Api.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace Xure.Api
 {
@@ -30,6 +31,12 @@ namespace Xure.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<AppDbContext>(c => c.UseSqlServer(Configuration.GetConnectionString("Data")));
+            services.AddIdentity<AppUser, IdentityRole>(options => {
+                options.Password.RequiredLength = 8;
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
+
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IUnitRepository, UnitRepository>();
             services.AddTransient<IProductSpecificationsRepository, ProductSpecificationsRepository>();
@@ -49,7 +56,7 @@ namespace Xure.Api
             services.AddTransient<IOrderReportRepository, OrderReportRepository>();
             services.AddTransient<IProductReportRepository, ProductReportRepository>();
             services.AddTransient<IMessageRepository, MessageRepository>();
-            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));           
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));                       
             services.AddControllers();            
         }
         
@@ -64,6 +71,7 @@ namespace Xure.Api
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

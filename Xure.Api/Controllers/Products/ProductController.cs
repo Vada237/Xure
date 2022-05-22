@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Xure.Api.Interfaces;
 using Xure.Data;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Xure.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductController : ControllerBase
     {
 
@@ -31,7 +33,7 @@ namespace Xure.Api.Controllers
             }
 
         }
-
+                
         [HttpGet]
         [Route("{Id}")]
         public IActionResult Get(int Id)

@@ -1,9 +1,11 @@
 ﻿using Xure.Data;
 using Xure.Api.Interfaces;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
-namespace Xure.Api.Services
-{
+namespace Xure.Api.Services { 
+    
+    
     public class CompanyRepository : Repository<Company>, ICompanyRepository
     {
         public CompanyRepository(AppDbContext context) : base(context)

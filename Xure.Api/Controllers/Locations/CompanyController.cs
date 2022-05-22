@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Xure.Api.Interfaces;
 using Xure.Data;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Xure.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]    
     public class CompanyController : ControllerBase
     {
         private ICompanyRepository _companyRepository;
@@ -18,6 +20,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Модератор")]
         public ActionResult Get()
         {
             if (_companyRepository.GetAll() == null)
@@ -33,14 +36,14 @@ namespace Xure.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = "Модератор")]
         public IActionResult Get(int id)
         {
             if (_companyRepository.Get(id) == null) return NotFound("Компания не найдена");
             else return Ok(_companyRepository.Get(id));
         }
 
-        [HttpPost]
-
+        [HttpPost]        
         public IActionResult Post(Company company)
         {
             if (ModelState.IsValid)
@@ -55,6 +58,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Update(Company company)
         {
             if (ModelState.IsValid)
@@ -70,6 +74,7 @@ namespace Xure.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Delete(int id)
         {
             if (_companyRepository.GetAll().FirstOrDefault(c => c.Id == id) != null)
