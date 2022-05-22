@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using Xure.Api.Interfaces;
 using Xure.Data;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
+
 namespace Xure.Api.Services
 {
     public class Repository<T> : IRepository<T> where T : class, new()
@@ -17,7 +19,7 @@ namespace Xure.Api.Services
         public void Create(T item)
         {
             if (item == null)
-            {
+            {                
                 throw new ArgumentNullException($"{nameof(Create)} сущность не должна быть равна null");
             }
 
@@ -45,7 +47,21 @@ namespace Xure.Api.Services
             {
                 throw new Exception($"{nameof(id)}: Не найдена сущность");
             }
-        }        
+        }
+
+        public void Delete(long id)
+        {
+            try
+            {
+                T item = _context.Set<T>().Find(id);
+                _context.Set<T>().Remove(item);
+                Save();
+            }
+            catch
+            {
+                throw new Exception($"{nameof(id)}: Не найдена сущность");
+            }
+        }
 
         public IEnumerable<T> GetAll()
         {
