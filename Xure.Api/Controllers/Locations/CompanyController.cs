@@ -8,25 +8,25 @@ namespace Xure.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class StorageController : ControllerBase
+    public class CompanyController : ControllerBase
     {
-        private IStorageRepository _storageRepository;
+        private ICompanyRepository _companyRepository;
 
-        public StorageController(IStorageRepository storageRepository)
+        public CompanyController(ICompanyRepository companyRepository)
         {
-            _storageRepository = storageRepository;
+            _companyRepository = companyRepository;
         }
 
         [HttpGet]
         public ActionResult Get()
         {
-            if (_storageRepository.GetAll() == null)
+            if (_companyRepository.GetAll() == null)
             {
-                return NotFound("Склады не найдены");
+                return NotFound("Компании не найдены");
             }
             else
             {
-                return Ok(_storageRepository.GetAll());
+                return Ok(_companyRepository.GetAll());
             }
 
         }
@@ -35,18 +35,18 @@ namespace Xure.Api.Controllers
         [Route("{id}")]
         public IActionResult Get(int id)
         {
-            if (_storageRepository.GetStorage(id) == null) return NotFound("Склад не найден");
-            else return Ok(_storageRepository.GetStorage(id));
+            if (_companyRepository.Get(id) == null) return NotFound("Компания не найдена");
+            else return Ok(_companyRepository.Get(id));
         }
 
         [HttpPost]
 
-        public IActionResult Post(Storage storage)
+        public IActionResult Post(Company company)
         {
             if (ModelState.IsValid)
             {
-                _storageRepository.Create(storage);
-                return Created(HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + HttpContext.Request.Path + '/' + storage.id, storage);
+                _companyRepository.Create(company);
+                return Created(HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + HttpContext.Request.Path + '/' + company.Id, company);
             }
             else
             {
@@ -55,12 +55,12 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPut]
-        public ActionResult Update(Storage storage)
+        public ActionResult Update(Company company)
         {
             if (ModelState.IsValid)
             {
-                _storageRepository.Update(storage);
-                return Accepted(HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + HttpContext.Request.Path + '/' + storage.id, storage);
+                _companyRepository.Update(company);
+                return Accepted(HttpContext.Request.Scheme + "://" + HttpContext.Request.Host + HttpContext.Request.Path + '/' + company.Id, company);
             }
             else
             {
@@ -72,9 +72,9 @@ namespace Xure.Api.Controllers
         [Route("{id}")]
         public ActionResult Delete(int id)
         {
-            if (_storageRepository.GetAll().FirstOrDefault(c => c.id == id) != null)
+            if (_companyRepository.GetAll().FirstOrDefault(c => c.Id == id) != null)
             {
-                _storageRepository.Delete(id);
+                _companyRepository.Delete(id);
                 return Ok("Объект удален");
             }
             else
