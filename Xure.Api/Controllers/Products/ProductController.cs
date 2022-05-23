@@ -21,6 +21,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public ActionResult Get()
         {
             if (_ProductRepository.GetAll() == null)
@@ -36,6 +37,7 @@ namespace Xure.Api.Controllers
                 
         [HttpGet]
         [Route("{Id}")]
+        [Authorize(Roles = "Покупатель,Поставщик,Менеджер,Администратор")]
         public IActionResult Get(int Id)
         {
             if (_ProductRepository.GetById(Id) == null) return NotFound("Продукт не найден");
@@ -43,7 +45,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPost]
-
+        [Authorize (Roles = "Поставщик,Администратор")]
         public IActionResult Post(Product Product)
         {
             if (ModelState.IsValid)
@@ -58,6 +60,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Поставщик,Администратор")]
         public ActionResult Update(Product Product)
         {
             if (ModelState.IsValid)
@@ -73,6 +76,7 @@ namespace Xure.Api.Controllers
 
         [HttpDelete]
         [Route("{Id}")]
+        [Authorize(Roles = "Поставщик,Менеджер,Администратор")]
         public ActionResult Delete(int Id)
         {
             if (_ProductRepository.GetAll().FirstOrDefault(c => c.Id == Id) != null)

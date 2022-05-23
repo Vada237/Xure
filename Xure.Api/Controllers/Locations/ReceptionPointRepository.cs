@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Xure.Api.Interfaces;
 using Xure.Data;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Xure.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Администратор")]
     public class ReceptionPointController : ControllerBase
     {
         private IReceptionPointRepository _receptionPointRepository;
@@ -17,7 +19,7 @@ namespace Xure.Api.Controllers
             _receptionPointRepository = receptionPointRepository;
         }
 
-        [HttpGet]
+        [HttpGet]              
         public ActionResult Get()
         {
             if (_receptionPointRepository.GetAll() == null)
@@ -31,7 +33,7 @@ namespace Xure.Api.Controllers
 
         }
 
-        [HttpGet]
+        [HttpGet]        
         [Route("{id}")]
         public IActionResult Get(int id)
         {

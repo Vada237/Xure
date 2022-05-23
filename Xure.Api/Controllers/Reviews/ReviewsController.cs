@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Xure.Api.Interfaces;
 using Xure.Data;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Xure.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ReviewsController : ControllerBase
     {
         private IReviewsRepository _ReviewsRepository;
@@ -17,7 +19,8 @@ namespace Xure.Api.Controllers
             _ReviewsRepository = ReviewsRepository;
         }
 
-        [HttpGet]
+        [HttpGet]        
+        [Authorize(Roles = "Менеджер,Администратор")]
         public ActionResult Get()
         {
             if (_ReviewsRepository.GetAll() == null)
@@ -33,6 +36,7 @@ namespace Xure.Api.Controllers
 
         [HttpGet]
         [Route("{Id}")]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public IActionResult Get(int Id)
         {
             if (_ReviewsRepository.Get(Id) == null) return NotFound("Отзыв не найден");
@@ -40,7 +44,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPost]
-
+        [Authorize(Roles = "Покупатель,Администратор")]
         public IActionResult Post(Reviews Reviews)
         {
             if (ModelState.IsValid)
@@ -56,7 +60,8 @@ namespace Xure.Api.Controllers
 
         [HttpDelete]
         [Route("{Id}")]
-        public ActionResult Delete(int Id)
+        [Authorize (Roles = "Администратор")]
+        private ActionResult Delete(int Id)
         {
             if (_ReviewsRepository.GetAll().FirstOrDefault(c => c.Id == Id) != null)
             {

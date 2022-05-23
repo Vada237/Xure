@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Xure.Data;
 using Xure.Api.Interfaces;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Xure.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductSpecificationsController : ControllerBase
     {
         private IProductSpecificationsRepository _productSpecificationsRepository;
@@ -18,6 +20,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public ActionResult Get()
         {
             if (_productSpecificationsRepository.GetAll() != null)
@@ -31,6 +34,7 @@ namespace Xure.Api.Controllers
         }
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public ActionResult GetById(int id)
         {
             if (_productSpecificationsRepository.GetAll().FirstOrDefault(c => c.Id == id) == null)
@@ -43,6 +47,7 @@ namespace Xure.Api.Controllers
             }
         }
         [HttpPost]
+        [Authorize(Roles = "Поставщик,Администратор")]
         public ActionResult Create(ProductSpecifications productSpecifications)
         {
             if (ModelState.IsValid)
@@ -57,6 +62,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public ActionResult Update(ProductSpecifications productSpecifications)
         {
             if (ModelState.IsValid)
@@ -72,6 +78,7 @@ namespace Xure.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public ActionResult Delete(int id)
         {
             if (_productSpecificationsRepository.GetAll().FirstOrDefault(c => c.Id == id) != null)

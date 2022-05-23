@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Xure.Api.Interfaces;
 using Xure.Data;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Xure.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrderReportController : ControllerBase
     {
         private IOrderReportRepository _OrderReportRepository;
@@ -18,6 +20,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Менеджер,Адмнистратор")]
         public ActionResult Get()
         {
             if (_OrderReportRepository.GetAll() == null)
@@ -33,6 +36,7 @@ namespace Xure.Api.Controllers
 
         [HttpGet]
         [Route("{Id}")]
+        [Authorize(Roles = "Менеджер,Адмнистратор")]
         public IActionResult Get(int Id)
         {
             if (_OrderReportRepository.Get(Id) == null) return NotFound("Жалоба на заказ не найдена");
@@ -40,7 +44,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPost]
-
+        [Authorize(Roles = "Покупатель,Адмнистратор")]
         public IActionResult Post(OrderReport OrderReport)
         {
             if (ModelState.IsValid)
@@ -55,6 +59,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Менеджер,Адмнистратор")]
         public ActionResult Update(OrderReport OrderReport)
         {
             if (ModelState.IsValid)
@@ -70,7 +75,8 @@ namespace Xure.Api.Controllers
 
         [HttpDelete]
         [Route("{Id}")]
-        public ActionResult Delete(int Id)
+        [Authorize(Roles = "Администратор")]
+        private ActionResult Delete(int Id)
         {
             if (_OrderReportRepository.GetAll().FirstOrDefault(c => c.Id == Id) != null)
             {

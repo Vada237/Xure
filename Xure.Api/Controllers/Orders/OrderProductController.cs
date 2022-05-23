@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Xure.Api.Interfaces;
 using Xure.Data;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Xure.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrderProductController : ControllerBase
     {
         private IOrderProductRepository _orderProductRepository;
@@ -18,6 +20,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public ActionResult Get()
         {
             if (_orderProductRepository.GetAll() == null)
@@ -33,6 +36,7 @@ namespace Xure.Api.Controllers
 
         [HttpGet]
         [Route("ProductId={id}")]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public IActionResult GetByProductId(int id)
         {           
             if (_orderProductRepository.GetByProductId(id) == null) return NotFound($"Заказы с товаром {_orderProductRepository.GetProductName(id)} не найдены");
@@ -41,6 +45,7 @@ namespace Xure.Api.Controllers
 
         [HttpGet]
         [Route("OrderId={id}")]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public IActionResult GetByOrderId(int id)
         {
             if (_orderProductRepository.GetByOrderId(id) == null) return NotFound("Заказ не найден");
@@ -49,6 +54,7 @@ namespace Xure.Api.Controllers
 
         [HttpGet]
         [Route("{orderId}/{productId}")]
+        [Authorize (Roles = "Менеджер,Администратор")]
         public IActionResult GetByIds(int orderId,int productId)
         {
             if (_orderProductRepository.GetByIds(orderId, productId) == null) return NotFound($"Товар {_orderProductRepository.GetProductName(productId)} отсутствует в заказе");
@@ -56,6 +62,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Покупатель,Администратор")]
 
         public IActionResult Post(OrderProduct orderProduct)
         {
@@ -71,6 +78,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Update(OrderProduct orderProduct)
         {
             if (ModelState.IsValid)
@@ -86,6 +94,7 @@ namespace Xure.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = "Покупатель,Администратор")]
         public ActionResult Delete(long id)
         {
             if (_orderProductRepository.GetAll().FirstOrDefault(c => c.OrderId == id) != null)

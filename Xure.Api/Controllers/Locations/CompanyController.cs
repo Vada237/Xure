@@ -20,7 +20,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Модератор")]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Get()
         {
             if (_companyRepository.GetAll() == null)
@@ -36,14 +36,15 @@ namespace Xure.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [Authorize(Roles = "Модератор")]
+        [Authorize(Roles = "Администратор")]
         public IActionResult Get(int id)
         {
             if (_companyRepository.Get(id) == null) return NotFound("Компания не найдена");
             else return Ok(_companyRepository.Get(id));
         }
 
-        [HttpPost]        
+        [HttpPost]
+        [Authorize(Roles = "Администратор")]
         public IActionResult Post(Company company)
         {
             if (ModelState.IsValid)

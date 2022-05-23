@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Xure.Api.Interfaces;
 using Xure.Data;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Xure.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize(Roles = "Менеджер,Администратор")]
     public class ReasonController : ControllerBase
     {
         private IReasonRepository _ReasonRepository;
@@ -17,7 +19,7 @@ namespace Xure.Api.Controllers
             _ReasonRepository = ReasonRepository;
         }
 
-        [HttpGet]
+        [HttpGet]        
         public ActionResult Get()
         {
             if (_ReasonRepository.GetAll() == null)

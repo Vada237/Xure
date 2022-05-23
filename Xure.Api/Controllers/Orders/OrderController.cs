@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Xure.Api.Interfaces;
 using Xure.Data;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Xure.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class OrderController : ControllerBase
     {
         private IOrderRepository _orderRepository;
@@ -18,6 +20,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Администратор,Менеджер")]
         public ActionResult Get()
         {
             if (_orderRepository.GetAll() == null)
@@ -33,6 +36,7 @@ namespace Xure.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public IActionResult Get(int id)
         {
             if (_orderRepository.GetOrder(id) == null) return NotFound("Заказ не найден");
@@ -40,7 +44,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPost]
-
+        [Authorize(Roles = "Администратор,Пользователь")]
         public IActionResult Post(Order order)
         {
             if (ModelState.IsValid)
@@ -55,6 +59,8 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Администратор")]
+
         public ActionResult Update(Order order)
         {
             if (ModelState.IsValid)
@@ -70,6 +76,7 @@ namespace Xure.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Delete(int id)
         {
             if (_orderRepository.GetAll().FirstOrDefault(c => c.Id == id) != null)

@@ -2,10 +2,13 @@
 using Xure.Data;
 using Xure.Api.Interfaces;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+
 namespace Xure.Api.Controllers
 {
     [ApiController]
     [Route("api/{Controller}")]
+    [Authorize]
     public class CategoryController : ControllerBase
     {        
         private readonly ICategoryRepository _categoryRepository;
@@ -16,6 +19,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public ActionResult Get()
         {
             if (_categoryRepository.GetAll() != null)
@@ -27,6 +31,7 @@ namespace Xure.Api.Controllers
         }
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public ActionResult GetById(int id)
         {
             if (_categoryRepository.GetAll().FirstOrDefault(c => c.Id == id) == null)
@@ -38,6 +43,7 @@ namespace Xure.Api.Controllers
             }
         }
         [HttpPost]
+        [Authorize(Roles = "Поставщик,Администратор")]
         public ActionResult Create(Category category)
         {
             if (ModelState.IsValid)
@@ -51,6 +57,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public ActionResult Update(Category category)
         {
             if (ModelState.IsValid)
@@ -65,6 +72,7 @@ namespace Xure.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public ActionResult Delete(int id)
         {
             if (_categoryRepository.GetAll().FirstOrDefault(c => c.Id == id) != null)

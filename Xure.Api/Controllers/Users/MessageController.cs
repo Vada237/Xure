@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Xure.Api.Interfaces;
 using Xure.Data;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Xure.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class MessageController : ControllerBase
     {
         private IMessageRepository _MessageRepository;
@@ -18,7 +20,8 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]
-        public ActionResult Get()
+        [Authorize(Roles = "Администратор")]
+        private ActionResult Get()
         {
             if (_MessageRepository.GetAll() == null)
             {
@@ -33,14 +36,15 @@ namespace Xure.Api.Controllers
 
         [HttpGet]
         [Route("{Id}")]
-        public IActionResult Get(int Id)
+        [Authorize(Roles = "Администратор")]
+        private IActionResult Get(int Id)
         {
             if (_MessageRepository.Get(Id) == null) return NotFound("Сообщение не найдено");
             else return Ok(_MessageRepository.Get(Id));
         }
 
         [HttpPost]
-
+        [Authorize(Roles = "Поставщик,Покупатель,Администратор")]
         public IActionResult Post(Message Message)
         {
             if (ModelState.IsValid)
@@ -55,7 +59,8 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPut]
-        public ActionResult Update(Message Message)
+        [Authorize(Roles = "Администратор")]
+        private ActionResult Update(Message Message)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +75,8 @@ namespace Xure.Api.Controllers
 
         [HttpDelete]
         [Route("{Id}")]
-        public ActionResult Delete(int Id)
+        [Authorize(Roles = "Администратор")]
+        private ActionResult Delete(int Id)
         {
             if (_MessageRepository.GetAll().FirstOrDefault(c => c.Id == Id) != null)
             {

@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Xure.Api.Interfaces;
 using Xure.Data;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
+
 namespace Xure.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class DeliveryController : ControllerBase
     {
         private IDeliveryRepository _deliveryRepository;
@@ -17,6 +20,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public ActionResult Get()
         {
             if (_deliveryRepository.GetAll() == null)
@@ -32,6 +36,7 @@ namespace Xure.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public IActionResult Get(int id)
         {
             if (_deliveryRepository.GetDelivery(id) == null) return NotFound("Поставка не найдена");
@@ -39,7 +44,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPost]
-
+        [Authorize(Roles = "Администратор")]
         public IActionResult Post(Delivery delivery)
         {
             if (ModelState.IsValid)
@@ -54,6 +59,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Update(Delivery delivery)
         {
             if (ModelState.IsValid)
@@ -69,6 +75,7 @@ namespace Xure.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = "Администратор")]
         public ActionResult Delete(int id)
         {
             if (_deliveryRepository.GetAll().FirstOrDefault(c => c.Id == id) != null)

@@ -3,11 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Xure.Api.Interfaces;
 using Xure.Data;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Xure.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class BrandsController : ControllerBase
     {
         private IBrandRepository _brandRepository;
@@ -18,6 +20,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public ActionResult Get()
         {
             if (_brandRepository.GetAll() == null)
@@ -33,6 +36,7 @@ namespace Xure.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public IActionResult Get(int id)
         {
             if (_brandRepository.getById(id) == null) return NotFound("Бренд не найден");
@@ -40,7 +44,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPost]
-
+        [Authorize(Roles = "Поставщик,Администратор")]
         public IActionResult Post(Brands brand)
         {
             if (ModelState.IsValid)
@@ -55,6 +59,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public ActionResult Update(Brands brand)
         {
             if (ModelState.IsValid)
@@ -70,6 +75,7 @@ namespace Xure.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
+        [Authorize(Roles = "Менеджер,Администратор")]
         public ActionResult Delete(int id)
         {
             if (_brandRepository.GetAll().FirstOrDefault(c => c.Id == id) != null)
