@@ -20,7 +20,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Менеджер,Администратор")]
+        [Authorize(Roles = "Модератор,Администратор")]
         public ActionResult Get()
         {
             if (_productSpecificationsValueRepository.GetAll() != null)
@@ -34,7 +34,7 @@ namespace Xure.Api.Controllers
         }
         [HttpGet]
         [Route("{id}")]
-        [Authorize(Roles = "Менеджер,Администратор")]
+        [Authorize(Roles = "Модератор,Администратор")]
         public ActionResult GetById(int id)
         {
             if (_productSpecificationsValueRepository.GetAll().FirstOrDefault(c => c.Id == id) == null)
@@ -63,7 +63,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Менеджер,Администратор")]
+        [Authorize(Roles = "Модератор,Администратор")]
         public ActionResult Update(ProductSpecificationsValue productSpecificationsValue)
         {
             if (ModelState.IsValid)
@@ -79,7 +79,7 @@ namespace Xure.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = "Поставщик,Менеджер,Администратор")]
+        [Authorize(Roles = "Поставщик,Модератор,Администратор")]
 
         public ActionResult Delete(int id)
         {

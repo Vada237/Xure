@@ -20,7 +20,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Менеджер,Администратор")]
+        [Authorize(Roles = "Модератор,Администратор")]
         public ActionResult Get()
         {
             if (_priceRepository.GetAll() == null)
@@ -36,7 +36,7 @@ namespace Xure.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [Authorize(Roles = "Менеджер,Администратор")]
+        [Authorize(Roles = "Модератор,Администратор")]
         public IActionResult Get(int id)
         {
             if (_priceRepository.GetById(id) == null) return NotFound("Текущая цена не найдена");
@@ -75,7 +75,7 @@ namespace Xure.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = "Администратор")]
+        [Authorize(Roles = "Модератор,Администратор")]
         private ActionResult Delete(int id)
         {
             if (_priceRepository.GetAll().FirstOrDefault(c => c.Id == id) != null)

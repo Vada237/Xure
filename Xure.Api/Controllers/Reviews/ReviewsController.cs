@@ -20,7 +20,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]        
-        [Authorize(Roles = "Менеджер,Администратор")]
+        [Authorize(Roles = "Модератор,Администратор")]
         public ActionResult Get()
         {
             if (_ReviewsRepository.GetAll() == null)
@@ -36,7 +36,7 @@ namespace Xure.Api.Controllers
 
         [HttpGet]
         [Route("{Id}")]
-        [Authorize(Roles = "Менеджер,Администратор")]
+        [Authorize(Roles = "Модератор,Администратор")]
         public IActionResult Get(int Id)
         {
             if (_ReviewsRepository.Get(Id) == null) return NotFound("Отзыв не найден");

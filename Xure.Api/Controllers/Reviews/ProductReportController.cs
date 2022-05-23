@@ -21,7 +21,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles="Менеджер,Администратор")]
+        [Authorize(Roles= "Модератор,Администратор")]
         public ActionResult Get()
         {
             if (_ProductReportRepository.GetAll() == null)
@@ -37,7 +37,7 @@ namespace Xure.Api.Controllers
 
         [HttpGet]
         [Route("{Id}")]
-        [Authorize(Roles="Менеджер,Администратор")]
+        [Authorize(Roles= "Модератор,Администратор")]
         public IActionResult Get(int Id)
         {
             if (_ProductReportRepository.Get(Id) == null) return NotFound("Жалоба на продукт не найдена");
@@ -60,7 +60,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Менеджер,Адмнистратор")]
+        [Authorize(Roles = "Модератор,Адмнистратор")]
         public ActionResult Update(ProductReport ProductReport)
         {
             if (ModelState.IsValid)
@@ -77,7 +77,7 @@ namespace Xure.Api.Controllers
         [HttpDelete]
         [Route("{Id}")]
         [Authorize(Roles = "Администратор")]
-        public ActionResult Delete(int Id)
+        private ActionResult Delete(int Id)
         {
             if (_ProductReportRepository.GetAll().FirstOrDefault(c => c.Id == Id) != null)
             {

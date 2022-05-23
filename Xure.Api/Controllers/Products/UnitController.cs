@@ -21,7 +21,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Менеджер,Администратор")]
+        [Authorize(Roles = "Модератор,Администратор")]
         public ActionResult Get() { 
            if (_unitRepository.GetAll() == null)
             {
@@ -35,7 +35,7 @@ namespace Xure.Api.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        [Authorize(Roles = "Менеджер,Администратор")]
+        [Authorize(Roles = "Модератор,Администратор")]
         public IActionResult Get(int id)
         {
             if (_unitRepository.GetById(id) == null) return NotFound("Единица измерения не найдена");
@@ -43,7 +43,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Поставщик,Менеджер,Администратор")]
+        [Authorize(Roles = "Поставщик,Модератор,Администратор")]
         public IActionResult Post(Units unit)
         {
             if (ModelState.IsValid)
@@ -58,7 +58,7 @@ namespace Xure.Api.Controllers
         }
 
         [HttpPut]        
-        [Authorize(Roles = "Менеджер,Администратор")]
+        [Authorize(Roles = "Модератор,Администратор")]
         public ActionResult Update(Units unit)
         {
             if (ModelState.IsValid)
@@ -74,7 +74,7 @@ namespace Xure.Api.Controllers
 
         [HttpDelete]
         [Route("{id}")]
-        [Authorize(Roles = "Менеджер,Администратор")]
+        [Authorize(Roles = "Модератор,Администратор")]
         public ActionResult Delete(int id)
         {
             if (_unitRepository.GetAll().FirstOrDefault(c => c.id == id) != null)

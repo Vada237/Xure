@@ -21,7 +21,7 @@ namespace Xure.Api.Controllers
         [HttpGet]
         [Authorize(Roles = "Администратор")]
 
-        public ActionResult Get()
+        private ActionResult Get()
         {
             if (_priceHistoryRepository.GetAll() == null)
             {
@@ -37,7 +37,7 @@ namespace Xure.Api.Controllers
         [HttpGet]
         [Route("{id}")]
         [Authorize(Roles = "Администратор")]
-        public IActionResult Get(int id)
+        private IActionResult Get(int id)
         {
             if (_priceHistoryRepository.GetById(id) == null) return NotFound("Цена не найдена");
             else return Ok(_priceHistoryRepository.GetById(id));

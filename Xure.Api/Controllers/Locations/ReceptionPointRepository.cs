@@ -9,7 +9,7 @@ namespace Xure.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "Администратор")]
+    [Authorize(Roles = "Модератор,Администратор")]
     public class ReceptionPointController : ControllerBase
     {
         private IReceptionPointRepository _receptionPointRepository;
