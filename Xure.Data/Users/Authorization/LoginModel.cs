@@ -9,11 +9,11 @@ namespace Xure.Data
 {
     public class LoginModel
     {
-        [Required]  
+        [Required(ErrorMessage = "Неверный логин")]  
         [UIHint("Логин")]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Неверный пароль")]
         [UIHint("Пароль")]
         public string Password { get; set; }
     }

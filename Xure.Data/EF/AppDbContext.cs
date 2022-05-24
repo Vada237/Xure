@@ -1,5 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using System;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using System.Threading.Tasks;
 
 namespace Xure.Data
 {
@@ -165,6 +170,27 @@ namespace Xure.Data
                 .WithMany(c => c.Deliveries)
                 .HasForeignKey(c => c.ReceprtionPointId)
                 .OnDelete(DeleteBehavior.NoAction));
-        }        
+        }
+
+        public static async Task CreateAccount(IServiceProvider serviceProvider, IConfiguration configuration)
+        {
+            UserManager<AppUser> userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
+            
+
+            if (await userManager.FindByEmailAsync(configuration["UserData:Admin:Email"]) == null)
+            {
+                AppUser user = new AppUser
+                {
+                    UserName = configuration["UserData:Admin:Name"],
+                    Surname = configuration["UserData:Admin:Surname"],
+                    PhoneNumber = configuration["UserData:Admin:PhoneNumber"],
+                    Birthday = Convert.ToDateTime(configuration["UserData:Admin:Birthday"]),
+                    Passport = configuration["UserData:Admin:Passport"],
+                    Email = configuration["UserData:Admin:Email"],
+                    
+                };
+                IdentityResult result = await userManager.CreateAsync(user, configuration["UserData:Admin:Password"]);
+            }
+        }
     }
 }
