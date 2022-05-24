@@ -9,7 +9,7 @@ namespace Xure.Api.Controllers.Users
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles="Администраторы")]
+    [Authorize(Roles="Администратор")]
     public class AdminController : ControllerBase
     {
         private UserManager<AppUser> UserManager;
@@ -70,7 +70,7 @@ namespace Xure.Api.Controllers.Users
 
         [HttpPost]
         [Route("{email}")]
-        public async Task<IActionResult> SetRole(RoleModel model,string Email) 
+        public async Task<IActionResult> SetUserRoleByEmail(RoleModel model,string Email) 
         {
             if (ModelState.IsValid)
             {
@@ -92,10 +92,41 @@ namespace Xure.Api.Controllers.Users
 
         [HttpGet]
         [Route("GetUsers")]
-
         public IActionResult GetUsers()
         {            
             return Ok(UserRepository.GetUsers());
+        }
+
+        [HttpDelete]
+        [Route("id={id}")]        
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            if (UserManager.FindByIdAsync(id) == null)
+            {
+                return NotFound("Пользователь не найден");
+            }
+            else
+            {     
+                var user = await UserManager.FindByIdAsync(id);
+                IdentityResult result = await UserManager.DeleteAsync(user);
+                if (result.Succeeded && user == null)
+                {
+                    return Ok("Пользователь удален");
+                }
+                return BadRequest();
+            }
+        }
+
+        [HttpGet] 
+        [Route("RoleName={name}")]
+        public async Task<IActionResult> GetRolesByName(string name)
+        {
+            if (await RoleManager.FindByNameAsync(name) == null)
+            {
+                return NotFound("Роль не найдена");
+            } 
+            var role = await RoleManager.FindByNameAsync(name);
+            return Ok(role);            
         }
     }
 }

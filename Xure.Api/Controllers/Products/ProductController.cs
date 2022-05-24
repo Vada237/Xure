@@ -89,5 +89,17 @@ namespace Xure.Api.Controllers
                 return NotFound("Объект не найден");
             }
         }
+
+        [HttpDelete]
+        [Route("name={name}")]
+        [Authorize (Roles = "Поставщик,Покупатель,Модератор,Администратор")]
+        public IActionResult FindProducts(string name)
+        {
+            if (_ProductRepository.FindProductsByName(name) == null)
+            {
+                return NotFound("Товары не найдены");
+            }
+            return Ok(_ProductRepository.FindProductsByName(name));
+        }
     }
 }
