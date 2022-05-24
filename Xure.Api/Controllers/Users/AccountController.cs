@@ -75,14 +75,13 @@ namespace Xure.Api.Controllers
             }
             return BadRequest();
         }
-
-        [Authorize]
+        
         [HttpGet]
         [Route("LogOut")]
         public async Task<IActionResult> Logout()
         {
             await SignInManager.SignOutAsync();
             return Ok("Произведен выход из аккаунта");
-        }
+        }       
     }
 }
