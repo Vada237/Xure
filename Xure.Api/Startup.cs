@@ -1,22 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Xure.Data;
 using Xure.Api.Interfaces;
 using Xure.Api.Services;
 using Microsoft.AspNetCore.Identity;
-
 namespace Xure.Api
 {
     public class Startup
@@ -56,6 +47,7 @@ namespace Xure.Api
             services.AddTransient<IOrderReportRepository, OrderReportRepository>();
             services.AddTransient<IProductReportRepository, ProductReportRepository>();
             services.AddTransient<IMessageRepository, MessageRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));                       
             services.AddControllers();            
         }
@@ -78,6 +70,8 @@ namespace Xure.Api
             {
                 endpoints.MapControllers();
             });
+
+            AppDbContext.CreateAccount(app.ApplicationServices, Configuration).Wait();
         }
     }
 }
