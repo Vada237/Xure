@@ -4,14 +4,14 @@ using Xure.Api.Interfaces;
 using Xure.Data;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Xure.Api.Services
 {
     public class Repository<T> : IRepository<T> where T : class, new()
     {
 
-        private readonly AppDbContext _context;
-
+        private readonly AppDbContext _context;        
         public Repository(AppDbContext context)
         {
             this._context = context;   
@@ -74,7 +74,7 @@ namespace Xure.Api.Services
                 throw new Exception($"не найдены сущности: {ex.Message}");
             }        
         }
-
+        
         public void Save()
         {
             try
@@ -103,6 +103,23 @@ namespace Xure.Api.Services
             {
                 throw new Exception($"{nameof(item)} не может быть обновлен: {ex.Message}");
             }
+        }
+
+        public IEnumerable<T> GetWithInclude(params Expression<Func<T, object>>[] includeProperties)
+        {
+            return Include(includeProperties).ToList();
+        }
+
+        public IEnumerable<T> GetWithInclude(Func<T,bool> predicate, params Expression<Func<T,object>>[] includeProperties)
+        {
+            var query = Include(includeProperties);
+            return query.Where(predicate).ToList();
+        }
+
+        private IQueryable<T> Include(params Expression<Func<T,object>>[] includeProperties)
+        {
+            IQueryable<T> query = _context.Set<T>().AsNoTracking();
+            return includeProperties.Aggregate(query, (current, includeProperties) => current.Include(includeProperties));
         }
     }
 }

@@ -2,12 +2,14 @@
 using Xure.Api.Interfaces;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace Xure.Api.Services { 
     
     
     public class CompanyRepository : Repository<Company>, ICompanyRepository
     {
+
         public CompanyRepository(AppDbContext context) : base(context)
         {
 
@@ -16,6 +18,6 @@ namespace Xure.Api.Services {
         public Company Get(int id)
         {
             return GetAll().FirstOrDefault(x => x.Id == id);
-        }
+        }        
     }
 }
