@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Identity;
 namespace Xure.Data
 {
     public class Sellers 
-    {        
+   {
         public int Id { get; set; }
         public AppUser UserInfo { get; set; }
         public string UserId { get; set; }

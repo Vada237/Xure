@@ -24,8 +24,7 @@ namespace Xure.Data
         [Required(ErrorMessage = "Введите значение характеристики")]
         [MaxLength(50,ErrorMessage = "Длина значения не должна превышать 50 символов")]
         public string Value { get; set; }
-        public Units Unit { get; set; }
-        [Required(ErrorMessage = "Введите единицу измерения")]
+        public Units Unit { get; set; }        
         public int UnitId { get; set; }
 
      }
