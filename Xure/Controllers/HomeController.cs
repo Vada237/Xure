@@ -24,7 +24,7 @@ namespace Xure.App.Controllers
 
         public IActionResult Index()
         {
-            return View(_appDbContext.Products);
+            return View();
         }
 
         public IActionResult Privacy()

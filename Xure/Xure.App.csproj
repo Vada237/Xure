@@ -19,7 +19,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Xure.Api\Xure.Api.csproj" />
     <ProjectReference Include="..\Xure.Data\Xure.Data.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\header\" />
   </ItemGroup>
 
 </Project>

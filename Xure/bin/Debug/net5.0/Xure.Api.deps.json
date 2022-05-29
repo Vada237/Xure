@@ -31,14 +31,11 @@
   },
   "targets": {
     ".NETCoreApp,Version=v5.0": {
-      "Xure.App/1.0.0": {
+      "Xure.Api/1.0.0": {
         "dependencies": {
           "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "5.0.0",
-          "Microsoft.EntityFrameworkCore": "5.0.0",
           "Microsoft.EntityFrameworkCore.Design": "5.0.0",
-          "Microsoft.EntityFrameworkCore.SqlServer": "5.0.0",
-          "Microsoft.EntityFrameworkCore.Tools": "5.0.0",
-          "Xure.Api": "1.0.0",
+          "Swashbuckle.AspNetCore": "5.6.3",
           "Xure.Data": "1.0.0",
           "Microsoft.AspNetCore.Antiforgery": "5.0.0.0",
           "Microsoft.AspNetCore.Authentication.Abstractions": "5.0.0.0",
@@ -325,10 +322,10 @@
           "WindowsBase": "4.0.0.0"
         },
         "runtime": {
-          "Xure.App.dll": {}
+          "Xure.Api.dll": {}
         },
         "compile": {
-          "Xure.App.dll": {}
+          "Xure.Api.dll": {}
         }
       },
       "Humanizer.Core/2.8.26": {
@@ -516,11 +513,6 @@
         },
         "compile": {
           "lib/netstandard2.1/Microsoft.EntityFrameworkCore.SqlServer.dll": {}
-        }
-      },
-      "Microsoft.EntityFrameworkCore.Tools/5.0.0": {
-        "dependencies": {
-          "Microsoft.EntityFrameworkCore.Design": "5.0.0"
         }
       },
       "Microsoft.Extensions.ApiDescription.Server/3.0.0": {},
@@ -1392,19 +1384,6 @@
           "System.Threading": "4.3.0",
           "System.Xml.ReaderWriter": "4.3.0",
           "System.Xml.XmlDocument": "4.3.0"
-        }
-      },
-      "Xure.Api/1.0.0": {
-        "dependencies": {
-          "Microsoft.AspNetCore.Identity.EntityFrameworkCore": "5.0.0",
-          "Swashbuckle.AspNetCore": "5.6.3",
-          "Xure.Data": "1.0.0"
-        },
-        "runtime": {
-          "Xure.Api.dll": {}
-        },
-        "compile": {
-          "Xure.Api.dll": {}
         }
       },
       "Xure.Data/1.0.0": {
@@ -3121,7 +3100,7 @@
     }
   },
   "libraries": {
-    "Xure.App/1.0.0": {
+    "Xure.Api/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""
@@ -3216,13 +3195,6 @@
       "sha512": "sha512-ChtvV0o7F1LsD1ek6pgADRJOzswf2YiPlqlEo0SZOfTp3daHgibp4JC9XXI/oXnQoUuRPuqMGtvgxuDXpr2xwQ==",
       "path": "microsoft.entityframeworkcore.sqlserver/5.0.0",
       "hashPath": "microsoft.entityframeworkcore.sqlserver.5.0.0.nupkg.sha512"
-    },
-    "Microsoft.EntityFrameworkCore.Tools/5.0.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-HSV7DLFMImkOuhnExianO/Csn1O/6s7h1kQxPFDa6zgfCQI09fyh7zzJoJ3KQiMUnajBBfYkEE9GtK7FoyeHOA==",
-      "path": "microsoft.entityframeworkcore.tools/5.0.0",
-      "hashPath": "microsoft.entityframeworkcore.tools.5.0.0.nupkg.sha512"
     },
     "Microsoft.Extensions.ApiDescription.Server/3.0.0": {
       "type": "package",
@@ -3881,11 +3853,6 @@
       "sha512": "sha512-MYoTCP7EZ98RrANESW05J5ZwskKDoN0AuZ06ZflnowE50LTpbR5yRg3tHckTVm5j/m47stuGgCrCHWePyHS70Q==",
       "path": "system.xml.xmlserializer/4.3.0",
       "hashPath": "system.xml.xmlserializer.4.3.0.nupkg.sha512"
-    },
-    "Xure.Api/1.0.0": {
-      "type": "project",
-      "serviceable": false,
-      "sha512": ""
     },
     "Xure.Data/1.0.0": {
       "type": "project",
