@@ -1,0 +1,17 @@
+﻿.signin {
+    height: 90vh;
+    position: absolute;  
+}
+
+.header {
+    height: 10vh;
+}
+
+.borderform {
+    border-radius: 10px;
+}
+
+.registration {
+    height: 120vh;
+    position: absolute;
+}
