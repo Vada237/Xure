@@ -10,11 +10,11 @@ namespace Xure.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = "Модератор,Администратор")]
-    public class ReceptionPointController : ControllerBase
+    public class ApiReceptionPointController : ControllerBase
     {
         private IReceptionPointRepository _receptionPointRepository;
 
-        public ReceptionPointController(IReceptionPointRepository receptionPointRepository)
+        public ApiReceptionPointController(IReceptionPointRepository receptionPointRepository)
         {
             _receptionPointRepository = receptionPointRepository;
         }

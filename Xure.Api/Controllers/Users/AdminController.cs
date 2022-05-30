@@ -4,18 +4,18 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Xure.Data;
 using System.Threading.Tasks;
-using Xure.Api.Services;
+using Xure.Api.Interfaces;
 namespace Xure.Api.Controllers.Users
 {
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles="Администратор")]
-    public class AdminController : ControllerBase
+    public class ApiAdminController : ControllerBase
     {
         private UserManager<AppUser> UserManager;
         private RoleManager<IdentityRole> RoleManager;
         private IUserRepository UserRepository;
-        public AdminController(UserManager<AppUser> userManager,RoleManager<IdentityRole> roleManager,IUserRepository userRepository)
+        public ApiAdminController(UserManager<AppUser> userManager,RoleManager<IdentityRole> roleManager,IUserRepository userRepository)
         {
             UserManager = userManager;
             RoleManager = roleManager;

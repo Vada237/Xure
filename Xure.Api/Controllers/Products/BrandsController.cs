@@ -10,11 +10,11 @@ namespace Xure.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class BrandsController : ControllerBase
+    public class ApiBrandsController : ControllerBase
     {
         private IBrandRepository _brandRepository;
 
-        public BrandsController(IBrandRepository brandRepository)
+        public ApiBrandsController(IBrandRepository brandRepository)
         {
             _brandRepository = brandRepository;
         }

@@ -10,11 +10,11 @@ namespace Xure.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]    
-    public class CompanyController : ControllerBase
+    public class ApiCompanyController : ControllerBase
     {
         private ICompanyRepository _companyRepository;
 
-        public CompanyController(ICompanyRepository companyRepository)
+        public ApiCompanyController(ICompanyRepository companyRepository)
         {
             _companyRepository = companyRepository;
         }

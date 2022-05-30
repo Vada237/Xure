@@ -9,11 +9,11 @@ namespace Xure.Api.Controllers
     [ApiController]
     [Route("api/{Controller}")]
     [Authorize]
-    public class CategoryController : ControllerBase
+    public class ApiCategoryController : ControllerBase
     {        
         private readonly ICategoryRepository _categoryRepository;
 
-        public CategoryController(AppDbContext appDbContext,ICategoryRepository categoryRepository)
+        public ApiCategoryController(AppDbContext appDbContext,ICategoryRepository categoryRepository)
         {                 
            this._categoryRepository = categoryRepository;
         }

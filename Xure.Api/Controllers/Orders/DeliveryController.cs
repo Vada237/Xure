@@ -10,11 +10,11 @@ namespace Xure.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class DeliveryController : ControllerBase
+    public class ApiDeliveryController : ControllerBase
     {
         private IDeliveryRepository _deliveryRepository;
 
-        public DeliveryController(IDeliveryRepository deliveryRepository)
+        public ApiDeliveryController(IDeliveryRepository deliveryRepository)
         {
             _deliveryRepository = deliveryRepository;
         }

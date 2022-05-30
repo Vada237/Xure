@@ -2,6 +2,7 @@
 using Xure.Data;
 using System.Collections.Generic;
 using System.Linq;
+using Xure.Api.Interfaces;
 
 namespace Xure.Api.Services
 {
@@ -20,6 +21,6 @@ namespace Xure.Api.Services
                 return null;
             }
             return AppDbContext.Users;
-        }
+        }           
     }
 }

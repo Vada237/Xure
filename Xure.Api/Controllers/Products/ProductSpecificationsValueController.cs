@@ -10,11 +10,11 @@ namespace Xure.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class ProductSpecificationsValueController : ControllerBase
+    public class ApiProductSpecificationsValueController : ControllerBase
     {
         private IProductSpecificationsValueRepository _productSpecificationsValueRepository;
 
-        public ProductSpecificationsValueController(IProductSpecificationsValueRepository _productSpecificationsValueRepository)
+        public ApiProductSpecificationsValueController(IProductSpecificationsValueRepository _productSpecificationsValueRepository)
         {
             this._productSpecificationsValueRepository = _productSpecificationsValueRepository;
         }

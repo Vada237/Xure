@@ -10,11 +10,11 @@ namespace Xure.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize(Roles = "Модератор,Администратор")]
-    public class ReasonController : ControllerBase
+    public class ApiReasonController : ControllerBase
     {
         private IReasonRepository _ReasonRepository;
 
-        public ReasonController(IReasonRepository ReasonRepository)
+        public ApiReasonController(IReasonRepository ReasonRepository)
         {
             _ReasonRepository = ReasonRepository;
         }

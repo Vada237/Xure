@@ -10,11 +10,11 @@ namespace Xure.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class MessageController : ControllerBase
+    public class ApiMessageController : ControllerBase
     {
         private IMessageRepository _MessageRepository;
 
-        public MessageController(IMessageRepository MessageRepository)
+        public ApiMessageController(IMessageRepository MessageRepository)
         {
             _MessageRepository = MessageRepository;
         }

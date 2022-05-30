@@ -10,11 +10,11 @@ namespace Xure.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class PriceController : ControllerBase
+    public class ApiPriceController : ControllerBase
     {
         private IPriceRepository _priceRepository;
 
-        public PriceController(IPriceRepository priceRepository)
+        public ApiPriceController(IPriceRepository priceRepository)
         {
             _priceRepository = priceRepository;
         }

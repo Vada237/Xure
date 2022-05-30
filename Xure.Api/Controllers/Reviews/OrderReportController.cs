@@ -10,11 +10,11 @@ namespace Xure.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class OrderReportController : ControllerBase
+    public class ApiOrderReportController : ControllerBase
     {
         private IOrderReportRepository _OrderReportRepository;
 
-        public OrderReportController(IOrderReportRepository OrderReportRepository)
+        public ApiOrderReportController(IOrderReportRepository OrderReportRepository)
         {
             _OrderReportRepository = OrderReportRepository;
         }

@@ -10,12 +10,12 @@ namespace Xure.Api.Controllers
     [ApiController]
     [Route("api/{Controller}")]
     [Authorize]
-    public class UnitController : ControllerBase
+    public class ApiUnitController : ControllerBase
     {           
         
         private IUnitRepository _unitRepository;
 
-        public UnitController(IUnitRepository unitRepository)
+        public ApiUnitController(IUnitRepository unitRepository)
         {
             _unitRepository = unitRepository;
         }

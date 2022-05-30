@@ -9,11 +9,11 @@ namespace Xure.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class PriceHistoryController : ControllerBase
+    public class ApiPriceHistoryController : ControllerBase
     {
         private IPriceHistoryRepository _priceHistoryRepository;
 
-        public PriceHistoryController(IPriceHistoryRepository priceHistoryRepository)
+        public ApiPriceHistoryController(IPriceHistoryRepository priceHistoryRepository)
         {
             _priceHistoryRepository = priceHistoryRepository;
         }

@@ -9,12 +9,12 @@ namespace Xure.Api.Controllers
     [ApiController]
     [Authorize]
     [Route("api/[Controller]")]
-    public class AccountController : ControllerBase
+    public class ApiAccountController : ControllerBase
     {
         private UserManager<AppUser> UserManager;
         private SignInManager<AppUser> SignInManager;
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) 
+        public ApiAccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) 
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -23,7 +23,7 @@ namespace Xure.Api.Controllers
         [HttpPost]
         [Route("Create")]
         [AllowAnonymous]        
-        public async Task<IActionResult> Create (string returnUrl,СreateModel model)
+        public async Task<IActionResult> Create (string returnUrl,CreateModel model)
         {
             if (ModelState.IsValid)
             {

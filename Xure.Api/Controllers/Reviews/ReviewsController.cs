@@ -10,11 +10,11 @@ namespace Xure.Api.Controllers
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class ReviewsController : ControllerBase
+    public class ApiReviewsController : ControllerBase
     {
         private IReviewsRepository _ReviewsRepository;
 
-        public ReviewsController(IReviewsRepository ReviewsRepository)
+        public ApiReviewsController(IReviewsRepository ReviewsRepository)
         {
             _ReviewsRepository = ReviewsRepository;
         }
