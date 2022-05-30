@@ -1,0 +1,78 @@
+﻿@model CreateModel
+@{
+    Layout = "_SignInOutLayout";
+}
+
+<div class="container-fluid bg-light registration">
+    <div class="row">
+        <div class="col-4 offset-4 bg-light text-center borderform bg-white ">
+
+            <div class="mt-2">
+                <h3> Регистрация </h3>
+            </div>
+            
+
+            <div class="row text-center">
+                <div class="col-3 offset-3">
+                    <a class="btn btn-outline-success mt-4 mb-3" asp-action="СreateClientAccount">Я покупатель</a>
+                </div>
+
+                <div class="col-3">
+                    <a class="btn btn-outline-danger mb-3 mt-4" asp-action="CreateSellerAccount">Я продавец</a>
+                </div>
+            </div> 
+            
+            <div class="row">
+                <div class="col-8 offset-2">
+                    <form asp-action="" method="post">
+
+                <div class="form-group">
+                     <label asp-for="PhoneNumber">Телефон</label>
+                     <input asp-for="PhoneNumber" class="form-control form-control-sm" type="text"/>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Email">Почта</label>
+                     <input asp-for="Email" class="form-control form-control-sm" type="email"/>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="Password">Пароль</label>
+                     <input asp-for="Password" class="form-control form-control-sm" type="password"/>
+                </div>
+
+                <div class="form-group">
+                     <label asp-for="Name">Имя</label>
+                     <input asp-for="Name" class="form-control form-control-sm" type="text"/>
+                </div>
+
+                <div class="form-group">
+                     <label asp-for="Surname">Фамилия</label>
+                     <input asp-for="Surname" class="form-control form-control-sm" type="text"/>
+                </div>
+
+                <div class="form-group">
+                     <label asp-for="MiddleName">Отчество</label>
+                     <input asp-for="MiddleName" class="form-control form-control-sm" type="text"/>
+                </div>
+
+                <div class="form-group">
+                     <label asp-for="Birthday">Дата рождения</label>
+                     <input asp-for="Birthday" class="form-control form-control-sm" type="date"/>
+                </div>
+
+                <div class="form-group">
+                     <label asp-for="Passport">Паспорт</label>
+                     <input asp-for="Passport" class="form-control form-control-sm" type="text"/>
+                </div>     
+                
+                <button class="btn btn-outline-primary mb-5 mt-3" type="submit">
+                    Зарегистрироваться
+                </button>
+            </form>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+</div>

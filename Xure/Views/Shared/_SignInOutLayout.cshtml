@@ -1,0 +1,26 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" asp-href-include="lib/bootstrap/dist/css/*.css" />
+    <link rel="icon" type="image/x-icon" asp-href-include="favicon.ico" />
+    <link rel="stylesheet" type="text/css" asp-href-include="css/*.css" />    
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</head>
+<body>    
+        <div class="text-center bg-light header pt-3">
+            <h1>
+                <a asp-action="Catalog" asp-controller="Main" class="text-dark nav-link">
+                    Xure
+                </a>
+            </h1>
+        </div>
+        @RenderBody()            
+</body>
+</html>

@@ -1,0 +1,110 @@
+﻿@model CreateSellerViewModel 
+@{
+    Layout = "_SignInOutLayout";
+}
+
+<div class="container-fluid bg-light registration">
+    <div class="row">
+        <div class="col-6 offset-3 text-center borderform bg-white">
+
+            <div class="mt-2">
+                <h3> Регистрация </h3>
+            </div>
+            
+            <div class="row text-center">
+                <div class="col-4 offset-2">
+                    <a class="btn btn-outline-success mt-4 mb-3" asp-action="CreateClientAccount">Я покупатель</a>
+                </div>
+
+                <div class="col-4">
+                    <a class="btn btn-outline-danger mb-3 mt-4" asp-action="CreateSellerAccount">Я продавец</a>
+                </div>
+            </div> 
+            
+            
+                <form asp-action="" method="post" enctype="multipart/form-data">
+                <div class="row">        
+                    <div class="col">
+                        
+                        <h5>Личная информация</h5>
+
+                        <div class="form-group">
+                             <label asp-for="User.PhoneNumber">Телефон</label>
+                             <input asp-for="User.PhoneNumber" class="form-control form-control-sm" type="text"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="User.Email">Почта</label>
+                             <input asp-for="User.Email" class="form-control form-control-sm" type="email"/>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="User.Password">Пароль</label>
+                             <input asp-for="User.Password" class="form-control form-control-sm" type="password"/>
+                        </div>
+
+                        <div class="form-group">
+                             <label asp-for="User.Name">Имя</label>
+                             <input asp-for="User.Name" class="form-control form-control-sm" type="text"/>
+                        </div>
+
+                        <div class="form-group">
+                             <label asp-for="User.Surname">Фамилия</label>
+                             <input asp-for="User.Surname" class="form-control form-control-sm" type="text"/>
+                        </div>
+
+                        <div class="form-group">
+                             <label asp-for="User.MiddleName">Отчество</label>
+                             <input asp-for="User.MiddleName" class="form-control form-control-sm" type="text"/>
+                        </div>
+
+                        <div class="form-group">
+                             <label asp-for="User.Birthday">Дата рождения</label>
+                             <input asp-for="User.Birthday" class="form-control form-control-sm" type="date"/>
+                        </div>
+
+                        <div class="form-group">
+                             <label asp-for="User.Passport">Паспорт</label>
+                             <input asp-for="User.Passport" class="form-control form-control-sm" type="text"/>
+                        </div>     
+                                
+                        <div class="form-group">
+                             <p>Аватар</p>
+                             <input asp-for="User.Avatar" class="" type="file"/>
+                        </div>     
+                    </div>
+
+                    <div class="col">
+                            <h5>Информация о магазине</h5>
+
+                            <div class="form-group">
+                             <label asp-for="Company.Name">Название</label>
+                             <input asp-for="Company.Name" class="form-control form-control-sm" type="text"/>
+                            </div>  
+
+                            <div class="form-group">
+                             <label asp-for="Company.Description">О магазине</label>
+                             <input asp-for="Company.Description" class="form-control form-control-sm" type="text"/>
+                            </div>  
+
+                            <input type="hidden" asp-for="Company.DateRegistration" value="@DateTime.Now"/>
+
+                            <div class="form-group">
+                             <label asp-for="Company.INN">ИНН</label>
+                             <input asp-for="Company.INN" class="form-control form-control-sm" type="text"/>
+                            </div>  
+
+                            <div class="form-group">
+                             <label asp-for="Company.OGRN">ОГРН</label>
+                             <input asp-for="Company.OGRN" class="form-control form-control-sm" type="text"/>
+                            </div>  
+                    </div>
+                    </div> 
+                    <button class="btn btn-outline-primary mb-3" type="submit">
+                        Зарегистрироваться
+                    </button> 
+                               
+                </form>                   
+        </div>
+    </div>
+</div>

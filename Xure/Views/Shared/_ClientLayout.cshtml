@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>@ViewBag.Title</title>
     <link rel="stylesheet" type="text/css" asp-href-include="lib/bootstrap/dist/css/*.css" />
+    <link rel="icon" type="image/x-icon" asp-href-include="favicon.ico" />
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="/lib/jquery/dist/jquery.min.js"></script>
@@ -48,7 +49,7 @@
                                  <div class="col-2">  
                                      <ul class="navbar-nav justify-content-center">
                                          <li class="nav-item">
-                                              <a asp-action="" asp-controller="" class="nav-link">Войти</a> 
+                                              <a asp-action="Login" asp-controller="Account" class="nav-link">Войти</a> 
                                          </li>
                                          <li class="nav-item">
                                               <a asp-action="" asp-controller="" class="nav-link">Заказы</a>                                                                                          
