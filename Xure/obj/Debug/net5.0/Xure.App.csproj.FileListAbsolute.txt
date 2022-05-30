@@ -81,3 +81,7 @@ C:\Users\denis\OneDrive\Desktop\Xure\Xure\bin\Debug\net5.0\Xure.Api.dll
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\bin\Debug\net5.0\Xure.Api.pdb
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Xure.App.MvcApplicationPartsAssemblyInfo.cs
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Shared\_ClientLayout.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Account\Login.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Shared\_SignInOutLayout.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Account\CreateClientAccount.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Account\CreateSellerAccount.cshtml.g.cs
