@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Xure.Data
 {
-    public class СreateModel
+    public class CreateModel
     {                
         [UIHint("Номер телефона")]
         [Required(ErrorMessage = "Укажите номер телефона")]
@@ -29,13 +29,15 @@ namespace Xure.Data
         [UIHint("Дата рождения")]
         public DateTime Birthday { get; set; }
 
-        [Required(ErrorMessage = "Укажите срию и номер пасспорта")]
+        [Required(ErrorMessage = "Укажите серию и номер пасспорта")]
         [UIHint("Серия и номер паспорта")]
         public string Passport { get; set; }
         public bool Confirmed { get; set; }
 
+        [Required(ErrorMessage = "Добавьте аватар")]
+        [FileExtensions(Extensions = "jpg,jpeg,png",ErrorMessage = "Поддерживаются только форматы: jpg, png, jpeg")]
         [UIHint("Аватар")]
-        public string Avatar { get; set; }
+        public byte[] Avatar { get; set; }
                 
         [UIHint("Почта")]
         [Required(ErrorMessage = "Укажите почту")]

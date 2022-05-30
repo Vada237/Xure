@@ -29,8 +29,11 @@ namespace Xure.Data
         public Sellers Seller { get; set; }
 
         [Required(ErrorMessage = "Укажите поставщика")]
-        public int SellerId { get; set; }                
-        public string Image { get; set; }
+        public int SellerId { get; set; }   
+        
+        [FileExtensions(Extensions = "jpg,jpeg,png", ErrorMessage = "Изображения поддерживаются только в формате jpeg,jpg и png")]       
+        public byte[] Image { get; set; }
+
         public List<Order> Orders { get; set; }
         public List<OrderProduct> OrderProducts { get; set; }
         public List<Reviews> Reviews { get; set; }        

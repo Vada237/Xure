@@ -14,7 +14,7 @@ namespace Xure.Data
         public DateTime Birthday { get; set; }
         public string Passport { get; set; }
         public bool Confirmed { get; set; }
-        public string Avatar { get; set; }
+        public byte[] Avatar { get; set; }
         
         public Sellers Seller { get; set; }        
         public Clients Client { get; set; }
