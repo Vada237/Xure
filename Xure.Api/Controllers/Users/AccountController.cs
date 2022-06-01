@@ -82,6 +82,11 @@ namespace Xure.Api.Controllers
         {
             await SignInManager.SignOutAsync();
             return Ok("Произведен выход из аккаунта");
-        }       
+        }
+
+        [HttpGet]
+        [Route("Test")]
+        [AllowAnonymous]
+        public IActionResult Test() => Ok("Апи работает");
     }
 }

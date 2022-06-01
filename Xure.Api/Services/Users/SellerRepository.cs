@@ -3,15 +3,21 @@ using System.Linq;
 using System.Collections.Generic;
 using Xure.Api.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
+using System.Security.Claims;
+using System;
 
 namespace Xure.Api.Services
 {
-    public class SellerRepository : ISellerRepository
+    public class SellerRepository : Repository<Sellers>,ISellerRepository
     {
         AppDbContext appDbContext;
-        public SellerRepository(AppDbContext appDbContext)
+        UserManager<AppUser> UserManager;
+        public SellerRepository(AppDbContext appDbContext,UserManager<AppUser> userManager) : base(appDbContext)
         {
             this.appDbContext = appDbContext;
+            this.UserManager = userManager;
         }
 
         public Company FindCompanyByEmail(string email)
@@ -61,5 +67,14 @@ namespace Xure.Api.Services
             return query;
         }
 
+        public IEnumerable<Sellers> GetSellers()
+        {
+            return appDbContext.Sellers;
+        }
+
+        public IEnumerable<Sellers> GetSellersWithInclude()
+        {
+            return appDbContext.Sellers.Include(c => c.UserInfo).Include(c => c.Company);
+        }        
     }
 }
