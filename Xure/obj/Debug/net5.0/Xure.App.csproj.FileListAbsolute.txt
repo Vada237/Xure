@@ -85,3 +85,4 @@ C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Account\L
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Shared\_SignInOutLayout.cshtml.g.cs
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Account\CreateClientAccount.cshtml.g.cs
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Account\CreateSellerAccount.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Account\Profile.cshtml.g.cs

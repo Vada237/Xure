@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 using System;
+using System.Collections.Generic;
+using Xure.Data;
 
 namespace Xure.App.Models
 {
@@ -23,29 +25,27 @@ namespace Xure.App.Models
         public string MiddleName { get; set; }
 
         [Required(ErrorMessage = "Укажите дату рождения")]
-        [UIHint("Дата рождения")]
+        [UIHint("Дата рождения")]        
         public DateTime Birthday { get; set; }
 
-        [Required(ErrorMessage = "Укажите серию и номер пасспорта")]
+        [Required(ErrorMessage = "Укажите серию и номер паспорта")]
         [UIHint("Серия и номер паспорта")]
         public string Passport { get; set; }
         public bool Confirmed { get; set; }
-
-        [Required(ErrorMessage = "Добавьте аватар")]
-        [FileExtensions(Extensions = "jpg,jpeg,png", ErrorMessage = "Поддерживаются только форматы: jpg, png, jpeg")]
+        
         [UIHint("Аватар")]
         public IFormFile Avatar { get; set; }
 
-        [UIHint("Почта")]
         [Required(ErrorMessage = "Укажите почту")]
+        [UIHint("Почта")]        
         public string Email { get; set; }
 
-        [UIHint("Пароль")]
-        [Required(ErrorMessage = "Укажите пароль")]
+        [Required(ErrorMessage = "Добавьте пароль")]
+        [UIHint("Пароль")]        
         public string Password { get; set; }
     }
 
-    class CreateClientViewModel
+    public class CreateClientViewModel
     {
         [UIHint("Номер телефона")]
         [Required(ErrorMessage = "Укажите номер телефона")]
@@ -62,18 +62,16 @@ namespace Xure.App.Models
 
         [UIHint("Отчество")]
         public string MiddleName { get; set; }
-
-        [Required(ErrorMessage = "Укажите дату рождения")]
+        
         [UIHint("Дата рождения")]
         public DateTime Birthday { get; set; }
-
-        [Required(ErrorMessage = "Укажите серию и номер пасспорта")]
+        
         [UIHint("Серия и номер паспорта")]
         public string Passport { get; set; }
-        public bool Confirmed { get; set; }               
+        public bool Confirmed { get; set; }
 
-        [UIHint("Почта")]
         [Required(ErrorMessage = "Укажите почту")]
+        [UIHint("Почта")]        
         public string Email { get; set; }
 
         [UIHint("Пароль")]
@@ -85,5 +83,14 @@ namespace Xure.App.Models
     {
         public UserViewModel User { get; set; }
         public CompanyViewModel Company { get; set; }
+    }
+
+    public class ProfileViewModel 
+    { 
+        public Clients? Client { get; set; }
+        public Sellers? Seller { get; set; }
+        public IEnumerable<SellerOrder>? SellerForOrders { get; set; }
+        
+        public int? CountSellerOrders { get; set; }
     }
 }

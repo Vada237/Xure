@@ -35,6 +35,10 @@ namespace Xure.App
                 options.Password.RequireNonAlphanumeric = false;
             }).AddEntityFrameworkStores<AppDbContext>().AddDefaultTokenProviders();
 
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.User.AllowedUserNameCharacters = "éöóêåíãøùçõúôûâàïğîëäæıÿ÷ñìèòüáşÉÖÓÊÅÍÃØÙÇÕÚÔÛÂÀÏĞÎËÄÆİß×ÑÌÈÒÜÁŞabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";                
+            });
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IUnitRepository, UnitRepository>();
             services.AddTransient<IProductSpecificationsRepository, ProductSpecificationsRepository>();
@@ -55,6 +59,8 @@ namespace Xure.App
             services.AddTransient<IProductReportRepository, ProductReportRepository>();
             services.AddTransient<IMessageRepository, MessageRepository>();
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ISellerRepository, SellerRepository>();
+            services.AddTransient<IClientRepository, ClientRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
 
             services.AddControllersWithViews();

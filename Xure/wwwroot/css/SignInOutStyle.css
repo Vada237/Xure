@@ -12,6 +12,17 @@
 }
 
 .registration {
-    height: 120vh;
+    height: 100vh;
     position: absolute;
+}
+
+.registrationSeller {
+    height: 140vh;
+    position: absolute;
+}
+
+.avatarSettings {
+    border-radius: 100px;
+    width: 160px;
+    height: 160px;
 }

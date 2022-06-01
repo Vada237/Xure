@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Xure.App.Models;
 using System.IO;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
+using System.Linq;
 
 namespace Xure.App.Controllers
 {
@@ -15,17 +17,24 @@ namespace Xure.App.Controllers
         private UserManager<AppUser> UserManager { get; set; }
         private SignInManager<AppUser> SignInManager { get; set; }
         private RoleManager<IdentityRole> roleManager { get; set; }
-        private ICompanyRepository CompanyRepository { get; set; }
-        private IUserRepository userRepository { get; set; }
+        private ICompanyRepository CompanyRepository { get; set; }        
+        private ISellerRepository SellerRepository { get; set; }
+        private ISellerOrderRepository sellerOrderRepository { get; set; }
+        private IOrderRepository OrderRepository { get; set; }
+        private IClientRepository ClientRepository { get; set; }
 
         public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,RoleManager<IdentityRole> roleManager
-            ,IUserRepository repository, ICompanyRepository companyRepository)
+            , ICompanyRepository companyRepository, ISellerRepository sellerRepository, IClientRepository clientRepository
+            , ISellerOrderRepository sellerOrderRepository, IOrderRepository orderRepository)
         {
             UserManager = userManager;
             SignInManager = signInManager;
-            this.roleManager = roleManager;
-            userRepository = repository;
+            this.roleManager = roleManager;            
             CompanyRepository = companyRepository;
+            SellerRepository = sellerRepository;
+            ClientRepository = clientRepository;
+            OrderRepository = orderRepository;
+            this.sellerOrderRepository = sellerOrderRepository;
         }
 
         [AllowAnonymous]
@@ -37,36 +46,29 @@ namespace Xure.App.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateClientAccount(UserViewModel model,string returnUrl)
+        public async Task<IActionResult> CreateClientAccount(CreateClientViewModel model,string returnUrl)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 AppUser user = new AppUser() {
 
                     UserName = model.Name,
-                    Surname = model.Surname,
-                    MiddleName = model.MiddleName,
-                    Birthday = model.Birthday,
-                    PhoneNumber = model.PhoneNumber,
-                    Passport = model.Passport,
-                    Email = model.Email
-                };                
-
-                if (model.Avatar != null)
-                {
-                    byte[] data = null;
-                    using (var binaryReader = new BinaryReader(model.Avatar.OpenReadStream()))
-                    {
-                        data = binaryReader.ReadBytes((int)model.Avatar.Length);
-                    }
-
-                    user.Avatar = data;
-                }
+                    Surname = model.Surname,  
+                    Email = model.Email,
+                    PhoneNumber = model.PhoneNumber                    
+                };                               
 
                 IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+
                 if (result.Succeeded)
                 {
-                    result = await UserManager.AddToRoleAsync(user, "Покупатель");
+                    result = await UserManager.AddToRoleAsync(user, "Покупатель");                                        
+                    
+                    ClientRepository.Create(new Clients
+                    {
+                        UserId = user.Id
+                    });             
+
                     return RedirectToAction("Login", "Account");
                 }
             }
@@ -78,7 +80,7 @@ namespace Xure.App.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> CreateSellerAccount(CreateSellerViewModel model, string returnUrl)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 AppUser user = new AppUser()
                 {
@@ -116,9 +118,15 @@ namespace Xure.App.Controllers
                 if (result.Succeeded)
                 {
                     result = await UserManager.AddToRoleAsync(user, "НеподтвержденныйПоставщик");
+                    CompanyRepository.Create(company);
+                    SellerRepository.Create(new Sellers
+                    {
+                        UserId = user.Id,
+                        CompanyId = company.Id
+                    });
                     return RedirectToAction("Login", "Account");
                 }
-            }
+            } 
             return View(model);
         }
 
@@ -146,10 +154,28 @@ namespace Xure.App.Controllers
             }
             return View(details);
         }
-                
+               
+        
         public IActionResult Profile()
         {
-            return View();
+            var vm = new ProfileViewModel
+            {
+                Seller = SellerRepository.GetSellersWithInclude().Where(c => c.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault(),
+                Client = ClientRepository.GetAll().Where(c => c.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault(),
+                SellerForOrders = sellerOrderRepository.GetOrders()
+                .Where(C => C.Order.OrderProducts == C.Order.OrderProducts.Where(c => c.Product.Seller.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)),
+                CountSellerOrders = sellerOrderRepository.GetOrders()
+                .Where(C => C.Order.OrderProducts == C.Order.OrderProducts.Where(c => c.Product.Seller.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)).Count()
+
+            };
+
+            return View(vm);
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await SignInManager.SignOutAsync();
+            return RedirectToAction("Index","Home");
         }
 
         [AllowAnonymous]

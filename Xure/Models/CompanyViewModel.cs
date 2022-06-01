@@ -14,8 +14,7 @@ namespace Xure.App.Models
         [MinLength(30, ErrorMessage = "Описание магазина не должно быть меньше 30 символов")]
         [MaxLength(200, ErrorMessage = "Описание магазина не должно превышать 200 символов")]
         public string Description { get; set; }
-
-        [Required(ErrorMessage = "Введите дату регистрации магазина")]
+        
         public DateTime DateRegistration { get; set; }
 
         [Required(ErrorMessage = "Введите ИНН")]
