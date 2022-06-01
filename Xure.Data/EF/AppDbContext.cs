@@ -27,14 +27,13 @@ namespace Xure.Data
         public DbSet<ReceptionPoint> ReceptionPoints { get; set; }
         public DbSet<Reviews> Reviews { get; set; }        
         public DbSet<Sellers> Sellers { get; set; }
+        public DbSet<SellerOrder> SellerOrders { get; set; }
         public DbSet<Units> Units { get; set; }
         public DbSet<PriceHistory> PriceHistories { get; set; }
 
 
         public AppDbContext(DbContextOptions<AppDbContext> dbContextOptions) : base(dbContextOptions)
-        {
-            Database.EnsureDeleted();
-            Database.EnsureCreated();
+        {                        
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -297,6 +296,7 @@ namespace Xure.Data
         {
             UserManager<AppUser> userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
             
+            RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
             if (await userManager.FindByEmailAsync(configuration["UserData:Admin:Email"]) == null)
             {
@@ -311,6 +311,8 @@ namespace Xure.Data
                     
                 };
                 IdentityResult result = await userManager.CreateAsync(user, configuration["UserData:Admin:Password"]);
+                result = await roleManager.CreateAsync(new IdentityRole("Администратор"));
+                result = await userManager.AddToRoleAsync(user, "Администратор");
             }
         }
     }

@@ -10,8 +10,8 @@ using Xure.Data;
 namespace Xure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220518062146_Fix")]
-    partial class Fix
+    [Migration("20220531190653_FixImage")]
+    partial class FixImage
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -231,14 +231,50 @@ namespace Xure.Data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("Country")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Brands");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Country = "Америка",
+                            Name = "Villams"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Country = "Америка",
+                            Name = "Tommy Hilfiger"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Country = "Великобритания",
+                            Name = "Polo"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Country = "Россия",
+                            Name = "Добрый"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Country = "Германия",
+                            Name = "Duracell"
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.Category", b =>
@@ -249,11 +285,30 @@ namespace Xure.Data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Еда"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Одежда"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Техника"
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.Clients", b =>
@@ -273,6 +328,18 @@ namespace Xure.Data.Migrations
                         .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Clients");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            UserId = "1ab2bff8-07be-441b-82d6-0d91174ad815"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            UserId = "221a163b-8960-42f9-a19e-023493311599"
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.Company", b =>
@@ -286,20 +353,48 @@ namespace Xure.Data.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("INN")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("OGRN")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Companies");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            DateRegistration = new DateTime(2020, 11, 4, 14, 41, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Американский магазин одежды премиум-класса, выпускающий одежду, обувь, аксессуары, ароматы и товары для дома.",
+                            INN = "4534239794",
+                            Name = "iVan Clothes",
+                            OGRN = "1091363440190"
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            DateRegistration = new DateTime(2021, 12, 26, 21, 14, 0, 0, DateTimeKind.Unspecified),
+                            Description = "Сеть розничных магазинов",
+                            INN = "0998416485",
+                            Name = "Магнит",
+                            OGRN = "9057136863819"
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.Delivery", b =>
@@ -345,7 +440,8 @@ namespace Xure.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Text")
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
 
                     b.HasKey("Id");
 
@@ -373,6 +469,11 @@ namespace Xure.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("TrackNumber")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -443,6 +544,38 @@ namespace Xure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("PriceHistories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            UpdatedDate = new DateTime(2022, 5, 21, 19, 21, 0, 0, DateTimeKind.Unspecified),
+                            Value = 50m
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            UpdatedDate = new DateTime(2022, 3, 18, 14, 35, 0, 0, DateTimeKind.Unspecified),
+                            Value = 1849m
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            UpdatedDate = new DateTime(2021, 10, 12, 19, 30, 0, 0, DateTimeKind.Unspecified),
+                            Value = 1448m
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            UpdatedDate = new DateTime(2022, 3, 3, 11, 15, 0, 0, DateTimeKind.Unspecified),
+                            Value = 81m
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            UpdatedDate = new DateTime(2022, 4, 28, 20, 0, 0, 0, DateTimeKind.Unspecified),
+                            Value = 9m
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.Prices", b =>
@@ -460,6 +593,33 @@ namespace Xure.Data.Migrations
                     b.HasIndex("PriceHistoryId");
 
                     b.ToTable("Prices");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            PriceHistoryId = 1L
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            PriceHistoryId = 2L
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            PriceHistoryId = 3L
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            PriceHistoryId = 4L
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            PriceHistoryId = 5L
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.Product", b =>
@@ -476,12 +636,14 @@ namespace Xure.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Description")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<long>("PriceId")
@@ -501,6 +663,58 @@ namespace Xure.Data.Migrations
                     b.HasIndex("SellerId");
 
                     b.ToTable("Products");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1L,
+                            BrandId = 1,
+                            CategoryId = 1,
+                            Description = "Зеленые Краснодарские яблоки",
+                            Name = "Яблоко",
+                            PriceId = 1L,
+                            SellerId = 1
+                        },
+                        new
+                        {
+                            Id = 2L,
+                            BrandId = 2,
+                            CategoryId = 2,
+                            Description = "Недорогие джинсы",
+                            Name = "Джинсы",
+                            PriceId = 2L,
+                            SellerId = 2
+                        },
+                        new
+                        {
+                            Id = 3L,
+                            BrandId = 3,
+                            CategoryId = 2,
+                            Description = "Недорогая рубашка",
+                            Name = "Рубашка",
+                            PriceId = 3L,
+                            SellerId = 2
+                        },
+                        new
+                        {
+                            Id = 4L,
+                            BrandId = 4,
+                            CategoryId = 1,
+                            Description = "Вкусный яблочный сок без химии и добавок",
+                            Name = "Сок",
+                            PriceId = 4L,
+                            SellerId = 1
+                        },
+                        new
+                        {
+                            Id = 5L,
+                            BrandId = 5,
+                            CategoryId = 3,
+                            Description = "Долгосрочные батарейки",
+                            Name = "Батарейки",
+                            PriceId = 5L,
+                            SellerId = 2
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.ProductReport", b =>
@@ -539,13 +753,65 @@ namespace Xure.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.ToTable("ProductSpecifications");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Name = "Вес"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 2,
+                            Name = "Вес"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 3,
+                            Name = "Вес"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 1,
+                            Name = "Cостав"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 2,
+                            Name = "Cрок годности"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 2,
+                            Name = "Ткань"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoryId = 2,
+                            Name = "Размер"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CategoryId = 3,
+                            Name = "Мощность"
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.ProductSpecificationsValue", b =>
@@ -565,7 +831,9 @@ namespace Xure.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Value")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -576,6 +844,152 @@ namespace Xure.Data.Migrations
                     b.HasIndex("UnitId");
 
                     b.ToTable("ProductSpecificationsValues");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            ProductId = 1L,
+                            ProductSpecificationsId = 1,
+                            UnitId = 1,
+                            Value = "150"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            ProductId = 1L,
+                            ProductSpecificationsId = 5,
+                            UnitId = 5,
+                            Value = "1"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            ProductId = 2L,
+                            ProductSpecificationsId = 2,
+                            UnitId = 1,
+                            Value = "150"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            ProductId = 2L,
+                            ProductSpecificationsId = 5,
+                            UnitId = 8,
+                            Value = "2"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            ProductId = 2L,
+                            ProductSpecificationsId = 6,
+                            UnitId = 6,
+                            Value = "80%"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            ProductId = 2L,
+                            ProductSpecificationsId = 7,
+                            UnitId = 7,
+                            Value = "44-46"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            ProductId = 3L,
+                            ProductSpecificationsId = 2,
+                            UnitId = 1,
+                            Value = "135"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            ProductId = 3L,
+                            ProductSpecificationsId = 5,
+                            UnitId = 5,
+                            Value = "16"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            ProductId = 3L,
+                            ProductSpecificationsId = 6,
+                            UnitId = 6,
+                            Value = "100%"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            ProductId = 3L,
+                            ProductSpecificationsId = 7,
+                            UnitId = 7,
+                            Value = "43-45"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            ProductId = 4L,
+                            ProductSpecificationsId = 1,
+                            UnitId = 1,
+                            Value = "800"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            ProductId = 4L,
+                            ProductSpecificationsId = 4,
+                            UnitId = 10,
+                            Value = "Яблочный концентрат"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            ProductId = 4L,
+                            ProductSpecificationsId = 4,
+                            UnitId = 10,
+                            Value = "Вода"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            ProductId = 4L,
+                            ProductSpecificationsId = 4,
+                            UnitId = 10,
+                            Value = "Cахар"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            ProductId = 4L,
+                            ProductSpecificationsId = 5,
+                            UnitId = 5,
+                            Value = "6"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            ProductId = 5L,
+                            ProductSpecificationsId = 3,
+                            UnitId = 1,
+                            Value = "30"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            ProductId = 5L,
+                            ProductSpecificationsId = 5,
+                            UnitId = 8,
+                            Value = "10"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            ProductId = 5L,
+                            ProductSpecificationsId = 8,
+                            UnitId = 9,
+                            Value = "2000"
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.Reason", b =>
@@ -584,10 +998,14 @@ namespace Xure.Data.Migrations
                         .HasColumnType("tinyint");
 
                     b.Property<string>("Description")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("nvarchar(200)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -602,12 +1020,17 @@ namespace Xure.Data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("Address")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<TimeSpan>("CloseTime")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("time");
 
                     b.Property<TimeSpan>("OpenTime")
+                        .IsConcurrencyToken()
+                        .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("time");
 
                     b.HasKey("id");
@@ -687,6 +1110,20 @@ namespace Xure.Data.Migrations
                         .HasFilter("[UserId] IS NOT NULL");
 
                     b.ToTable("Sellers");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CompanyId = 1L,
+                            UserId = "c49e0b3a-bebc-47d3-b65d-e2da531830ae"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CompanyId = 2L,
+                            UserId = "6a522bd3-d3d6-4f6c-bd0e-f00e38a89b86"
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.Units", b =>
@@ -697,19 +1134,73 @@ namespace Xure.Data.Migrations
                         .UseIdentityColumn();
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(60)
+                        .HasColumnType("nvarchar(60)");
 
                     b.HasKey("id");
 
                     b.ToTable("Units");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            Name = "Грамм"
+                        },
+                        new
+                        {
+                            id = 2,
+                            Name = "Килограмм"
+                        },
+                        new
+                        {
+                            id = 3,
+                            Name = "Литр"
+                        },
+                        new
+                        {
+                            id = 4,
+                            Name = "Миллиметр"
+                        },
+                        new
+                        {
+                            id = 5,
+                            Name = "Месяц"
+                        },
+                        new
+                        {
+                            id = 6,
+                            Name = "Хлопок"
+                        },
+                        new
+                        {
+                            id = 7,
+                            Name = "S"
+                        },
+                        new
+                        {
+                            id = 8,
+                            Name = "Год"
+                        },
+                        new
+                        {
+                            id = 9,
+                            Name = "mA"
+                        },
+                        new
+                        {
+                            id = 10,
+                            Name = " "
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.AppUser", b =>
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
-                    b.Property<string>("Avatar")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Avatar")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime>("Birthday")
                         .HasColumnType("datetime2");
@@ -727,6 +1218,80 @@ namespace Xure.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("AppUser");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = "c49e0b3a-bebc-47d3-b65d-e2da531830ae",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "f4736cc6-40d5-4fa4-b3da-2687c1798bdb",
+                            Email = "DaryaDubova@mail.ru",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumber = "+7916463121",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "383a1ca8-b2bc-4c52-8ab4-63eceff04663",
+                            TwoFactorEnabled = false,
+                            UserName = "Darya",
+                            Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Confirmed = false,
+                            Passport = "6034 877186",
+                            Surname = "Dubova"
+                        },
+                        new
+                        {
+                            Id = "6a522bd3-d3d6-4f6c-bd0e-f00e38a89b86",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "3a6f89c0-d02c-4544-8db0-e46bfb0c2d78",
+                            Email = "DaniilPetrov@gmail.com",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumber = "+7921649797",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "951da589-7ee9-4fb0-ad40-a22c06c0a08c",
+                            TwoFactorEnabled = false,
+                            UserName = "Daniil",
+                            Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Confirmed = false,
+                            Passport = "2016 518374",
+                            Surname = "Petrov"
+                        },
+                        new
+                        {
+                            Id = "1ab2bff8-07be-441b-82d6-0d91174ad815",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "b66b31eb-3b99-42be-985d-21b08b81518a",
+                            Email = "YanaL@mail.ru",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumber = "+79892221468",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "452dbee1-298c-4ae5-a946-b6dd73fd0223",
+                            TwoFactorEnabled = false,
+                            UserName = "Yana",
+                            Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Confirmed = false,
+                            Passport = "6048 518375",
+                            Surname = "Levchenkova"
+                        },
+                        new
+                        {
+                            Id = "221a163b-8960-42f9-a19e-023493311599",
+                            AccessFailedCount = 0,
+                            ConcurrencyStamp = "462a9574-82a7-466e-bbab-d1144d4cc219",
+                            Email = "YP@mail.ru",
+                            EmailConfirmed = false,
+                            LockoutEnabled = false,
+                            PhoneNumber = "78106964233",
+                            PhoneNumberConfirmed = false,
+                            SecurityStamp = "15b13a36-6c09-434d-980e-bdddcbf2858b",
+                            TwoFactorEnabled = false,
+                            UserName = "Yan",
+                            Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Confirmed = false,
+                            Passport = "6510 838162",
+                            Surname = "Pedrechuk"
+                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

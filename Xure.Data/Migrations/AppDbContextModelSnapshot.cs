@@ -1083,7 +1083,7 @@ namespace Xure.Data.Migrations
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("SellerOrder");
+                    b.ToTable("SellerOrders");
                 });
 
             modelBuilder.Entity("Xure.Data.Sellers", b =>
@@ -1222,13 +1222,13 @@ namespace Xure.Data.Migrations
                         {
                             Id = "c49e0b3a-bebc-47d3-b65d-e2da531830ae",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "4068550b-add5-4d2f-b53e-78628cfb2183",
+                            ConcurrencyStamp = "5a708f24-8818-45fb-9d72-4de524fe5f43",
                             Email = "DaryaDubova@mail.ru",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumber = "+7916463121",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "cd484429-811c-4d8f-9a0c-91cd7ffa53a9",
+                            SecurityStamp = "7f8b8b1b-7426-4b3d-81f1-e1ebb8aca56f",
                             TwoFactorEnabled = false,
                             UserName = "Darya",
                             Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1240,13 +1240,13 @@ namespace Xure.Data.Migrations
                         {
                             Id = "6a522bd3-d3d6-4f6c-bd0e-f00e38a89b86",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "0c24f84f-2002-48d1-8774-ba0d1c9b595e",
+                            ConcurrencyStamp = "a2972523-5af6-4b90-9d02-8abac509d10c",
                             Email = "DaniilPetrov@gmail.com",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumber = "+7921649797",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "771e78c3-44d1-4cf0-b8d6-8878518ad331",
+                            SecurityStamp = "a0511c81-960a-4ec0-a0d9-74ba025a3afc",
                             TwoFactorEnabled = false,
                             UserName = "Daniil",
                             Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1258,13 +1258,13 @@ namespace Xure.Data.Migrations
                         {
                             Id = "1ab2bff8-07be-441b-82d6-0d91174ad815",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "f5d734d6-18d7-45fb-ba7d-5037b5701f10",
+                            ConcurrencyStamp = "6ea7e841-c4a9-40c5-b1f0-131832ed6f29",
                             Email = "YanaL@mail.ru",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumber = "+79892221468",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "d3c696ce-b1bb-4836-ac78-d6de66f886f8",
+                            SecurityStamp = "97e12bfa-6164-44f2-9eff-ac6d6c87d2f6",
                             TwoFactorEnabled = false,
                             UserName = "Yana",
                             Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
@@ -1276,13 +1276,13 @@ namespace Xure.Data.Migrations
                         {
                             Id = "221a163b-8960-42f9-a19e-023493311599",
                             AccessFailedCount = 0,
-                            ConcurrencyStamp = "de5f44a4-0019-450d-b36f-4b3a5c32878e",
+                            ConcurrencyStamp = "dcdab130-c5d3-4924-a42f-6419ac4994ff",
                             Email = "YP@mail.ru",
                             EmailConfirmed = false,
                             LockoutEnabled = false,
                             PhoneNumber = "78106964233",
                             PhoneNumberConfirmed = false,
-                            SecurityStamp = "151bf5ef-487c-4d9d-992b-5daa2b2b05f4",
+                            SecurityStamp = "1015f6f4-0e90-4669-bc76-d53b1c274a1d",
                             TwoFactorEnabled = false,
                             UserName = "Yan",
                             Birthday = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
