@@ -1,0 +1,36 @@
+﻿@model ProfileViewModel;
+@{
+    Layout = "_ClientLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8 offset-2 bg-light borderform">
+            @if(User.IsInRole("Покупатель"))
+            {
+                <p>Профиль клиента</p>
+            }
+            @if(User.IsInRole("Поставщик") || User.IsInRole("НеподтвержденныйПоставщик"))
+            {
+                <div class="row">
+                     <div class="col-2 m-2 p-2">                   
+                        <img class="avatarSettings" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Seller.UserInfo.Avatar))"/>
+                     </div>             
+
+                     <div class="col-8 m-2 p-2">                   
+                        <h3>@Model.Seller.UserInfo.UserName @Model.Seller.UserInfo.Surname @Model.Seller.UserInfo.MiddleName</h3> 
+                        <h6>@Model.Seller.Company.Name</h6>
+                        <h6>Дней в системе: @Math.Round((DateTime.Now - Model.Seller.Company.DateRegistration).TotalDays)</h6>                                                
+                        <h6>Всего заказов: @Model.CountSellerOrders</h6>
+                        @if (User.IsInRole("Поставщик")){
+                                <h6>Статус: Подтвержден</h6>
+                            } else
+                            {
+                                <h6>Статус: На проверке</h6>
+                            }                                                                   
+                    </div>        
+                 </div>
+            }
+        </div>
+    </div>
+</div>
