@@ -165,10 +165,8 @@ namespace Xure.App.Controllers
                 SellerForOrders = sellerOrderRepository.GetOrders()
                 .Where(C => C.Order.OrderProducts == C.Order.OrderProducts.Where(c => c.Product.Seller.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)),
                 CountSellerOrders = sellerOrderRepository.GetOrders()
-                .Where(C => C.Order.OrderProducts == C.Order.OrderProducts.Where(c => c.Product.Seller.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)).Count()
-
-            };
-
+                .Where(C => C.Order.OrderProducts == C.Order.OrderProducts.Where(c => c.Product.Seller.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)).Count()                
+            };            
             return View(vm);
         }
 
