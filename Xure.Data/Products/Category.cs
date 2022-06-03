@@ -8,8 +8,6 @@ namespace Xure.Data
         public int Id { get; set; }
 
         [Required(ErrorMessage = "Введите название категории")]
-        [MinLength(3,ErrorMessage = "Название категории не должны быть меньше 3 символов")]
-        [MaxLength(50,ErrorMessage = "Название категории не должны превышать 50 символов")]
         public string Name { get; set; }
 
         public List<Product> Products { get; set; }

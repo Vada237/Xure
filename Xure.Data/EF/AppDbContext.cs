@@ -33,7 +33,8 @@ namespace Xure.Data
 
 
         public AppDbContext(DbContextOptions<AppDbContext> dbContextOptions) : base(dbContextOptions)
-        {                        
+        {
+                          
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -130,9 +131,13 @@ namespace Xure.Data
                     .HasForeignKey(c => c.ReasonId);
                 });
             builder.Entity<ProductSpecifications>(
-                c => c.HasOne(c => c.Category)
-                .WithMany(C => C.ProductSpecifications)
-                .HasForeignKey(c => c.CategoryId));
+                c =>
+                {
+                    c.HasKey(c => c.Id);
+                    c.HasOne(c => c.Category)
+                    .WithMany(C => C.ProductSpecifications)
+                    .HasForeignKey(c => c.CategoryId);
+                });
             builder.Entity<ProductSpecificationsValue>(
                 c => {
                     c.HasOne(c => c.ProductSpecification)
@@ -148,16 +153,16 @@ namespace Xure.Data
                 }
                 );
             builder.Entity<Sellers>(
-                c => {                    
+                c => {
                     c.HasOne(c => c.UserInfo)
                    .WithOne(c => c.Seller)
                    .HasForeignKey<Sellers>(c => c.UserId);
-                 });
-            builder.Entity<Clients>(                                
-                c => {                
-                c.HasOne(c => c.UserInfo)
-                .WithOne(c => c.Client)
-                .HasForeignKey<Clients>(c => c.UserId);
+                });
+            builder.Entity<Clients>(
+                c => {
+                    c.HasOne(c => c.UserInfo)
+                    .WithOne(c => c.Client)
+                    .HasForeignKey<Clients>(c => c.UserId);
                 });
             builder.Entity<SellerOrder>(
                 c =>
@@ -174,121 +179,110 @@ namespace Xure.Data
                 .WithMany(c => c.Deliveries)
                 .HasForeignKey(c => c.ReceprtionPointId)
                 .OnDelete(DeleteBehavior.NoAction));
+            builder.Entity<PriceHistory>(
+                c => c.HasOne(c => c.Product)
+                .WithMany(c => c.PriceHistories)
+                .HasForeignKey(c => c.ProductId)
+                .OnDelete(DeleteBehavior.NoAction)
+                );
+            //// Первичная инициализация данными
 
-            // Первичная инициализация данными
+
+            builder.Entity<Category>().HasData(
+                new Category[] {
+                    new Category { Id = 1, Name = "Продукты питания"},
+                    new Category { Id = 2, Name = "Одежда"},
+                    new Category { Id = 3, Name = "Техника"},
+                    new Category { Id = 4, Name = "Спорт"},
+                    new Category { Id = 5, Name = "Образование" },
+                    new Category { Id = 6, Name = "Бытовые товары" },
+                    new Category { Id = 7, Name = "Медицина" },
+                    new Category { Id = 8, Name = "Мебель"},
+                    new Category { Id = 9, Name = "Аксессуары"}
+                });
 
             builder.Entity<Units>().HasData(
-                new Units[] {
-                    new Units { id = 1, Name = "Грамм"},
-                    new Units { id = 2, Name = "Килограмм"},
-                    new Units { id = 3, Name = "Литр"},
-                    new Units { id = 4, Name = "Миллиметр"},
-                    new Units { id = 5, Name = "Месяц"},
-                    new Units { id = 6, Name = "Хлопок"},
-                    new Units { id = 7, Name = "S"},
-                    new Units { id = 8, Name = "Год"},
-                    new Units {id = 9, Name = "mA" },
-                    new Units { id = 10 , Name = " "}
-                 });
-            builder.Entity<Product>().HasData(
-                new Product[] {
-                    new Product { Id = 1, Name = "Яблоко", Description = "Зеленые Краснодарские яблоки", PriceId = 1, BrandId = 1, SellerId = 1, CategoryId = 1},
-                    new Product { Id = 2, Name = "Джинсы", Description = "Недорогие джинсы", PriceId = 2, BrandId = 2, SellerId = 2, CategoryId = 2},
-                    new Product { Id = 3, Name = "Рубашка", Description = "Недорогая рубашка", PriceId = 3, BrandId = 3, SellerId = 2, CategoryId = 2},
-                    new Product { Id = 4, Name = "Сок", Description = "Вкусный яблочный сок без химии и добавок", PriceId = 4, BrandId = 4, SellerId = 1, CategoryId = 1},
-                    new Product { Id = 5, Name = "Батарейки", Description = "Долгосрочные батарейки", PriceId = 5, BrandId = 5, SellerId = 2, CategoryId = 3}
-                });
-            builder.Entity<Prices>().HasData(
-                new Prices[]
+                new Units[]
                 {
-                    new Prices { Id = 1, PriceHistoryId = 1},
-                    new Prices { Id = 2, PriceHistoryId = 2},
-                    new Prices { Id = 3, PriceHistoryId = 3},
-                    new Prices { Id = 4, PriceHistoryId = 4},
-                    new Prices { Id = 5, PriceHistoryId = 5}
+                    new Units { id = 1, Name = "Г" },
+                    new Units { id = 2, Name = "Кг"},
+                    new Units { id = 3, Name = "Мл"},
+                    new Units { id = 4, Name = "Л"},
+                    new Units { id = 5, Name = "См"},
+                    new Units { id = 6, Name = "М"},
+                    new Units { id = 7, Name = "Шт"},
+                    new Units { id = 8, Name = "Упаковка"},
+                    new Units { id = 9, Name = "mA"},
+                    new Units { id = 10, Name = "Хлопок"},
+                    new Units { id = 11, Name = "Лён"},
+                    new Units { id = 12, Name = "Шелк"},
+                    new Units { id = 13, Name = "Шерсть"},
+                    new Units { id = 14, Name = "Вискоза"},
+                    new Units { id = 15, Name = "RU"},
+                    new Units { id = 16, Name = "EU"},
+                    new Units { id = 17, Name = "С"},
+                    new Units { id = 18, Name = "В"},
+                    new Units { id = 19, Name = "Мм"},
                 });
-            builder.Entity<PriceHistory>().HasData(
-                new PriceHistory[] { 
-                    new PriceHistory { Id = 1, Value = 50, UpdatedDate = Convert.ToDateTime("2022-05-21T19:21")},
-                    new PriceHistory { Id = 2, Value = 1849, UpdatedDate = Convert.ToDateTime("2022-03-18T14:35")},
-                    new PriceHistory { Id = 3, Value = 1448, UpdatedDate = Convert.ToDateTime("2021-10-12T19:30")},
-                    new PriceHistory { Id = 4, Value = 81, UpdatedDate = Convert.ToDateTime("2022-03-03T11:15")},
-                    new PriceHistory { Id = 5, Value = 9, UpdatedDate = Convert.ToDateTime("2022-04-28T20:00")}
-                });
-            builder.Entity<Brands>().HasData(
-                new Brands[] {
-                    new Brands { Id = 1, Name = "Villams", Country = "Америка"},
-                    new Brands { Id = 2, Name = "Tommy Hilfiger", Country = "Америка"},
-                    new Brands { Id = 3, Name = "Polo", Country = "Великобритания"},
-                    new Brands { Id = 4, Name = "Добрый", Country = "Россия"},
-                    new Brands { Id = 5, Name = "Duracell", Country = "Германия"}
-                });
-            builder.Entity<Category>().HasData(
-                new Category[] { 
-                    new Category { Id = 1, Name = "Еда"},
-                    new Category { Id = 2, Name = "Одежда"},
-                    new Category { Id = 3, Name = "Техника"}
-                });
+
             builder.Entity<ProductSpecifications>().HasData(
-                new ProductSpecifications[] { 
+                new ProductSpecifications[]
+                {
                     new ProductSpecifications { Id = 1, Name = "Вес", CategoryId = 1},
                     new ProductSpecifications { Id = 2, Name = "Вес", CategoryId = 2},
                     new ProductSpecifications { Id = 3, Name = "Вес", CategoryId = 3},
-                    new ProductSpecifications { Id = 4, Name = "Cостав", CategoryId = 1},
-                    new ProductSpecifications { Id = 5, Name = "Cрок годности", CategoryId = 2},
-                    new ProductSpecifications { Id = 6, Name = "Ткань", CategoryId = 2},
-                    new ProductSpecifications { Id = 7, Name = "Размер", CategoryId = 2},
-                    new ProductSpecifications { Id = 8, Name = "Мощность", CategoryId = 3}
+                    new ProductSpecifications { Id = 4, Name = "Вес", CategoryId = 4},
+                    new ProductSpecifications { Id = 5, Name = "Вес", CategoryId = 5},
+                    new ProductSpecifications { Id = 6, Name = "Вес", CategoryId = 6},
+                    new ProductSpecifications { Id = 7, Name = "Вес", CategoryId = 7},
+                    new ProductSpecifications { Id = 8, Name = "Вес", CategoryId = 8},
+                    new ProductSpecifications { Id = 9, Name = "Вес", CategoryId = 9},
+                    new ProductSpecifications { Id = 10, Name = "Тип", CategoryId = 1},
+                    new ProductSpecifications { Id = 11, Name = "Тип", CategoryId = 2},
+                    new ProductSpecifications { Id = 12, Name = "Тип", CategoryId = 3},
+                    new ProductSpecifications { Id = 13, Name = "Тип", CategoryId = 4},
+                    new ProductSpecifications { Id = 14, Name = "Тип", CategoryId = 5},
+                    new ProductSpecifications { Id = 15, Name = "Тип", CategoryId = 6},
+                    new ProductSpecifications { Id = 16, Name = "Тип", CategoryId = 7},
+                    new ProductSpecifications { Id = 17, Name = "Тип", CategoryId = 8},
+                    new ProductSpecifications { Id = 18, Name = "Тип", CategoryId = 9},
+                    new ProductSpecifications { Id = 19, Name = "Пищевая ценность", CategoryId = 1},
+                    new ProductSpecifications { Id = 20, Name = "Энергетическая ценность", CategoryId = 1},
+                    new ProductSpecifications { Id = 21, Name = "Материал", CategoryId = 2},
+                    new ProductSpecifications { Id = 22, Name = "Материал", CategoryId = 3},
+                    new ProductSpecifications { Id = 23, Name = "Цвет", CategoryId = 2},
+                    new ProductSpecifications { Id = 24, Name = "Цвет", CategoryId = 3},
+                    new ProductSpecifications { Id = 25, Name = "Цвет", CategoryId = 4},
+                    new ProductSpecifications { Id = 26, Name = "Объем", CategoryId = 3},
+                    new ProductSpecifications { Id = 27, Name = "Количество в упаковке", CategoryId = 1},
+                    new ProductSpecifications { Id = 28, Name = "Количество в упаковке", CategoryId = 2},
+                    new ProductSpecifications { Id = 29, Name = "Количество в упаковке", CategoryId = 3},
+                    new ProductSpecifications { Id = 30, Name = "Количество в упаковке", CategoryId = 4},
+                    new ProductSpecifications { Id = 31, Name = "Количество в упаковке", CategoryId = 5},
+                    new ProductSpecifications { Id = 32, Name = "Количество в упаковке", CategoryId = 6},
+                    new ProductSpecifications { Id = 33, Name = "Количество в упаковке", CategoryId = 7},
+                    new ProductSpecifications { Id = 34, Name = "Количество в упаковке", CategoryId = 8},
+                    new ProductSpecifications { Id = 35, Name = "Количество в упаковке", CategoryId = 9},
+                    new ProductSpecifications { Id = 36, Name = "Напряжение", CategoryId = 3},
+                    new ProductSpecifications { Id = 37, Name = "Длина", CategoryId = 4},
+                    new ProductSpecifications { Id = 38, Name = "Материал", CategoryId = 4},
+                    new ProductSpecifications { Id = 39, Name = "Издательство", CategoryId = 5},
+                    new ProductSpecifications { Id = 40, Name = "Год выпуска", CategoryId = 5},
+                    new ProductSpecifications { Id = 41, Name = "Обьем", CategoryId = 6},
+                    new ProductSpecifications { Id = 42, Name = "Размеры, мм", CategoryId = 7},
+                    new ProductSpecifications { Id = 43, Name = "Область применения", CategoryId = 7},
+                    new ProductSpecifications { Id = 44, Name = "Ширина", CategoryId = 8},
+                    new ProductSpecifications { Id = 45, Name = "Глубина", CategoryId = 8},
+                    new ProductSpecifications { Id = 46, Name = "Высота", CategoryId = 8},
+                    new ProductSpecifications { Id = 47, Name = "Материал", CategoryId = 9},
                 });
-            builder.Entity<ProductSpecificationsValue>().HasData(
-                new ProductSpecificationsValue[]
+            builder.Entity<ReceptionPoint>().HasData(
+                new ReceptionPoint[]
                 {
-                    new ProductSpecificationsValue { Id = 1, ProductId = 1, ProductSpecificationsId = 1, Value = "150", UnitId = 1},
-                    new ProductSpecificationsValue { Id = 2, ProductId = 1, ProductSpecificationsId = 5, Value = "1", UnitId = 5},
-                    new ProductSpecificationsValue { Id = 3, ProductId = 2, ProductSpecificationsId = 2, Value = "150", UnitId = 1},
-                    new ProductSpecificationsValue { Id = 4, ProductId = 2, ProductSpecificationsId = 5, Value = "2", UnitId = 8},
-                    new ProductSpecificationsValue { Id = 5, ProductId = 2, ProductSpecificationsId = 6, Value = "80%", UnitId = 6},
-                    new ProductSpecificationsValue { Id = 6, ProductId = 2, ProductSpecificationsId = 7, Value = "44-46", UnitId = 7},
-                    new ProductSpecificationsValue { Id = 7, ProductId = 3, ProductSpecificationsId = 2, Value = "135", UnitId = 1},
-                    new ProductSpecificationsValue { Id = 8, ProductId = 3, ProductSpecificationsId = 5, Value = "16", UnitId = 5},
-                    new ProductSpecificationsValue { Id = 9, ProductId = 3, ProductSpecificationsId = 6, Value = "100%", UnitId = 6},
-                    new ProductSpecificationsValue { Id = 10, ProductId = 3, ProductSpecificationsId = 7, Value = "43-45", UnitId = 7},
-                    new ProductSpecificationsValue { Id = 11, ProductId = 4, ProductSpecificationsId = 1, Value = "800", UnitId = 1},
-                    new ProductSpecificationsValue { Id = 12, ProductId = 4, ProductSpecificationsId = 4, Value = "Яблочный концентрат", UnitId = 10},
-                    new ProductSpecificationsValue { Id = 13, ProductId = 4, ProductSpecificationsId = 4, Value = "Вода", UnitId = 10},
-                    new ProductSpecificationsValue { Id = 14, ProductId = 4, ProductSpecificationsId = 4, Value = "Cахар", UnitId = 10},
-                    new ProductSpecificationsValue { Id = 15, ProductId = 4, ProductSpecificationsId = 5, Value = "6", UnitId = 5},
-                    new ProductSpecificationsValue { Id = 16, ProductId = 5, ProductSpecificationsId = 3, Value = "30", UnitId = 1},
-                    new ProductSpecificationsValue { Id = 17, ProductId = 5, ProductSpecificationsId = 5, Value = "10", UnitId = 8},
-                    new ProductSpecificationsValue { Id = 18, ProductId = 5, ProductSpecificationsId = 8, Value = "2000", UnitId = 9}
-                });
-            builder.Entity<AppUser>().HasData(
-                new AppUser[]
-                {
-                    new AppUser { Id = "c49e0b3a-bebc-47d3-b65d-e2da531830ae", UserName = "Darya", Surname = "Dubova", Email = "DaryaDubova@mail.ru",Passport = "6034 877186", PhoneNumber = "+7916463121"},
-                    new AppUser { Id = "6a522bd3-d3d6-4f6c-bd0e-f00e38a89b86", UserName = "Daniil", Surname = "Petrov", Email = "DaniilPetrov@gmail.com", Passport = "2016 518374", PhoneNumber = "+7921649797"},
-                    new AppUser { Id = "1ab2bff8-07be-441b-82d6-0d91174ad815", UserName = "Yana", Surname = "Levchenkova", Email = "YanaL@mail.ru", Passport = "6048 518375", PhoneNumber = "+79892221468"},
-                    new AppUser { Id = "221a163b-8960-42f9-a19e-023493311599", UserName = "Yan", Surname = "Pedrechuk", Email = "YP@mail.ru", Passport = "6510 838162", PhoneNumber = "78106964233"}
-                });
-            builder.Entity<Company>().HasData(
-                new Company[]
-                {
-                    new Company { Id = 1, Name = "iVan Clothes",
-                        Description = "Американский магазин одежды премиум-класса, выпускающий одежду, обувь, аксессуары, ароматы и товары для дома.",
-                            DateRegistration = Convert.ToDateTime("2020-11-04T14:41"), INN = "4534239794", OGRN = "1091363440190"},
-                    new Company { Id = 2, Name = "Магнит", Description = "Сеть розничных магазинов", DateRegistration = Convert.ToDateTime("2021-12-26T21:14"),
-                    INN = "0998416485", OGRN = "9057136863819"}
-                });
-            builder.Entity<Sellers>().HasData(
-                new Sellers[]
-                {
-                    new Sellers { Id = 1, UserId = "c49e0b3a-bebc-47d3-b65d-e2da531830ae", CompanyId = 1},
-                    new Sellers { Id = 2, UserId = "6a522bd3-d3d6-4f6c-bd0e-f00e38a89b86", CompanyId = 2}
-                });
-            builder.Entity<Clients>().HasData(
-                new Clients[] {
-                    new Clients { Id = 1, UserId = "1ab2bff8-07be-441b-82d6-0d91174ad815"},
-                    new Clients { Id = 2, UserId = "221a163b-8960-42f9-a19e-023493311599"}
+                    new ReceptionPoint { id = 1, Address = "Москва, ул.Лестева, д.9", OpenTime = new TimeSpan(7,30,30), CloseTime = new TimeSpan(20,30,00)},
+                    new ReceptionPoint { id = 2, Address = "Воронеж, ул.3 Интернационала, д.35", OpenTime = new TimeSpan(8,30,30), CloseTime = new TimeSpan(20,30,00)},
+                    new ReceptionPoint { id = 3, Address = "Ростов-на-Дону, пер. Журавлева, д.127", OpenTime = new TimeSpan(8,30,30), CloseTime = new TimeSpan(20,30,00)},
+                    new ReceptionPoint { id = 4, Address = "Ставрополь, ул. Ломоносова, д.30", OpenTime = new TimeSpan(7,30,30), CloseTime = new TimeSpan(20,30,00)},
                 });
         }
 
@@ -297,9 +291,7 @@ namespace Xure.Data
             UserManager<AppUser> userManager = serviceProvider.GetRequiredService<UserManager<AppUser>>();
             
             RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-
-            if (await userManager.FindByEmailAsync(configuration["UserData:Admin:Email"]) == null)
-            {
+                      
                 AppUser user = new AppUser
                 {
                     UserName = configuration["UserData:Admin:Name"],
@@ -311,9 +303,16 @@ namespace Xure.Data
                     
                 };
                 IdentityResult result = await userManager.CreateAsync(user, configuration["UserData:Admin:Password"]);
+                            
+            if (await roleManager.FindByNameAsync("Администратор") == null)
+            { 
                 result = await roleManager.CreateAsync(new IdentityRole("Администратор"));
+                result = await roleManager.CreateAsync(new IdentityRole("Покупатель"));
+                result = await roleManager.CreateAsync(new IdentityRole("Поставщик"));
+                result = await roleManager.CreateAsync(new IdentityRole("НеподтвержденныйПоставщик"));
+                result = await roleManager.CreateAsync(new IdentityRole("Модератор"));
                 result = await userManager.AddToRoleAsync(user, "Администратор");
-            }
+            }           
         }
     }
 }

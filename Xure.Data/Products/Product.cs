@@ -8,11 +8,13 @@ namespace Xure.Data
         public long Id { get; set; }
         
         [Required(ErrorMessage = "Введите название товара")]
-        [Range(5,100)]
+        [MinLength(3,ErrorMessage = "Минимальная длина товара не должна быть меньше 3 символов")]
+        [MaxLength(100, ErrorMessage = "Минимальная длина товара не должна быть больше 100 символов")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Опишите товар")]
-        [Range(10,600)]
+        [MinLength(10, ErrorMessage = "Минимальное описание товара не должна быть меньше 10 символов")]
+        [MaxLength(600, ErrorMessage = "Минимальное описание товара не должно быть больше 600 символов")]
         public string Description { get; set; }
         public Prices Price { get; set; }
         
@@ -28,10 +30,11 @@ namespace Xure.Data
         public int CategoryId { get; set; }        
         public Sellers Seller { get; set; }
 
+        [Required(ErrorMessage = "Укажите количество")]
+        public int Сount { get; set; }
+
         [Required(ErrorMessage = "Укажите поставщика")]
-        public int SellerId { get; set; }   
-        
-        [FileExtensions(Extensions = "jpg,jpeg,png", ErrorMessage = "Изображения поддерживаются только в формате jpeg,jpg и png")]       
+        public int SellerId { get; set; }                           
         public byte[] Image { get; set; }
 
         public List<Order> Orders { get; set; }
@@ -39,6 +42,7 @@ namespace Xure.Data
         public List<Reviews> Reviews { get; set; }        
         public List<ProductReport> ProductReports { get; set; }
         
+        public List<PriceHistory> PriceHistories { get; set; }
         public List<ProductSpecificationsValue> ProductSpecificationsValues { get; set; }
     }
 }

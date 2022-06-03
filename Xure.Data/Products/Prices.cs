@@ -8,7 +8,7 @@ using System.ComponentModel.DataAnnotations;
 namespace Xure.Data
 {
     public class Prices
-    {
+    {        
         public long Id { get; set; }
         public PriceHistory PriceHistory { get; set; }
 
