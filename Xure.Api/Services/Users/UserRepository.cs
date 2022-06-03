@@ -21,6 +21,6 @@ namespace Xure.Api.Services
                 return null;
             }
             return AppDbContext.Users;
-        }           
+        }       
     }
 }

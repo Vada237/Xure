@@ -14,13 +14,22 @@ namespace Xure.Api.Services
         }
         public Product GetById(int id)
         {
-            return GetAll().FirstOrDefault(x => x.Id == id);
+            return GetWithInclude(c => c.Id == id, c => c.Price.PriceHistory, c => c.Category, c => c.Brands, c=> c.ProductSpecificationsValues ).FirstOrDefault(x => x.Id == id);
         }
 
         public List<Product> FindProductsByName(string name)
         {
-            return GetAll().Where(x => x.Name.Contains(name)).ToList();
+            return GetWithInclude(x => x.Name.Contains(name), x => x.Price.PriceHistory).ToList();
         }
-    }
 
+        public IEnumerable<Product> FindProductBySeller(string SellerId)
+        {
+            return GetWithInclude(c => c.Seller.UserId == SellerId, c => c.Seller, c => c.Brands, c => c.Category, c => c.Price.PriceHistory, c => c.Price.PriceHistory.Product);
+        }
+
+        public List<Product> FindProductByCategory(string CategoryName)
+        {
+            return GetWithInclude(c => c.Category.Name.Contains(CategoryName), c => c.Category, c => c.Price.PriceHistory).ToList();
+        }        
+    }
 }

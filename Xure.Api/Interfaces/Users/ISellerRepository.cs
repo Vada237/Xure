@@ -8,6 +8,7 @@ namespace Xure.Api.Interfaces {
         public Company FindCompanyByNameAndSurname(string Name,string Surname);
 
         public IEnumerable<Sellers> GetSellers();
-        public IEnumerable<Sellers> GetSellersWithInclude();        
+        public IEnumerable<Sellers> GetSellersWithInclude();                  
+        public int GetIdByUserId(string userId);
     }
 }

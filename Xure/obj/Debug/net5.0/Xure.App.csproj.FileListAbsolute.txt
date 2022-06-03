@@ -86,3 +86,6 @@ C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Shared\_S
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Account\CreateClientAccount.cshtml.g.cs
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Account\CreateSellerAccount.cshtml.g.cs
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Account\Profile.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Seller\ProductList.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Seller\CreateProduct.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Seller\ProductInfo.cshtml.g.cs

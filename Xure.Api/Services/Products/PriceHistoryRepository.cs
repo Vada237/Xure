@@ -15,6 +15,6 @@ namespace Xure.Api.Services
         public PriceHistory GetById(int id)
         {
             return GetAll().FirstOrDefault(x => x.Id == id);
-        }
+        }        
     }
 }

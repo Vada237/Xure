@@ -8,6 +8,8 @@ namespace Xure.Api.Interfaces
         public Product GetById(int id);
         public List<Product> FindProductsByName(string name);
 
+        public IEnumerable<Product> FindProductBySeller(string SellerId);
 
+        public List<Product> FindProductByCategory(string CategoryName);
     }
 }

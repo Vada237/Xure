@@ -16,5 +16,10 @@ namespace Xure.Api.Services
         {            
             return GetAll().FirstOrDefault(x => x.Id == id);                        
         }
+        
+        public Category GetByName(string name)
+        {
+            return GetAll().Where(x => x.Name == name).FirstOrDefault();
+        }        
     }
 }

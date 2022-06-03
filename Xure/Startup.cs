@@ -88,7 +88,7 @@ namespace Xure.App
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
-            });
+            });     
         }
     }
 }

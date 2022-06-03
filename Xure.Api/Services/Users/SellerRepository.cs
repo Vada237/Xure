@@ -75,6 +75,10 @@ namespace Xure.Api.Services
         public IEnumerable<Sellers> GetSellersWithInclude()
         {
             return appDbContext.Sellers.Include(c => c.UserInfo).Include(c => c.Company);
-        }        
+        } 
+        public int GetIdByUserId (string userId)
+        {
+            return GetAll().Where(c => c.UserId == userId).FirstOrDefault().Id;
+        }
     }
 }

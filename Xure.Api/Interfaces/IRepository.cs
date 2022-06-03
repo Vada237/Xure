@@ -11,6 +11,10 @@ namespace Xure.Api.Interfaces
         void Update(T item);
         void Create(T item);
         void Delete(int id);
-        void Save();        
+        void Save();
+
+        public IEnumerable<T> GetWithInclude(Func<T, bool> predicate, params Expression<Func<T, object>>[] includeProperties);
+
+        public IEnumerable<T> GetWithInclude(params Expression<Func<T, object>>[] includeProperties);
     }    
 }
