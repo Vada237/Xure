@@ -1,0 +1,16 @@
+﻿.profileFunction {    
+    height: 30vh;  
+    text-align:center;  
+    
+}
+
+.profileImageFunction {
+    width: 64px;
+    height: 64px;
+
+}
+
+.footerSettings {
+    bottom: 0;
+    margin-top: 20vh;
+}
