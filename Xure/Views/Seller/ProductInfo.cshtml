@@ -1,0 +1,35 @@
+﻿@model ProductInfoViewModel;
+@{
+    Layout = "_ClientLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-10 offset-1">
+            <div class="row">
+                <div class="col-4">
+                    <img class="goodSettings" src="data:image/jpeg;base64,@(Convert.ToBase64String(@Model.Product.Image))"/> 
+                </div>
+
+                <div class="col-3">
+                    <h2>@Model.Product.Name</h2>
+                    <h6>@Model.Product.Description</h6>
+                    <h6>Цена: @Model.Product.Price.PriceHistory.Value</h6>
+                    <h6>Остаток: @Model.Product.Сount</h6>
+                </div>
+
+                <div class="col-3">
+                    <a asp-action="AddSpecification" class="nav-link text-dark">Добавить характеристики</a>            
+                    <a asp-action="" class="nav-link text-danger">Удалить</a>
+                    <a asp-action="ProductList" class="nav-link">Вернуться</a>
+                </div>
+            </div>        
+                <div class="col-4">
+                    <h2>Характеристики</h2>
+                    <h6>Категория: @Model.Product.Category.Name</h6>
+                    <h6>Бренд: @Model.Product.Brands.Name</h6>
+                    <h6>Страна производитель: @Model.Product.Brands.Country</h6>
+                </div>
+            </div>
+        </div>
+    </div>

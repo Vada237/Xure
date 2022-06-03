@@ -1,0 +1,53 @@
+﻿@model ProductListViewModel
+
+@{
+    Layout = "_ClientLayout";
+}
+@if(Model != null) {
+    <div class="container-fluid">
+        <div class="row m-2 p-2">         
+            <div class="col-8 offset-1">
+                <h3 class="Text-dark">@ViewBag.BodyTitle</h3>
+                <div class="row">
+                    @foreach (var i in Model.Products)
+                    {
+                        <div class="col-3 m-4 goodsSettings">
+                            <a asp-action="productInfo" asp-route-id="@i.Id" class="nav-link text-dark">
+                                <img class="goodSettings" src="data:image/jpeg;base64,@(Convert.ToBase64String(i.Image))"/>                            
+                                <h4>@i.Name</h4>
+                                <h6>Остаток: @i.Сount</h6>
+                                <h6>@i.Price.PriceHistory.Value</h6>                                 
+                            </a>
+                        </div>
+                    }           
+                </div>                
+                </div>
+                <div class="col-2 borderform mt-3">
+                    <a asp-action="CreateProduct" class="text-danger"><h5>Добавить продукт</h5></a>
+                    <form method="Get" asp-action="FindProductByName">
+                        <div class="form-group">
+                            <label>Поиск товаров</label>
+                            <input asp-for="@Model.productName" class="form-control-sm">
+                            <button type="submit" class="btn btn-sm btn-outline-danger mb-1">Найти</button>
+                        </div>                        
+                    </form>
+
+                    <form method="Get" asp-action="FindProductsByCategory">
+                       <select asp-for="@Model.CategoryName" class="custom-select custom-select-sm w-auto">
+                        <option>Выберите категорию</option>
+                        @foreach (var item in Model.Categories)
+                        {
+                            <option value="@item.Name">@item.Name</option>
+                        }                        
+                        </select>
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Поиск</button>
+                    </form>
+                </div>
+            </div>            
+        </div>    
+
+} else {
+    <div>
+        Товаров нет
+    </div>
+}

@@ -28,8 +28,66 @@
                             {
                                 <h6>Статус: На проверке</h6>
                             }                                                                   
+                        <a asp-action="" asp-controller="" class="nav-item text-primary">Редактировать профиль</a>
                     </div>        
-                 </div>
+                </div>                
+            }            
+        </div>
+    </div>
+
+    <div class="row justify-content-center mt-5 mb-5">
+        <div class="col-8 offset-2 borderform">
+            @if(User.IsInRole("Покупатель"))
+            {
+                
+                    <div class="row">
+                        <div class="col-2 bg-danger m-1 p-1">
+                            Функция 1
+                        </div>
+
+                        <div class="col-2 bg-dark m-1 p-1">
+                            Функция 2
+                        </div>
+
+                        <div class="col-2 bg-secondary m-1 p-1">
+                            Функция 3
+                        </div>
+
+                        <div class="col-2 bg-primary m-1 p-1">
+                            Функция 4
+                        </div>                                                
+                 </div>                
+            }
+            @if(User.IsInRole("Поставщик") || User.IsInRole("НеподтвержденныйПоставщик"))
+            {                
+                    <div class="row">                        
+                            <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
+                                <a asp-action="" asp-controller="" class="nav-link text-dark">
+                                    <img src="~/Images/Profile/Seller/clipboard.png" class="profileImageFunction">
+                                    <h4>Заказы</h4>
+                                </a>                                
+                            </div>                        
+                        <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
+                            <a asp-action="" asp-controller="" class="nav-link text-dark">
+                                <img src="~/Images/Profile/Seller/delivery.png" class="profileImageFunction">
+                                <h4>Оформить доставку</h4>
+                            </a>                            
+                        </div>
+
+                        <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
+                            <a asp-action="ProductList" asp-controller="Seller" class="nav-link text-dark">
+                                <img src="~/Images/Profile/Seller/sent.png" class="profileImageFunction">
+                                <h4>Товары</h4>
+                            </a>
+                        </div>
+
+                        <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
+                            <a asp-action="" asp-controller="" class="nav-link text-dark">
+                                <img src="~/Images/Profile/Seller/commentary.png" class="profileImageFunction">
+                                <h4>Отзывы</h4>
+                            </a>
+                        </div>                        
+                    </div>             
             }
         </div>
     </div>

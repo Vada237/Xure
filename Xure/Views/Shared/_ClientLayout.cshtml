@@ -50,16 +50,19 @@
                                  <div class="col-2">  
                                      <ul class="navbar-nav justify-content-center">
                                          <li class="nav-item">
-                                             
+                                                                                      
                                          @if(User.Identity.IsAuthenticated)
                                          {
                                              <a asp-action="LogOut" asp-controller="Account" class="nav-link">Выйти</a>
                                          } else {
                                              <a asp-action="Login" asp-controller="Account" class="nav-link">Войти</a> 
-                                          }
-
-                                        
+                                         }                                        
                                          </li>
+
+                                         <li class="nav-item">
+                                            <a asp-action="Profile" asp-controller="Account" class="nav-link">Профиль</a>
+                                         </li>
+
                                          <li class="nav-item">
                                               <a asp-action="" asp-controller="" class="nav-link">Заказы</a>                                                                                          
                                          </li>
@@ -75,9 +78,10 @@
             </div>
         </nav> 
     </header>
-        @RenderBody()    
+        @RenderBody()   
+        <div style="padding-bottom:50vh;"></div>
     <footer>
-        <div class="container-fluid fixed-bottom bg-light">
+        <div class="container-fluid position-absolute footerSettings mt-5 bg-light">
             <div class="row m-2 p-2">
 
                 <div class="col-1">
@@ -115,17 +119,6 @@
                             <button type="submit" class="btn border-dark ml-2">Отправить</button>
                         </div>
                     </form>
-                </div>
-
-                <div class="col-2">
-
-                </div>
-
-                <div class="col-1">
-
-                </div>
-                <div class="col-1">
-
                 </div>
             </div>
         </div>
