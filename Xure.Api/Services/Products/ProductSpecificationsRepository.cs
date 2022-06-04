@@ -12,5 +12,10 @@ namespace Xure.Api.Services
         {
             return GetAll().FirstOrDefault(x => x.Id == id);
         }
+
+        public ProductSpecifications GetByName(string name)
+        {
+            return GetAll().FirstOrDefault(x=>x.Name == name);
+        }
     }
 }

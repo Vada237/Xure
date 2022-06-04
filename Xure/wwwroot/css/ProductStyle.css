@@ -14,3 +14,10 @@
 .selectWidth {
     width: 70%;
 }
+
+.goodInfoSettings {
+    width: 30vh;
+    height: 30vh;
+    border: 2px solid dark;
+    border-radius: 1px;    
+}

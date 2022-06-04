@@ -10,10 +10,6 @@ namespace Xure.Data
     public class ProductSpecifications
     {
         public int Id { get; set; }
-
-        [Required(ErrorMessage = "Введите характеристику")]
-        [MinLength(3, ErrorMessage = "Название характеристики не должно быть меньше 3 символов")]
-        [MaxLength(60, ErrorMessage = "Название характеристики не должно превыщать 60 символов")]
         public string Name { get; set; }
         public Category Category { get; set; }  
         

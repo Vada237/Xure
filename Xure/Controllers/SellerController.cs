@@ -49,7 +49,7 @@ namespace Xure.App.Controllers
                 var ViewModel = new ProductListViewModel
                 {
                     Products = ProductRepository.FindProductBySeller(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value),
-                    Categories = CategoryRepository.GetAll()
+                    Categories = CategoryRepository.GetAll(),                    
                 };
 
                 return View(ViewModel);
@@ -148,14 +148,43 @@ namespace Xure.App.Controllers
 
             public IActionResult ProductInfo(int id)
             {
-                Product product = ProductRepository.GetById(id);
+                Product product2 = ProductRepository.GetById(id);
                 var vm = new ProductInfoViewModel
                 {
-                    Product = product,
-                    Unit = unitRepository.GetAll(),
-                    productSpecifications = productSpecificationsRepository.GetWithInclude(c => product.Category.Id == c.CategoryId)
+                    product = product2,
+                    Units = unitRepository.GetAll(),
+                    productSpecifications = productSpecificationsRepository.GetWithInclude(c => product2.Category.Id == c.CategoryId),
+                    productSpecificationsValues = productSpecificationsValueRepository.GetWithInclude(c => c.ProductId == product2.Id, c=> c.Unit, c=> c.ProductSpecification)
                 };
                 return View(vm);
+            }
+
+            public IActionResult AddSpecification(int id)
+            {
+            Product product2 = ProductRepository.GetById(id);
+            var vm = new ProductInfoViewModel
+            {
+                product = product2,
+                productSpecifications = productSpecificationsRepository.GetWithInclude(c => c.CategoryId == product2.CategoryId),
+                Units = unitRepository.GetAll()
+                };
+            return View(vm);
+            }
+
+            [HttpPost]
+            public IActionResult AddSpecification(ProductInfoViewModel model) {            
+            if (ModelState.ErrorCount < 3) {
+                var ProductSpecificationValue = new ProductSpecificationsValue
+                {                    
+                    ProductId = model.product.Id,
+                    ProductSpecificationsId = productSpecificationsRepository.GetByName(model.productSpecification.Name).Id,
+                    Value = model.productSpecificationsValue.Value,
+                    UnitId = unitRepository.GetByName(model.Unit.Name).id
+                    };
+                productSpecificationsValueRepository.Create(ProductSpecificationValue);
+                return RedirectToAction("ProductList");
+                }
+                return View(model);
             }
         }
     }

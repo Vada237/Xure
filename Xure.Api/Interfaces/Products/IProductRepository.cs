@@ -5,7 +5,7 @@ namespace Xure.Api.Interfaces
 {
     public interface IProductRepository : IRepository<Product>
     {
-        public Product GetById(int id);
+        public Product GetById(long id);
         public List<Product> FindProductsByName(string name);
 
         public IEnumerable<Product> FindProductBySeller(string SellerId);
