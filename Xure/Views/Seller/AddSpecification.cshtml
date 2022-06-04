@@ -1,0 +1,55 @@
+﻿@model ProductInfoViewModel
+@{
+    Layout = "_ClientLayout"; 
+}
+
+<div class="container-fluid">
+    <div class="row">
+        
+        <div class="col-5 offset-1">
+            <div class="row">
+                <div class="col-6">
+                    <img class="goodInfoSettings" src="data:image/jpeg;base64,@(Convert.ToBase64String(@Model.product.Image))"/> 
+                </div>
+
+                <div class="col-6">
+                    <h3>@Model.product.Name</h3>
+                    <h6>Бренд: @Model.product.Brands.Name</h6>
+                    <h6>Цена: @Model.product.Price.PriceHistory.Value</h6>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-5">
+            <form asp-action="AddSpecification" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group p-1">
+                    <input type="hidden" asp-for="@Model.product.Id"/>
+                    <select asp-for="@Model.productSpecification.Name" class="custom-select custom-select-sm">
+                        <option disabled selected>Характеристика</option>
+                        @foreach( var i in Model.productSpecifications)
+                        {
+                            <option value="@i.Name">@i.Name</option>
+                        }
+                    </select>                    
+                </div>
+                <div class="form-group p-1">
+                    <input asp-for="@Model.productSpecificationsValue.Value" class="form-control form-control-sm" placeholder="Значение"/>
+                    <span asp-validation-for="productSpecificationsValue.Value" class=text-danger></span>
+                </div>
+                <div class="form-group p-1">
+                    <select asp-for="@Model.Unit.Name" class="custom-select custom-select custom-select-sm">
+                        <option selected disabled>Единица измерения</option>
+                        @foreach( var i in Model.Units)
+                        {
+                            <option value="@i.Name">@i.Name</option>
+                        }
+                    </select>                    
+                </div>
+                <button type="submit" class="btn btn-sm btn-outline-success">Создать</button>
+                <a asp-action="ProductInfo" asp-route-id="@Model.product.Id" class="btn btn-sm btn-outline-danger">Вернуться</a>
+            </form>
+        </div>
+    </div>
+</div>

@@ -8,28 +8,33 @@
         <div class="col-10 offset-1">
             <div class="row">
                 <div class="col-4">
-                    <img class="goodSettings" src="data:image/jpeg;base64,@(Convert.ToBase64String(@Model.Product.Image))"/> 
+                    <img class="goodInfoSettings" src="data:image/jpeg;base64,@(Convert.ToBase64String(@Model.product.Image))"/> 
+                </div>
+
+                <div class="col-5">
+                    <h2>@Model.product.Name</h2>
+                    <h6>@Model.product.Description</h6>
+                    <h6>Цена: @Model.product.Price.PriceHistory.Value</h6>
+                    <h6>Остаток: @Model.product.Сount</h6>
                 </div>
 
                 <div class="col-3">
-                    <h2>@Model.Product.Name</h2>
-                    <h6>@Model.Product.Description</h6>
-                    <h6>Цена: @Model.Product.Price.PriceHistory.Value</h6>
-                    <h6>Остаток: @Model.Product.Сount</h6>
-                </div>
-
-                <div class="col-3">
-                    <a asp-action="AddSpecification" class="nav-link text-dark">Добавить характеристики</a>            
+                    <a asp-action="AddSpecification" asp-route-id="@Model.product.Id" class="nav-link text-dark">Добавить характеристики</a>            
                     <a asp-action="" class="nav-link text-danger">Удалить</a>
-                    <a asp-action="ProductList" class="nav-link">Вернуться</a>
+                    <a asp-action="productList" class="nav-link">Вернуться</a>
                 </div>
             </div>        
-                <div class="col-4">
+                <div class="col-4 mt-2">
                     <h2>Характеристики</h2>
-                    <h6>Категория: @Model.Product.Category.Name</h6>
-                    <h6>Бренд: @Model.Product.Brands.Name</h6>
-                    <h6>Страна производитель: @Model.Product.Brands.Country</h6>
-                </div>
+                    <h6>Категория: @Model.product.Category.Name</h6>
+                    <h6>Бренд: @Model.product.Brands.Name</h6>
+                    <h6>Страна производитель: @Model.product.Brands.Country</h6>
+                    @if (Model.productSpecificationsValues != null) {
+                    @foreach (var i in Model.productSpecificationsValues) {
+                        <h6>@i.ProductSpecification.Name: @i.Value @i.Unit.Name</h6>
+                        }
+                    }
+            </div>
             </div>
         </div>
     </div>
