@@ -1,0 +1,47 @@
+﻿@model ProductInfoViewModel;
+@{
+    Layout = "_ClientLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-10 offset-1">
+            <div class="row">
+                <div class="col-4">
+                    <img class="goodInfoSettings" src="data:image/jpeg;base64,@(Convert.ToBase64String(@Model.product.Image))"/> 
+                </div>
+
+                <div class="col-5">
+                    <h2>@Model.product.Name</h2>
+                    <h4>Магазин: @Model.product.Seller.Company.Name</h4>
+                    <h6>@Model.product.Description</h6>                    
+                    <h6>Количество: @Model.product.Сount</h6>
+                    <h4>@Model.product.Price.PriceHistory.Value руб</h4>
+                    @if (User.IsInRole("Покупатель"))
+                    {
+                        <div class="row">
+                            <div class="col-4">
+                                <form id="@Model.product.Id" asp-action="AddToCart" asp-controller="Cart" method="post">
+                                    <input type="hidden" asp-for="@Model.product.Id" name="productId"/>
+                                    <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
+                                    <button type="submit" class="btn btn-outline-danger pull-right">В корзину</button>
+                                </form>
+                            </div>                            
+                        </div>
+                    }
+                </div>              
+            </div>        
+                <div class="col-4 mt-2">
+                    <h2>Характеристики</h2>
+                    <h6>Категория: @Model.product.Category.Name</h6>
+                    <h6>Бренд: @Model.product.Brands.Name</h6>
+                    <h6>Страна производитель: @Model.product.Brands.Country</h6>
+                    @if (Model.productSpecificationsValues != null) {
+                    @foreach (var i in Model.productSpecificationsValues) {
+                        <h6>@i.ProductSpecification.Name: @i.Value @i.Unit.Name</h6>
+                        }
+                    }
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,31 @@
+﻿@model OrderViewModel;
+@{
+    Layout = "_ClientLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8 offset-2">
+            <div class="row">
+                <div class="col-4">
+                    <form asp-action="CreateOrder" method="post">                       
+
+                        <input type="hidden" asp-for="@Model.Order.OrderDate" value="@DateTime.Now"/>
+                        <input type="hidden" asp-for="@Model.Order.Status" value="В сборке"/>          
+                        
+                            <label> Выберите пункт выдачи</label>
+                            <select asp-for="@Model.Order.ReceptionPointId" class="custom-select custom-select-sm">                            
+                            @foreach (var i in @Model.receptionPoints)
+                            {
+                                <option value="@i.id">@i.Address</option>
+                            }
+                            </select>
+                        
+
+                        <button class="btn btn-outline-danger mt-2" type="submit">Оформить</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

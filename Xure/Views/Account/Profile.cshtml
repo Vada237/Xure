@@ -6,88 +6,110 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-8 offset-2 bg-light borderform">
-            @if(User.IsInRole("Покупатель"))
+            @if (User.IsInRole("Покупатель"))
             {
-                <p>Профиль клиента</p>
+                <div class="row">                    
+                    <div class="col-6 offset-2 m-2 p-2">
+                        <h2>@Model.Client.UserInfo.UserName @Model.Client.UserInfo.Surname</h2>
+                        <h5>@Model.Client.UserInfo.Email</h5>
+                        <h5>@Model.Client.UserInfo.PhoneNumber</h5>
+                        <h5>Статус: Покупатель</h5>
+                        <a asp-action="" asp-controller="" class="nav-item text-primary">Редактировать профиль</a>
+                    </div>
+                </div>
             }
-            @if(User.IsInRole("Поставщик") || User.IsInRole("НеподтвержденныйПоставщик"))
+            @if (User.IsInRole("Поставщик") || User.IsInRole("НеподтвержденныйПоставщик"))
             {
                 <div class="row">
-                     <div class="col-2 m-2 p-2">                   
-                        <img class="avatarSettings" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Seller.UserInfo.Avatar))"/>
-                     </div>             
+                    <div class="col-2 m-2 p-2">
+                        <img class="avatarSettings" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.Seller.UserInfo.Avatar))" />
+                    </div>
 
-                     <div class="col-8 m-2 p-2">                   
-                        <h3>@Model.Seller.UserInfo.UserName @Model.Seller.UserInfo.Surname @Model.Seller.UserInfo.MiddleName</h3> 
+                    <div class="col-8 m-2 p-2">
+                        <h3>@Model.Seller.UserInfo.Surname @Model.Seller.UserInfo.UserName @Model.Seller.UserInfo.MiddleName</h3>
                         <h6>@Model.Seller.Company.Name</h6>
-                        <h6>Дней в системе: @Math.Round((DateTime.Now - Model.Seller.Company.DateRegistration).TotalDays)</h6>                                                
+                        <h6>Дней в системе: @Math.Round((DateTime.Now - Model.Seller.Company.DateRegistration).TotalDays)</h6>
                         <h6>Всего заказов: @Model.CountSellerOrders</h6>
-                        @if (User.IsInRole("Поставщик")){
-                                <h6>Статус: Подтвержден</h6>
-                            } else
-                            {
-                                <h6>Статус: На проверке</h6>
-                            }                                                                   
+                        @if (User.IsInRole("Поставщик"))
+                        {
+                            <h6>Статус: Подтвержден</h6>
+                        }
+                        else
+                        {
+                            <h6>Статус: На проверке</h6>
+                        }
                         <a asp-action="" asp-controller="" class="nav-item text-primary">Редактировать профиль</a>
-                    </div>        
-                </div>                
-            }            
+                    </div>
+                </div>
+            }
         </div>
     </div>
 
     <div class="row justify-content-center mt-5 mb-5">
         <div class="col-8 offset-2 borderform">
-            @if(User.IsInRole("Покупатель"))
+            @if (User.IsInRole("Покупатель"))
             {
-                
-                    <div class="row">
-                        <div class="col-2 bg-danger m-1 p-1">
-                            Функция 1
-                        </div>
 
-                        <div class="col-2 bg-dark m-1 p-1">
-                            Функция 2
-                        </div>
+                <div class="row">
+                    <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
+                        <a asp-action="OrderList" asp-controller="Client" class="nav-link text-dark">
+                            <img src="~/Images/Profile/Client/shopping-bag.png" class="profileImageFunction">
+                            <h4>Мои заказы</h4>
+                        </a>
+                    </div>
 
-                        <div class="col-2 bg-secondary m-1 p-1">
-                            Функция 3
-                        </div>
+                    <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
+                        <a asp-action="" asp-controller="" class="nav-link text-dark">
+                            <img src="~/Images/Profile/Client/delivery.png" class="profileImageFunction">
+                            <h4>Доставки</h4>
+                        </a>
+                    </div>
 
-                        <div class="col-2 bg-primary m-1 p-1">
-                            Функция 4
-                        </div>                                                
-                 </div>                
+                    <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
+                        <a asp-action="" asp-controller="" class="nav-link text-dark">
+                            <img src="~/Images/Profile/Client/refund.png" class="profileImageFunction">
+                            <h4>Возврат<br>средств</h4>
+                        </a>
+                    </div>
+
+                    <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
+                        <a asp-action="" asp-controller="" class="nav-link text-dark">
+                            <img src="~/Images/Profile/Client/commentary.png" class="profileImageFunction">
+                            <h4>Мои отзывы</h4>
+                        </a>
+                    </div>
+                </div>
             }
-            @if(User.IsInRole("Поставщик") || User.IsInRole("НеподтвержденныйПоставщик"))
-            {                
-                    <div class="row">                        
-                            <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
-                                <a asp-action="" asp-controller="" class="nav-link text-dark">
-                                    <img src="~/Images/Profile/Seller/clipboard.png" class="profileImageFunction">
-                                    <h4>Заказы</h4>
-                                </a>                                
-                            </div>                        
-                        <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
-                            <a asp-action="" asp-controller="" class="nav-link text-dark">
-                                <img src="~/Images/Profile/Seller/delivery.png" class="profileImageFunction">
-                                <h4>Оформить доставку</h4>
-                            </a>                            
-                        </div>
+            @if (User.IsInRole("Поставщик") || User.IsInRole("НеподтвержденныйПоставщик"))
+            {
+                <div class="row">
+                    <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
+                        <a asp-action="SellerOrderList" asp-controller="Seller" class="nav-link text-dark">
+                            <img src="~/Images/Profile/Seller/clipboard.png" class="profileImageFunction">
+                            <h4>Заказы</h4>
+                        </a>
+                    </div>
+                    <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
+                        <a asp-action="" asp-controller="" class="nav-link text-dark">
+                            <img src="~/Images/Profile/Seller/delivery.png" class="profileImageFunction">
+                            <h4>Оформить доставку</h4>
+                        </a>
+                    </div>
 
-                        <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
-                            <a asp-action="ProductList" asp-controller="Seller" class="nav-link text-dark">
-                                <img src="~/Images/Profile/Seller/sent.png" class="profileImageFunction">
-                                <h4>Товары</h4>
-                            </a>
-                        </div>
+                    <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
+                        <a asp-action="ProductList" asp-controller="Seller" class="nav-link text-dark">
+                            <img src="~/Images/Profile/Seller/sent.png" class="profileImageFunction">
+                            <h4>Товары</h4>
+                        </a>
+                    </div>
 
-                        <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
-                            <a asp-action="" asp-controller="" class="nav-link text-dark">
-                                <img src="~/Images/Profile/Seller/commentary.png" class="profileImageFunction">
-                                <h4>Отзывы</h4>
-                            </a>
-                        </div>                        
-                    </div>             
+                    <div class="col-2 m-2 p-2 bg-light profileFunction borderform">
+                        <a asp-action="" asp-controller="" class="nav-link text-dark">
+                            <img src="~/Images/Profile/Seller/commentary.png" class="profileImageFunction">
+                            <h4>Отзывы</h4>
+                        </a>
+                    </div>
+                </div>
             }
         </div>
     </div>

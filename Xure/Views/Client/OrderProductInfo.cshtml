@@ -1,0 +1,42 @@
+﻿@model OrderProduct;
+@{
+    Layout = "_ClientLayout";
+}
+
+<div class="container-fluid">
+    <div class="row offset-4">
+        <div class="col-8 m-2 p-2">
+            <div class="row">
+                <div class="col-8 mt-4 bg-light borderform">
+                <h3>Информация о заказе</h3>            
+                <p>Номер заказа: @Model.Order.Id</p>            
+                <p>Дата оформления: @Model.Order.OrderDate</p>
+                <p>Статус: @Model.Order.Status</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 mt-4 bg-light borderform">
+                <h3>Информация о клиенте</h3>
+                <p>Клиент: @Model.Order.Client.UserInfo.Surname @Model.Order.Client.UserInfo.UserName @Model.Order.Client.UserInfo.MiddleName</p>
+                <p>Телефон: @Model.Order.Client.UserInfo.PhoneNumber</p>
+                <p>Пункт выдачи: @Model.Order.ReceptionPoint.Address</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-8 mt-4 bg-light borderform">
+                <h3>Информация о продавце</h3>
+                <p>Продавец: @Model.Product.Seller.UserInfo.Surname @Model.Product.Seller.UserInfo.UserName @Model.Product.Seller.UserInfo.MiddleName</p>
+                <p>Магазин: @Model.Product.Seller.Company.Name</p>                
+                <p>ИНН: @Model.Product.Seller.Company.INN</p>
+                <p>ОГРН: @Model.Product.Seller.Company.OGRN</p>
+                <a asp-action="Messenger" asp-controller="Chat" class="btn btn-outline-danger">Связаться с продавцом</a>
+                @if (Model.Order.Status != "Доставлен") {
+                    <a asp-action="ReturnOrder" asp-controller="Order" class="btn btn-outline-danger">Запросить возврат</a>
+                }    
+                </div>
+            </div>
+            <a asp-action="OrderList" asp-controller="Client" class="btn mt-2 btn-outline-primary">Вернуться</a>
+        </div>
+    </div>
+</div>

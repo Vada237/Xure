@@ -13,16 +13,34 @@
 
                 <div class="col-5">
                     <h2>@Model.product.Name</h2>
+                    <h2>Магазин: @Model.product.Seller.Company</h2>
                     <h6>@Model.product.Description</h6>
                     <h6>Цена: @Model.product.Price.PriceHistory.Value</h6>
                     <h6>Остаток: @Model.product.Сount</h6>
                 </div>
-
+                
+                @if (Model.locked == false) {
                 <div class="col-3">
                     <a asp-action="AddSpecification" asp-route-id="@Model.product.Id" class="nav-link text-dark">Добавить характеристики</a>            
-                    <a asp-action="" class="nav-link text-danger">Удалить</a>
+                    <a asp-action="DeleteProduct" asp-route-id="@Model.product.Id" class="nav-link text-danger">Удалить</a>
                     <a asp-action="productList" class="nav-link">Вернуться</a>
+                    <div class="nav-link">
+                        <h6>Остаток товаров</h6>
+                    </div>
+                    <form asp-action="EditCountProduct" method="post">
+                        <div class="row">
+                            <div class="col-7 ml-3">
+                                <input type="hidden" asp-for="@Model.product.Id"/>                                
+                                <input asp-for="@Model.product.Сount" class="form-control form-control-sm"/>
+                            </div>
+
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Изменить</button>
+                            </div>
+                         </div>
+                    </form>
                 </div>
+                }
             </div>        
                 <div class="col-4 mt-2">
                     <h2>Характеристики</h2>
