@@ -27,6 +27,10 @@ namespace Xure.App
         
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddControllers().AddNewtonsoftJson(x =>
+            {
+                x.SerializerSettings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            });
             services.AddDbContext<AppDbContext>(options => options.UseSqlServer(Configuration.GetConnectionString("Data")));
 
             services.AddIdentity<AppUser, IdentityRole>(options => {
@@ -61,9 +65,11 @@ namespace Xure.App
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ISellerRepository, SellerRepository>();
             services.AddTransient<IClientRepository, ClientRepository>();
-            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
-
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));            
+            services.AddScoped<Cart>();
             services.AddControllersWithViews();
+            services.AddMemoryCache();
+            services.AddSession();
         }
 
         
@@ -74,17 +80,12 @@ namespace Xure.App
                 app.UseDeveloperExceptionPage();
                 app.UseStatusCodePages();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");                
-                app.UseHsts();
-            }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
+            app.UseSession();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();

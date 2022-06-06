@@ -101,5 +101,7 @@ namespace Xure.Api.Controllers
             }
             return Ok(_ProductRepository.FindProductsByName(name));
         }
+
+
     }
 }

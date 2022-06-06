@@ -10,7 +10,12 @@ namespace Xure.Api.Services
         public ClientRepository(AppDbContext appDbContext) : base(appDbContext)
         {
 
-        }
+        }      
+
+        public Clients GetClientWithInclude(string id)
+        {
+            return GetWithInclude(c => c.UserId == id, c => c.UserInfo).FirstOrDefault();
+        } 
 
         public Clients Get(int id)
         {

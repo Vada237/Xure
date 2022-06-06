@@ -12,7 +12,6 @@ C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Xure.App.TagHelpers.i
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Xure.App.TagHelpers.output.cache
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Xure.App.RazorCoreGenerate.cache
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Home\Index.cshtml.g.cs
-C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Shared\_ValidationScriptsPartial.cshtml.g.cs
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\_ViewImports.cshtml.g.cs
@@ -90,3 +89,14 @@ C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Seller\Pr
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Seller\CreateProduct.cshtml.g.cs
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Seller\ProductInfo.cshtml.g.cs
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Seller\AddSpecification.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Home\ProductInfo.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\bin\Debug\net5.0\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\bin\Debug\net5.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\bin\Debug\net5.0\Newtonsoft.Json.Bson.dll
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Cart\Index.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Shared\Components\CartSummary\Default.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Order\Checkout.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Order\Completed.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Client\OrderList.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Client\OrderProductInfo.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Seller\SellerOrderList.cshtml.g.cs

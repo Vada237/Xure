@@ -7,9 +7,14 @@ namespace Xure.Api.Interfaces
     {
         public Product GetById(long id);
         public List<Product> FindProductsByName(string name);
-
+        
+        public void DeleteProduct(Product product)
+        {
+            Delete(product.Id);
+        }
         public IEnumerable<Product> FindProductBySeller(string SellerId);
 
         public List<Product> FindProductByCategory(string CategoryName);
+        public IEnumerable<Product> FindProducts(string productName, string categoryName, string brandName, string minPrice, string maxPrice, string productSpecifications);
     }
 }

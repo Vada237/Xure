@@ -63,7 +63,6 @@ namespace Xure.Api.Services
                     INN = c.Company.INN,
                     OGRN = c.Company.OGRN
                 }).FirstOrDefault();
-
             return query;
         }
 
@@ -76,6 +75,7 @@ namespace Xure.Api.Services
         {
             return appDbContext.Sellers.Include(c => c.UserInfo).Include(c => c.Company);
         } 
+
         public int GetIdByUserId (string userId)
         {
             return GetAll().Where(c => c.UserId == userId).FirstOrDefault().Id;
