@@ -49,11 +49,13 @@ namespace Xure.App.Models
     public class ProductListViewModel
     {
         public IEnumerable<Product> Products { get; set; }
-        public string productName { get; set; }
+        public Product? product { get; set; }        
+        
+        public IEnumerable<Brands> Brands { get; set; }
+        public IEnumerable<ProductSpecifications> productSpecifications { get; set; }
         public IEnumerable<Category> Categories { get; set; }
         public IEnumerable<ProductSpecificationsValue> productSpecificationsValues { get; set; }
-
-        public string CategoryName { get; set; }
+        
     }
 
     public class ProductInfoViewModel
@@ -64,7 +66,8 @@ namespace Xure.App.Models
         public Units Unit { get; set; }
         public IEnumerable<Units> Units { get; set; }
 
+        public bool? locked { get; set; }
         public IEnumerable<ProductSpecificationsValue> productSpecificationsValues { get; set; }
-        public ProductSpecificationsValue productSpecificationsValue { get; set; }
+        public ProductSpecificationsValue productSpecificationsValue { get; set; }                
     }
 }
