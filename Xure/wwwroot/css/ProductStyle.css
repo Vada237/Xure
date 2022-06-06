@@ -1,6 +1,6 @@
 ﻿.goodSettings {    
-    width: 25vh;
-    height: 25vh;
+    width: 27vh;
+    height: 30vh;
 }
 
 .goodsSettings {
@@ -20,4 +20,8 @@
     height: 30vh;
     border: 2px solid dark;
     border-radius: 1px;    
+}
+
+.NoDecoration {
+    text-decoration: none;
 }
