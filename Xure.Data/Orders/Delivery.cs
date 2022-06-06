@@ -11,6 +11,9 @@ namespace Xure.Data
         [Required(ErrorMessage = "Укажите пункт выдачи")]
         public int ReceprtionPointId { get; set; }
 
+        [Required(ErrorMessage = "Выберите место приема")]        
+        public string Address { get; set; }
+
         [Required(ErrorMessage = "Введите дату отправления")]
         [DataType(DataType.DateTime)]
         public DateTime DepartTime { get; set; }

@@ -15,6 +15,6 @@ namespace Xure.Data
         [Required(ErrorMessage = "Отсутствует заказ")]
         public long OrderId { get; set; }
         public Delivery Delivery { get; set; }
-        public long DeliveryId { get; set; }
+        public long? DeliveryId { get; set; }
     }
 }

@@ -10,8 +10,8 @@ using Xure.Data;
 namespace Xure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220603203239_fix")]
-    partial class fix
+    [Migration("20220605172316_fixProd")]
+    partial class fixProd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -254,12 +254,58 @@ namespace Xure.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Продукты питания"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Одежда"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Техника"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Спорт"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Образование"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Бытовые товары"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            Name = "Медицина"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            Name = "Мебель"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            Name = "Аксессуары"
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.Clients", b =>
@@ -571,15 +617,297 @@ namespace Xure.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
 
                     b.ToTable("ProductSpecifications");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            CategoryId = 1,
+                            Name = "Вес"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            CategoryId = 2,
+                            Name = "Вес"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            CategoryId = 3,
+                            Name = "Вес"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            CategoryId = 4,
+                            Name = "Вес"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            CategoryId = 5,
+                            Name = "Вес"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            CategoryId = 6,
+                            Name = "Вес"
+                        },
+                        new
+                        {
+                            Id = 7,
+                            CategoryId = 7,
+                            Name = "Вес"
+                        },
+                        new
+                        {
+                            Id = 8,
+                            CategoryId = 8,
+                            Name = "Вес"
+                        },
+                        new
+                        {
+                            Id = 9,
+                            CategoryId = 9,
+                            Name = "Вес"
+                        },
+                        new
+                        {
+                            Id = 10,
+                            CategoryId = 1,
+                            Name = "Тип"
+                        },
+                        new
+                        {
+                            Id = 11,
+                            CategoryId = 2,
+                            Name = "Тип"
+                        },
+                        new
+                        {
+                            Id = 12,
+                            CategoryId = 3,
+                            Name = "Тип"
+                        },
+                        new
+                        {
+                            Id = 13,
+                            CategoryId = 4,
+                            Name = "Тип"
+                        },
+                        new
+                        {
+                            Id = 14,
+                            CategoryId = 5,
+                            Name = "Тип"
+                        },
+                        new
+                        {
+                            Id = 15,
+                            CategoryId = 6,
+                            Name = "Тип"
+                        },
+                        new
+                        {
+                            Id = 16,
+                            CategoryId = 7,
+                            Name = "Тип"
+                        },
+                        new
+                        {
+                            Id = 17,
+                            CategoryId = 8,
+                            Name = "Тип"
+                        },
+                        new
+                        {
+                            Id = 18,
+                            CategoryId = 9,
+                            Name = "Тип"
+                        },
+                        new
+                        {
+                            Id = 19,
+                            CategoryId = 1,
+                            Name = "Пищевая ценность"
+                        },
+                        new
+                        {
+                            Id = 20,
+                            CategoryId = 1,
+                            Name = "Энергетическая ценность"
+                        },
+                        new
+                        {
+                            Id = 21,
+                            CategoryId = 2,
+                            Name = "Материал"
+                        },
+                        new
+                        {
+                            Id = 22,
+                            CategoryId = 3,
+                            Name = "Материал"
+                        },
+                        new
+                        {
+                            Id = 23,
+                            CategoryId = 2,
+                            Name = "Цвет"
+                        },
+                        new
+                        {
+                            Id = 24,
+                            CategoryId = 3,
+                            Name = "Цвет"
+                        },
+                        new
+                        {
+                            Id = 25,
+                            CategoryId = 4,
+                            Name = "Цвет"
+                        },
+                        new
+                        {
+                            Id = 26,
+                            CategoryId = 3,
+                            Name = "Объем"
+                        },
+                        new
+                        {
+                            Id = 27,
+                            CategoryId = 1,
+                            Name = "Количество в упаковке"
+                        },
+                        new
+                        {
+                            Id = 28,
+                            CategoryId = 2,
+                            Name = "Количество в упаковке"
+                        },
+                        new
+                        {
+                            Id = 29,
+                            CategoryId = 3,
+                            Name = "Количество в упаковке"
+                        },
+                        new
+                        {
+                            Id = 30,
+                            CategoryId = 4,
+                            Name = "Количество в упаковке"
+                        },
+                        new
+                        {
+                            Id = 31,
+                            CategoryId = 5,
+                            Name = "Количество в упаковке"
+                        },
+                        new
+                        {
+                            Id = 32,
+                            CategoryId = 6,
+                            Name = "Количество в упаковке"
+                        },
+                        new
+                        {
+                            Id = 33,
+                            CategoryId = 7,
+                            Name = "Количество в упаковке"
+                        },
+                        new
+                        {
+                            Id = 34,
+                            CategoryId = 8,
+                            Name = "Количество в упаковке"
+                        },
+                        new
+                        {
+                            Id = 35,
+                            CategoryId = 9,
+                            Name = "Количество в упаковке"
+                        },
+                        new
+                        {
+                            Id = 36,
+                            CategoryId = 3,
+                            Name = "Напряжение"
+                        },
+                        new
+                        {
+                            Id = 37,
+                            CategoryId = 4,
+                            Name = "Длина"
+                        },
+                        new
+                        {
+                            Id = 38,
+                            CategoryId = 4,
+                            Name = "Материал"
+                        },
+                        new
+                        {
+                            Id = 39,
+                            CategoryId = 5,
+                            Name = "Издательство"
+                        },
+                        new
+                        {
+                            Id = 40,
+                            CategoryId = 5,
+                            Name = "Год выпуска"
+                        },
+                        new
+                        {
+                            Id = 41,
+                            CategoryId = 6,
+                            Name = "Обьем"
+                        },
+                        new
+                        {
+                            Id = 42,
+                            CategoryId = 7,
+                            Name = "Размеры, мм"
+                        },
+                        new
+                        {
+                            Id = 43,
+                            CategoryId = 7,
+                            Name = "Область применения"
+                        },
+                        new
+                        {
+                            Id = 44,
+                            CategoryId = 8,
+                            Name = "Ширина"
+                        },
+                        new
+                        {
+                            Id = 45,
+                            CategoryId = 8,
+                            Name = "Глубина"
+                        },
+                        new
+                        {
+                            Id = 46,
+                            CategoryId = 8,
+                            Name = "Высота"
+                        },
+                        new
+                        {
+                            Id = 47,
+                            CategoryId = 9,
+                            Name = "Материал"
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.ProductSpecificationsValue", b =>
@@ -658,6 +986,36 @@ namespace Xure.Data.Migrations
                     b.HasKey("id");
 
                     b.ToTable("ReceptionPoints");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            Address = "Москва, ул.Лестева, д.9",
+                            CloseTime = new TimeSpan(0, 20, 30, 0, 0),
+                            OpenTime = new TimeSpan(0, 7, 30, 30, 0)
+                        },
+                        new
+                        {
+                            id = 2,
+                            Address = "Воронеж, ул.3 Интернационала, д.35",
+                            CloseTime = new TimeSpan(0, 20, 30, 0, 0),
+                            OpenTime = new TimeSpan(0, 8, 30, 30, 0)
+                        },
+                        new
+                        {
+                            id = 3,
+                            Address = "Ростов-на-Дону, пер. Журавлева, д.127",
+                            CloseTime = new TimeSpan(0, 20, 30, 0, 0),
+                            OpenTime = new TimeSpan(0, 8, 30, 30, 0)
+                        },
+                        new
+                        {
+                            id = 4,
+                            Address = "Ставрополь, ул. Ломоносова, д.30",
+                            CloseTime = new TimeSpan(0, 20, 30, 0, 0),
+                            OpenTime = new TimeSpan(0, 7, 30, 30, 0)
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.Reviews", b =>
@@ -749,6 +1107,103 @@ namespace Xure.Data.Migrations
                     b.HasKey("id");
 
                     b.ToTable("Units");
+
+                    b.HasData(
+                        new
+                        {
+                            id = 1,
+                            Name = "Г"
+                        },
+                        new
+                        {
+                            id = 2,
+                            Name = "Кг"
+                        },
+                        new
+                        {
+                            id = 3,
+                            Name = "Мл"
+                        },
+                        new
+                        {
+                            id = 4,
+                            Name = "Л"
+                        },
+                        new
+                        {
+                            id = 5,
+                            Name = "См"
+                        },
+                        new
+                        {
+                            id = 6,
+                            Name = "М"
+                        },
+                        new
+                        {
+                            id = 7,
+                            Name = "Шт"
+                        },
+                        new
+                        {
+                            id = 8,
+                            Name = "Упаковка"
+                        },
+                        new
+                        {
+                            id = 9,
+                            Name = "mA"
+                        },
+                        new
+                        {
+                            id = 10,
+                            Name = "Хлопок"
+                        },
+                        new
+                        {
+                            id = 11,
+                            Name = "Лён"
+                        },
+                        new
+                        {
+                            id = 12,
+                            Name = "Шелк"
+                        },
+                        new
+                        {
+                            id = 13,
+                            Name = "Шерсть"
+                        },
+                        new
+                        {
+                            id = 14,
+                            Name = "Вискоза"
+                        },
+                        new
+                        {
+                            id = 15,
+                            Name = "RU"
+                        },
+                        new
+                        {
+                            id = 16,
+                            Name = "EU"
+                        },
+                        new
+                        {
+                            id = 17,
+                            Name = "С"
+                        },
+                        new
+                        {
+                            id = 18,
+                            Name = "В"
+                        },
+                        new
+                        {
+                            id = 19,
+                            Name = "Мм"
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.AppUser", b =>
@@ -831,7 +1286,8 @@ namespace Xure.Data.Migrations
                 {
                     b.HasOne("Xure.Data.AppUser", "UserInfo")
                         .WithOne("Client")
-                        .HasForeignKey("Xure.Data.Clients", "UserId");
+                        .HasForeignKey("Xure.Data.Clients", "UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("UserInfo");
                 });
@@ -871,13 +1327,13 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Clients", "Client")
                         .WithMany("Orders")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.ReceptionPoint", "ReceptionPoint")
                         .WithMany("Orders")
                         .HasForeignKey("ReceptionPointId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Client");
@@ -890,13 +1346,13 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Order", "Order")
                         .WithMany("OrderProducts")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Product", "Product")
                         .WithMany("OrderProducts")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Order");
@@ -909,13 +1365,13 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Order", "Order")
                         .WithMany("OrderReports")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Reason", "Reason")
                         .WithMany("OrderReports")
                         .HasForeignKey("ReasonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Order");
@@ -938,7 +1394,7 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.PriceHistory", "PriceHistory")
                         .WithMany("Prices")
                         .HasForeignKey("PriceHistoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("PriceHistory");
@@ -949,25 +1405,25 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Brands", "Brands")
                         .WithMany("Products")
                         .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Prices", "Price")
                         .WithMany("Products")
                         .HasForeignKey("PriceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Sellers", "Seller")
                         .WithMany("Products")
                         .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Brands");
@@ -984,13 +1440,13 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Product", "Product")
                         .WithMany("ProductReports")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Reason", "Reason")
                         .WithMany("ProductReports")
                         .HasForeignKey("ReasonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -1003,7 +1459,7 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Category", "Category")
                         .WithMany("ProductSpecifications")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -1020,13 +1476,13 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.ProductSpecifications", "ProductSpecification")
                         .WithMany("ProductSpecificationsValues")
                         .HasForeignKey("ProductSpecificationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Units", "Unit")
                         .WithMany("productSpecificationsValues")
                         .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -1041,13 +1497,13 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Clients", "Client")
                         .WithMany("Reviews")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Product", "Product")
                         .WithMany("Reviews")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Client");
@@ -1060,13 +1516,13 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Delivery", "Delivery")
                         .WithMany("SellerOrders")
                         .HasForeignKey("DeliveryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Order", "Order")
                         .WithMany("SellerOrders")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Delivery");
@@ -1079,12 +1535,13 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Company", "Company")
                         .WithMany("Sellers")
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.AppUser", "UserInfo")
                         .WithOne("Seller")
-                        .HasForeignKey("Xure.Data.Sellers", "UserId");
+                        .HasForeignKey("Xure.Data.Sellers", "UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Company");
 

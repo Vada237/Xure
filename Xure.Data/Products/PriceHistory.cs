@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using System.Runtime.Serialization;
 
 namespace Xure.Data
 {
@@ -20,6 +22,8 @@ namespace Xure.Data
         [Required(ErrorMessage = "Дата обновления цены не добавлена")]
         public DateTime UpdatedDate { get; set; }
 
+        [JsonIgnore]
+        [IgnoreDataMember]
         public List<Prices> Prices { get; set; }
 
     }

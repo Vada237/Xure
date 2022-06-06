@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
+using System.Text.Json.Serialization;
+using System.Runtime.Serialization;
 
 namespace Xure.Data
 {
@@ -14,6 +16,9 @@ namespace Xure.Data
 
         [Required(ErrorMessage = "Выберите цену")]
         public long PriceHistoryId { get; set; }
+
+        [JsonIgnore]
+        [IgnoreDataMember]
         public List<Product> Products { get; set; }
     }
 }

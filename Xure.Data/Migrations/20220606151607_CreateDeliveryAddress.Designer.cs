@@ -10,8 +10,8 @@ using Xure.Data;
 namespace Xure.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20220603204057_initThird")]
-    partial class initThird
+    [Migration("20220606151607_CreateDeliveryAddress")]
+    partial class CreateDeliveryAddress
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -254,8 +254,7 @@ namespace Xure.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -369,6 +368,10 @@ namespace Xure.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("bigint")
                         .UseIdentityColumn();
+
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("ArrivalTime")
                         .HasColumnType("datetime2");
@@ -618,9 +621,7 @@ namespace Xure.Data.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("Name")
-                        .IsRequired()
-                        .HasMaxLength(60)
-                        .HasColumnType("nvarchar(60)");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -1056,7 +1057,7 @@ namespace Xure.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<long>("DeliveryId")
+                    b.Property<long?>("DeliveryId")
                         .HasColumnType("bigint");
 
                     b.Property<long>("OrderId")
@@ -1289,7 +1290,8 @@ namespace Xure.Data.Migrations
                 {
                     b.HasOne("Xure.Data.AppUser", "UserInfo")
                         .WithOne("Client")
-                        .HasForeignKey("Xure.Data.Clients", "UserId");
+                        .HasForeignKey("Xure.Data.Clients", "UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("UserInfo");
                 });
@@ -1329,13 +1331,13 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Clients", "Client")
                         .WithMany("Orders")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.ReceptionPoint", "ReceptionPoint")
                         .WithMany("Orders")
                         .HasForeignKey("ReceptionPointId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Client");
@@ -1348,13 +1350,13 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Order", "Order")
                         .WithMany("OrderProducts")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Product", "Product")
                         .WithMany("OrderProducts")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Order");
@@ -1367,13 +1369,13 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Order", "Order")
                         .WithMany("OrderReports")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Reason", "Reason")
                         .WithMany("OrderReports")
                         .HasForeignKey("ReasonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Order");
@@ -1396,7 +1398,7 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.PriceHistory", "PriceHistory")
                         .WithMany("Prices")
                         .HasForeignKey("PriceHistoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("PriceHistory");
@@ -1407,25 +1409,25 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Brands", "Brands")
                         .WithMany("Products")
                         .HasForeignKey("BrandId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Category", "Category")
                         .WithMany("Products")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Prices", "Price")
                         .WithMany("Products")
                         .HasForeignKey("PriceId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Sellers", "Seller")
                         .WithMany("Products")
                         .HasForeignKey("SellerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Brands");
@@ -1442,13 +1444,13 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Product", "Product")
                         .WithMany("ProductReports")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Reason", "Reason")
                         .WithMany("ProductReports")
                         .HasForeignKey("ReasonId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -1461,7 +1463,7 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Category", "Category")
                         .WithMany("ProductSpecifications")
                         .HasForeignKey("CategoryId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Category");
@@ -1478,13 +1480,13 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.ProductSpecifications", "ProductSpecification")
                         .WithMany("ProductSpecificationsValues")
                         .HasForeignKey("ProductSpecificationsId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Units", "Unit")
                         .WithMany("productSpecificationsValues")
                         .HasForeignKey("UnitId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Product");
@@ -1499,13 +1501,13 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Clients", "Client")
                         .WithMany("Reviews")
                         .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.Product", "Product")
                         .WithMany("Reviews")
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Client");
@@ -1518,13 +1520,12 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Delivery", "Delivery")
                         .WithMany("SellerOrders")
                         .HasForeignKey("DeliveryId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Xure.Data.Order", "Order")
                         .WithMany("SellerOrders")
                         .HasForeignKey("OrderId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Delivery");
@@ -1537,12 +1538,13 @@ namespace Xure.Data.Migrations
                     b.HasOne("Xure.Data.Company", "Company")
                         .WithMany("Sellers")
                         .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Xure.Data.AppUser", "UserInfo")
                         .WithOne("Seller")
-                        .HasForeignKey("Xure.Data.Sellers", "UserId");
+                        .HasForeignKey("Xure.Data.Sellers", "UserId")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Company");
 

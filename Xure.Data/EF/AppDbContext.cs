@@ -45,22 +45,31 @@ namespace Xure.Data
             c => {
                 c.HasOne(c => c.Category)
                 .WithMany(c => c.Products)
-                .HasForeignKey(c => c.CategoryId);
+                .HasForeignKey(c => c.CategoryId)
+                .OnDelete(DeleteBehavior.NoAction);
                 c.HasOne(c => c.Seller)
                 .WithMany(c => c.Products)
-                .HasForeignKey(c => c.SellerId);
+                .HasForeignKey(c => c.SellerId)
+                .OnDelete(DeleteBehavior.NoAction);
                 c.HasOne(c => c.Brands)
                 .WithMany(c => c.Products)
-                .HasForeignKey(c => c.BrandId);
+                .HasForeignKey(c => c.BrandId)
+                .OnDelete(DeleteBehavior.NoAction);
                 c.HasOne(c => c.Price)
                 .WithMany(c => c.Products)
-                .HasForeignKey(c => c.PriceId);
+                .HasForeignKey(c => c.PriceId)
+                .OnDelete(DeleteBehavior.NoAction);
+                c.HasMany(c => c.ProductSpecificationsValues)
+                .WithOne(c => c.Product)
+                .HasForeignKey(c => c.ProductId)
+                .OnDelete(DeleteBehavior.NoAction);
             });
 
             builder.Entity<Prices>(
                 c => c.HasOne(c => c.PriceHistory)
                 .WithMany(c => c.Prices)
                 .HasForeignKey(c => c.PriceHistoryId)
+                .OnDelete(DeleteBehavior.NoAction)
                 );
 
             builder.Entity<Company>(
@@ -68,7 +77,8 @@ namespace Xure.Data
                   {
                       c.HasMany(c => c.Sellers)
                         .WithOne(c => c.Company)
-                        .HasForeignKey(c => c.CompanyId);
+                        .HasForeignKey(c => c.CompanyId)
+                        .OnDelete(DeleteBehavior.NoAction);
                   });
             builder.Entity<Message>(
                 c =>
@@ -87,48 +97,59 @@ namespace Xure.Data
                 {
                     c.HasOne(c => c.ReceptionPoint)
                     .WithMany(c => c.Orders)
-                    .HasForeignKey(c => c.ReceptionPointId);
+                    .HasForeignKey(c => c.ReceptionPointId)
+                    .OnDelete(DeleteBehavior.NoAction);
                     c.HasOne(c => c.Client)
                     .WithMany(c => c.Orders)
-                    .HasForeignKey(c => c.ClientId);
+                    .HasForeignKey(c => c.ClientId)
+                    .OnDelete(DeleteBehavior.NoAction);
                     c.HasMany(c => c.Products)
                     .WithMany(c => c.Orders)
                     .UsingEntity<OrderProduct>(
                         c => c.HasOne(c => c.Product)
                         .WithMany(c => c.OrderProducts)
-                        .HasForeignKey(c => c.ProductId),
+                        .HasForeignKey(c => c.ProductId)
+                        .OnDelete(DeleteBehavior.NoAction),
                         c => c.HasOne(c => c.Order)
                         .WithMany(c => c.OrderProducts)
-                        .HasForeignKey(c => c.OrderId));
-                });
+                        .HasForeignKey(c => c.OrderId)
+                        .OnDelete(DeleteBehavior.NoAction));                    
+                });            
+                
             builder.Entity<Reviews>(
                 c => {
                     c.HasOne(c => c.Client)
                     .WithMany(c => c.Reviews)
-                    .HasForeignKey(c => c.ClientId);
+                    .HasForeignKey(c => c.ClientId)
+                    .OnDelete(DeleteBehavior.NoAction);
                     c.HasOne(c => c.Product)
                     .WithMany(c => c.Reviews)
-                    .HasForeignKey(c => c.ProductId);
+                    .HasForeignKey(c => c.ProductId)
+                    .OnDelete(DeleteBehavior.NoAction);
                 });
             builder.Entity<OrderReport>(
                 c =>
                 {
                     c.HasOne(c => c.Order)
                    .WithMany(c => c.OrderReports)
-                   .HasForeignKey(c => c.OrderId);
+                   .HasForeignKey(c => c.OrderId)
+                   .OnDelete(DeleteBehavior.NoAction);
                     c.HasOne(c => c.Reason)
                     .WithMany(c => c.OrderReports)
-                    .HasForeignKey(c => c.ReasonId);
+                    .HasForeignKey(c => c.ReasonId)
+                    .OnDelete(DeleteBehavior.NoAction);
                 });
             builder.Entity<ProductReport>(
                 c =>
                 {
                     c.HasOne(c => c.Product)
                     .WithMany(c => c.ProductReports)
-                    .HasForeignKey(c => c.ProductId);
+                    .HasForeignKey(c => c.ProductId)
+                    .OnDelete(DeleteBehavior.NoAction);
                     c.HasOne(c => c.Reason)
                     .WithMany(c => c.ProductReports)
-                    .HasForeignKey(c => c.ReasonId);
+                    .HasForeignKey(c => c.ReasonId)
+                    .OnDelete(DeleteBehavior.NoAction);
                 });
             builder.Entity<ProductSpecifications>(
                 c =>
@@ -136,16 +157,20 @@ namespace Xure.Data
                     c.HasKey(c => c.Id);
                     c.HasOne(c => c.Category)
                     .WithMany(C => C.ProductSpecifications)
-                    .HasForeignKey(c => c.CategoryId);
+                    .HasForeignKey(c => c.CategoryId)
+                    .OnDelete(DeleteBehavior.NoAction);
                 });
             builder.Entity<ProductSpecificationsValue>(
                 c => {
                     c.HasOne(c => c.ProductSpecification)
                     .WithMany(c => c.ProductSpecificationsValues)
-                .HasForeignKey(c => c.ProductSpecificationsId);
+                .HasForeignKey(c => c.ProductSpecificationsId)
+                .OnDelete(DeleteBehavior.NoAction);
+
                     c.HasOne(c => c.Unit)
                     .WithMany(c => c.productSpecificationsValues)
-                    .HasForeignKey(c => c.UnitId);
+                    .HasForeignKey(c => c.UnitId)
+                    .OnDelete(DeleteBehavior.NoAction);
                     c.HasOne(c => c.Product)
                     .WithMany(c => c.ProductSpecificationsValues)
                     .HasForeignKey(c => c.ProductId)
@@ -156,23 +181,27 @@ namespace Xure.Data
                 c => {
                     c.HasOne(c => c.UserInfo)
                    .WithOne(c => c.Seller)
-                   .HasForeignKey<Sellers>(c => c.UserId);
+                   .HasForeignKey<Sellers>(c => c.UserId)
+                   .OnDelete(DeleteBehavior.NoAction);
                 });
             builder.Entity<Clients>(
                 c => {
                     c.HasOne(c => c.UserInfo)
                     .WithOne(c => c.Client)
-                    .HasForeignKey<Clients>(c => c.UserId);
+                    .HasForeignKey<Clients>(c => c.UserId)
+                    .OnDelete(DeleteBehavior.NoAction);
                 });
             builder.Entity<SellerOrder>(
                 c =>
                 {
                     c.HasOne(c => c.Delivery)
                 .WithMany(c => c.SellerOrders)
-                .HasForeignKey(c => c.DeliveryId);
+                .HasForeignKey(c => c.DeliveryId)
+                .OnDelete(DeleteBehavior.NoAction);
                     c.HasOne(c => c.Order)
                     .WithMany(c => c.SellerOrders)
-                    .HasForeignKey(c => c.OrderId);
+                    .HasForeignKey(c => c.OrderId)
+                    .OnDelete(DeleteBehavior.NoAction);
                 });
             builder.Entity<Delivery>(
                 c => c.HasOne(c => c.ReceptionPoint)

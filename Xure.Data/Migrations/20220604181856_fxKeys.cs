@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Xure.Data.Migrations
 {
-    public partial class fix : Migration
+    public partial class fxKeys : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -73,7 +73,7 @@ namespace Xure.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -259,8 +259,7 @@ namespace Xure.Data.Migrations
                         name: "FK_Clients_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -269,7 +268,7 @@ namespace Xure.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(type: "nvarchar(60)", maxLength: 60, nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     CategoryId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
@@ -279,8 +278,7 @@ namespace Xure.Data.Migrations
                         name: "FK_ProductSpecifications_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -299,14 +297,12 @@ namespace Xure.Data.Migrations
                         name: "FK_Sellers_AspNetUsers_UserId",
                         column: x => x.UserId,
                         principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Sellers_Companies_CompanyId",
                         column: x => x.CompanyId,
                         principalTable: "Companies",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -348,14 +344,12 @@ namespace Xure.Data.Migrations
                         name: "FK_Orders_Clients_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Clients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Orders_ReceptionPoints_ReceptionPointId",
                         column: x => x.ReceptionPointId,
                         principalTable: "ReceptionPoints",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -402,14 +396,12 @@ namespace Xure.Data.Migrations
                         name: "FK_OrderReports_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_OrderReports_Reasons_ReasonId",
                         column: x => x.ReasonId,
                         principalTable: "Reasons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -428,14 +420,12 @@ namespace Xure.Data.Migrations
                         name: "FK_SellerOrders_Delivery_DeliveryId",
                         column: x => x.DeliveryId,
                         principalTable: "Delivery",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_SellerOrders_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -460,20 +450,17 @@ namespace Xure.Data.Migrations
                         name: "FK_Products_Brands_BrandId",
                         column: x => x.BrandId,
                         principalTable: "Brands",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Products_Categories_CategoryId",
                         column: x => x.CategoryId,
                         principalTable: "Categories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Products_Sellers_SellerId",
                         column: x => x.SellerId,
                         principalTable: "Sellers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -491,14 +478,12 @@ namespace Xure.Data.Migrations
                         name: "FK_OrderProducts_Orders_OrderId",
                         column: x => x.OrderId,
                         principalTable: "Orders",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_OrderProducts_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -538,14 +523,12 @@ namespace Xure.Data.Migrations
                         name: "FK_ProductReports_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ProductReports_Reasons_ReasonId",
                         column: x => x.ReasonId,
                         principalTable: "Reasons",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -571,14 +554,12 @@ namespace Xure.Data.Migrations
                         name: "FK_ProductSpecificationsValues_ProductSpecifications_ProductSpecificationsId",
                         column: x => x.ProductSpecificationsId,
                         principalTable: "ProductSpecifications",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_ProductSpecificationsValues_Units_UnitId",
                         column: x => x.UnitId,
                         principalTable: "Units",
-                        principalColumn: "id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "id");
                 });
 
             migrationBuilder.CreateTable(
@@ -599,14 +580,12 @@ namespace Xure.Data.Migrations
                         name: "FK_Reviews_Clients_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Clients",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Reviews_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -624,8 +603,121 @@ namespace Xure.Data.Migrations
                         name: "FK_Prices_PriceHistories_PriceHistoryId",
                         column: x => x.PriceHistoryId,
                         principalTable: "PriceHistories",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.InsertData(
+                table: "Categories",
+                columns: new[] { "Id", "Name" },
+                values: new object[,]
+                {
+                    { 1, "Продукты питания" },
+                    { 2, "Одежда" },
+                    { 3, "Техника" },
+                    { 4, "Спорт" },
+                    { 5, "Образование" },
+                    { 6, "Бытовые товары" },
+                    { 7, "Медицина" },
+                    { 8, "Мебель" },
+                    { 9, "Аксессуары" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ReceptionPoints",
+                columns: new[] { "id", "Address","OpenTime","CloseTime"},
+                values: new object[,]
+                {
+                    { 4, "Ставрополь, ул. Ломоносова, д.30","7:30:00","20:00:00" },
+                    { 3, "Ростов-на-Дону, пер. Журавлева, д.127","7:30:00","20:00:00" },
+                    { 2, "Воронеж, ул.3 Интернационала, д.35","7:30:00","20:00:00" },
+                    { 1, "Москва, ул.Лестева, д.9","7:30:00","20:00:00" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "Units",
+                columns: new[] { "id", "Name" },
+                values: new object[,]
+                {
+                    { 17, "С" },
+                    { 16, "EU" },
+                    { 15, "RU" },
+                    { 14, "Вискоза" },
+                    { 13, "Шерсть" },
+                    { 12, "Шелк" },
+                    { 11, "Лён" },
+                    { 10, "Хлопок" },
+                    { 3, "Мл" },
+                    { 8, "Упаковка" },
+                    { 7, "Шт" },
+                    { 6, "М" },
+                    { 5, "См" },
+                    { 4, "Л" },
+                    { 18, "В" },
+                    { 2, "Кг" },
+                    { 1, "Г" },
+                    { 9, "mA" },
+                    { 19, "Мм" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProductSpecifications",
+                columns: new[] { "Id", "CategoryId", "Name" },
+                values: new object[,]
+                {
+                    { 1, 1, "Вес" },
+                    { 31, 5, "Количество в упаковке" },
+                    { 39, 5, "Издательство" },
+                    { 40, 5, "Год выпуска" },
+                    { 6, 6, "Вес" },
+                    { 15, 6, "Тип" },
+                    { 32, 6, "Количество в упаковке" },
+                    { 41, 6, "Обьем" },
+                    { 7, 7, "Вес" },
+                    { 16, 7, "Тип" },
+                    { 14, 5, "Тип" },
+                    { 33, 7, "Количество в упаковке" },
+                    { 43, 7, "Область применения" },
+                    { 8, 8, "Вес" },
+                    { 17, 8, "Тип" },
+                    { 34, 8, "Количество в упаковке" },
+                    { 44, 8, "Ширина" },
+                    { 45, 8, "Глубина" },
+                    { 46, 8, "Высота" },
+                    { 9, 9, "Вес" },
+                    { 18, 9, "Тип" },
+                    { 42, 7, "Размеры, мм" },
+                    { 35, 9, "Количество в упаковке" },
+                    { 5, 5, "Вес" },
+                    { 37, 4, "Длина" },
+                    { 10, 1, "Тип" },
+                    { 19, 1, "Пищевая ценность" },
+                    { 20, 1, "Энергетическая ценность" },
+                    { 27, 1, "Количество в упаковке" },
+                    { 2, 2, "Вес" },
+                    { 11, 2, "Тип" },
+                    { 21, 2, "Материал" },
+                    { 23, 2, "Цвет" },
+                    { 28, 2, "Количество в упаковке" },
+                    { 38, 4, "Материал" },
+                    { 3, 3, "Вес" },
+                    { 22, 3, "Материал" },
+                    { 24, 3, "Цвет" },
+                    { 26, 3, "Объем" },
+                    { 29, 3, "Количество в упаковке" },
+                    { 36, 3, "Напряжение" },
+                    { 4, 4, "Вес" }
+                });
+
+            migrationBuilder.InsertData(
+                table: "ProductSpecifications",
+                columns: new[] { "Id", "CategoryId", "Name" },
+                values: new object[,]
+                {
+                    { 13, 4, "Тип" },
+                    { 25, 4, "Цвет" },
+                    { 30, 4, "Количество в упаковке" },
+                    { 12, 3, "Тип" },
+                    { 47, 9, "Материал" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -811,8 +903,7 @@ namespace Xure.Data.Migrations
                 table: "Products",
                 column: "PriceId",
                 principalTable: "Prices",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
+                principalColumn: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

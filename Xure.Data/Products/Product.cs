@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
+using System.Runtime.Serialization;
 
 namespace Xure.Data
 {
@@ -37,12 +39,20 @@ namespace Xure.Data
         public int SellerId { get; set; }                           
         public byte[] Image { get; set; }
 
+        [IgnoreDataMember]
         public List<Order> Orders { get; set; }
+        [IgnoreDataMember]
         public List<OrderProduct> OrderProducts { get; set; }
-        public List<Reviews> Reviews { get; set; }        
+        [IgnoreDataMember]
+        public List<Reviews> Reviews { get; set; }
+        [IgnoreDataMember]
         public List<ProductReport> ProductReports { get; set; }
-        
+
+        [JsonIgnore]
+        [IgnoreDataMember]
         public List<PriceHistory> PriceHistories { get; set; }
+        [JsonIgnore]
+        [IgnoreDataMember]
         public List<ProductSpecificationsValue> ProductSpecificationsValues { get; set; }
     }
 }

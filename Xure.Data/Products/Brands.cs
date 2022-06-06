@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Runtime.Serialization;
 
 namespace Xure.Data
 {
@@ -14,6 +15,7 @@ namespace Xure.Data
         [Required(ErrorMessage = "Укажите страну-производитель")]
         [MaxLength(30,ErrorMessage = "Длина страны не должна превышать 30 символов")]
         public string Country { get; set; }
+        [IgnoreDataMember]
         public List<Product> Products { get; set; }
     }
 }
