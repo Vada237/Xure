@@ -1,0 +1,42 @@
+﻿@model CartIndexViewModel
+@{
+    Layout = "_ClientLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8 offset-2">
+                <h2> Ваша корзина</h2>
+                    @foreach (var i in Model.Cart.Lines) {
+                        <div class="row border-dark">                
+
+                            <div class="col-4">
+                                <img class="goodInfoSettings" src="data:image/jpeg;base64,@(Convert.ToBase64String(@i.Product.Image))"/>  
+                            </div>
+
+                        <div class="col-6">                        
+                            <h2>@i.Product.Name</h2>
+                            <h5>Количество: @i.Quantity</h5>
+                            <h5>Цена: @i.Product.Price.PriceHistory.Value</h5>
+                            <h5>Сумма: @(i.Quantity * i.Product.Price.PriceHistory.Value)</h5>
+                            <form asp-action="RemoveFromCart" method="post">
+                                <input type="hidden" name="ProductId" value="@i.Product.Id">
+                                <input type="hidden" name="ProductId" value="@Model.ReturnUrl">
+                                <button type="submit" class="btn-primary btn-sm btn">Удалить</button>
+                            </form>                   
+                        </div>
+                   </div>
+                    }
+
+            <div class="row">
+                     <div class="col-6 m-2">
+                    <h3>Сумма: @Model.Cart.Lines.Sum(c => c.Product.Price.PriceHistory.Value * c.Quantity)</h3>          
+                    <form asp-action="Checkout" asp-controller="Order">
+                        <button type="submit" class="btn btn-outline-danger">Оформить заказ</button>                    
+                    </form>
+                    <a asp-action="index" asp-controller="home" class="btn btn-outline-primary">Продолжить покупки</a>
+                </div>
+            </div>
+        </div>        
+    </div>
+</div>
