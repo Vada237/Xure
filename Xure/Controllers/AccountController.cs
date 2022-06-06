@@ -13,7 +13,7 @@ namespace Xure.App.Controllers
 {
     [Authorize]
     public class AccountController : Controller
-    {        
+    {                
         private UserManager<AppUser> UserManager { get; set; }
         private SignInManager<AppUser> SignInManager { get; set; }
         private RoleManager<IdentityRole> roleManager { get; set; }
@@ -22,10 +22,12 @@ namespace Xure.App.Controllers
         private ISellerOrderRepository sellerOrderRepository { get; set; }
         private IOrderRepository OrderRepository { get; set; }
         private IClientRepository ClientRepository { get; set; }
+        
+        private ICategoryRepository CategoryRepository { get; set; }
 
         public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,RoleManager<IdentityRole> roleManager
             , ICompanyRepository companyRepository, ISellerRepository sellerRepository, IClientRepository clientRepository
-            , ISellerOrderRepository sellerOrderRepository, IOrderRepository orderRepository)
+            , ISellerOrderRepository sellerOrderRepository, IOrderRepository orderRepository, ICategoryRepository categoryRepository)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,7 +36,7 @@ namespace Xure.App.Controllers
             SellerRepository = sellerRepository;
             ClientRepository = clientRepository;
             OrderRepository = orderRepository;
-            this.sellerOrderRepository = sellerOrderRepository;
+            this.sellerOrderRepository = sellerOrderRepository;                        
         }
 
         [AllowAnonymous]
@@ -161,7 +163,7 @@ namespace Xure.App.Controllers
             var vm = new ProfileViewModel
             {
                 Seller = SellerRepository.GetSellersWithInclude().Where(c => c.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault(),
-                Client = ClientRepository.GetAll().Where(c => c.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault(),
+                Client = ClientRepository.GetClientWithInclude(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value),
                 SellerForOrders = sellerOrderRepository.GetOrders()
                 .Where(C => C.Order.OrderProducts == C.Order.OrderProducts.Where(c => c.Product.Seller.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)),
                 CountSellerOrders = sellerOrderRepository.GetOrders()

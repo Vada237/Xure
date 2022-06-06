@@ -7,6 +7,7 @@ using System.Security.Claims;
 using Xure.Data;
 using Microsoft.AspNetCore.Identity;
 using Xure.App.Models;
+using System;
 
 namespace Xure.App.Controllers
 {
@@ -22,13 +23,17 @@ namespace Xure.App.Controllers
         private IUnitRepository unitRepository { get; set; }
         private ISellerRepository sellerRepository { get; set; }
         private IProductSpecificationsRepository productSpecificationsRepository { get; set; }
-        private IProductSpecificationsValueRepository productSpecificationsValueRepository { get; set; }
+        private IProductSpecificationsValueRepository productSpecificationsValueRepository { get; set; }   
+        private ISellerOrderRepository sellerOrderRepository { get; set; }
         
+        private IOrderProductRepository orderProductRepository { get; set; }
+
         private int PageSize = 10;
         public SellerController(UserManager<AppUser> userManager, IProductRepository productRepository,
             ICategoryRepository categoryRepository, IBrandRepository brandRepository, IPriceHistoryRepository priceHistoryRepository
             , IPriceRepository priceRepository, ISellerRepository sellerRepository, IUnitRepository unitRepository,
-            IProductSpecificationsRepository productSpecificationsRepository, IProductSpecificationsValueRepository productSpecificationsValueRepository)
+            IProductSpecificationsRepository productSpecificationsRepository, IProductSpecificationsValueRepository productSpecificationsValueRepository,
+            ISellerOrderRepository sellerOrderRepository,IOrderProductRepository orderProductRepository)
             {
                 UserManager = userManager;
                 ProductRepository = productRepository;
@@ -40,16 +45,20 @@ namespace Xure.App.Controllers
                 this.unitRepository = unitRepository;
                 this.productSpecificationsRepository = productSpecificationsRepository;
                 this.productSpecificationsValueRepository = productSpecificationsValueRepository;
+                this.sellerOrderRepository = sellerOrderRepository;
+                this.orderProductRepository = orderProductRepository;
             }
 
             [Authorize(Roles = "Поставщик,НеподтвержденныйПоставщик")]
             public IActionResult ProductList()
             {
                 ViewBag.BodyTitle = "Список товаров";
-                var ViewModel = new ProductListViewModel
-                {
-                    Products = ProductRepository.FindProductBySeller(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value),
-                    Categories = CategoryRepository.GetAll(),                    
+            var ViewModel = new ProductListViewModel
+            {
+                Products = ProductRepository.FindProductBySeller(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value),
+                Brands = BrandRepository.GetAll(),
+                Categories = CategoryRepository.GetAll(),
+                productSpecifications = productSpecificationsRepository.GetAll().Distinct()
                 };
 
                 return View(ViewModel);
@@ -115,7 +124,7 @@ namespace Xure.App.Controllers
             {
                 var ViewModel = new ProductListViewModel
                 {
-                    Products = ProductRepository.FindProductsByName(Model.productName),
+                    Products = ProductRepository.FindProductsByName(Model.product.Name),
                     Categories = CategoryRepository.GetAll()
                 };
                 if (ViewModel.Products.Count() == 0)
@@ -129,16 +138,20 @@ namespace Xure.App.Controllers
             }
 
             [HttpGet]
-            public IActionResult FindProductsByCategory(ProductListViewModel Model)
+            public IActionResult FindProducts(string? productName, string? categoryName, string? brandName, string? minPrice, string? maxPrice, string? productSpecifications)
             {
-                var ViewModel = new ProductListViewModel
-                {
-                    Products = ProductRepository.FindProductByCategory(Model.CategoryName),
-                    Categories = CategoryRepository.GetAll()
-                };
+            var ViewModel = new ProductListViewModel
+            {
+                Products = ProductRepository.FindProducts(productName, categoryName, brandName, minPrice, maxPrice, productSpecifications),
+                Brands = BrandRepository.GetAll(),
+                Categories = CategoryRepository.GetAll(),
+                productSpecifications = productSpecificationsRepository.GetAll().Distinct()
+            };                
+           
+
                 if (ViewModel.Products.Count() == 0)
                 {
-                    ViewBag.BodyTitle = "В выбранной категории нет товаров";
+                    ViewBag.BodyTitle = "Товары не найдены";
                 } else
                 {
                     ViewBag.BodyTitle = "Найдены следующие товары: ";
@@ -148,14 +161,15 @@ namespace Xure.App.Controllers
 
             public IActionResult ProductInfo(int id)
             {
-                Product product2 = ProductRepository.GetById(id);
+                Product product2 = ProductRepository.GetWithInclude(c => c.Id == id,c => c.Seller,c => c.Price.PriceHistory, c => c.Category, c => c.Brands).FirstOrDefault();
                 var vm = new ProductInfoViewModel
-                {
+                {                    
                     product = product2,
                     Units = unitRepository.GetAll(),
                     productSpecifications = productSpecificationsRepository.GetWithInclude(c => product2.Category.Id == c.CategoryId),
                     productSpecificationsValues = productSpecificationsValueRepository.GetWithInclude(c => c.ProductId == product2.Id, c=> c.Unit, c=> c.ProductSpecification)
                 };
+                if (HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value == product2.Seller.UserId) vm.locked = false;
                 return View(vm);
             }
 
@@ -175,7 +189,7 @@ namespace Xure.App.Controllers
             public IActionResult AddSpecification(ProductInfoViewModel model) {            
             if (ModelState.ErrorCount < 3) {
                 var ProductSpecificationValue = new ProductSpecificationsValue
-                {                    
+                {                  
                     ProductId = model.product.Id,
                     ProductSpecificationsId = productSpecificationsRepository.GetByName(model.productSpecification.Name).Id,
                     Value = model.productSpecificationsValue.Value,
@@ -185,6 +199,36 @@ namespace Xure.App.Controllers
                 return RedirectToAction("ProductList");
                 }
                 return View(model);
+            }
+
+            public IActionResult DeleteProduct(long id)
+            {           
+            Product product = ProductRepository.GetAll().FirstOrDefault(c => c.Id == id);
+            if (product != null) { 
+                ProductRepository.Delete(id);
+            }
+            return RedirectToAction("ProductList");
+            }
+
+            [HttpPost]
+            public IActionResult EditCountProduct(ProductInfoViewModel model)
+            {
+                Product product = ProductRepository.GetById(model.product.Id);
+                product.Сount = model.product.Сount;
+                ProductRepository.Update(product);
+                return RedirectToAction("ProductList");
+            }
+
+            public IActionResult SellerOrderList()
+            {
+            var sellerId = sellerRepository.GetIdByUserId(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var vm = new SellerOrderViewModel
+            {
+                OrderProducts = orderProductRepository.GetWithInclude(
+                    c => c.Product.Seller.Id == sellerId,c => c.Order.ReceptionPoint, c => c.Product.Brands, c => c.Product.Seller.UserInfo
+                    , c => c.Product.Price.PriceHistory)
+            };
+               return View(vm);
             }
         }
     }
