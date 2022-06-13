@@ -15,5 +15,6 @@ namespace Xure.App.Models
 
         public IEnumerable<Brands> Brands { get; set; }
     
+        public IEnumerable<Product> AllProducts { get; set; }
     }
 }
