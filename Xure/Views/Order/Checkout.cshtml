@@ -10,11 +10,11 @@
                 <div class="col-4">
                     <form asp-action="CreateOrder" method="post">                       
 
-                        <input type="hidden" asp-for="@Model.Order.OrderDate" value="@DateTime.Now"/>
-                        <input type="hidden" asp-for="@Model.Order.Status" value="В сборке"/>          
+                        <input type="hidden" asp-for="@Model.Product.OrderDate" value="@DateTime.Now"/>
+                        <input type="hidden" asp-for="@Model.Product.Status" value="В сборке"/>          
                         
                             <label> Выберите пункт выдачи</label>
-                            <select asp-for="@Model.Order.ReceptionPointId" class="custom-select custom-select-sm">                            
+                            <select asp-for="@Model.Product.ReceptionPointId" class="custom-select custom-select-sm">                            
                             @foreach (var i in @Model.receptionPoints)
                             {
                                 <option value="@i.id">@i.Address</option>

@@ -1,0 +1,54 @@
+﻿@model ReportInfoViewModel;
+@{
+    Layout = "_ClientLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8 offset-2">            
+
+            <div class="row">
+                <div class="col-5 m-2 p-2">
+                    <h4>Сообщения</h4>
+                    @foreach(var i in Model.Messages)
+                    {
+                        <div class="borderform bg-light m-2 p-2">
+                        <p><b>@i.Sender.UserName @i.Sender.Surname</b>    @i.MessageTime.ToShortDateString() - @i.MessageTime.ToShortTimeString()</p>
+                        <p>@i.Text</p>    
+                        @if (i.Image != null) {
+                        <img class="goodSettings" src="data:image/jpeg;base64,@(Convert.ToBase64String(i.Image))" />
+                        }
+                        </div>
+                    }
+                    <form asp-action="AddMessage" method="post" enctype="multipart/form-data">
+                        
+                        <input type="hidden" asp-for="@Model.OrderReport.Id" value="@Model.OrderReport.Id">
+
+                        <div class="form-group mt-2 p-2">                                   
+                           <div class="mt-2">
+                                <input asp-for="@Model.Message.Text" type="text" class="form-control" placeholder="Введите сообщение"/>                           
+                                <input asp-for="@Model.Img" type="file" class="mt-2" />
+                           </div>
+                           <button type="submit" class="btn-primary btn mt-2">Отправить</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-5 m-2 p-2">
+                    <h4>Товар</h4>
+                    <h6>@Model.OrderReport.Product.Name</h6>
+                    <img class="goodSettings" src="data:image/jpeg;base64,@(Convert.ToBase64String(Model.OrderReport.Product.Image))"/>
+                    <p>Цена: @Model.OrderReport.Product.Price.PriceHistory.Value</p>
+                    @if(User.IsInRole("Поставщик") || User.IsInRole("НеподтвержденныйПоставщик"))
+                    {
+                       <form asp-action="ReturnMoney" asp-controller="Report" method="post"> 
+                           <input type="hidden" asp-for="@Model.OrderReport.OrderId" value="@Model.OrderReport.OrderId">
+                           <input type="hidden" asp-for="@Model.OrderReport.ProductId" value="@Model.OrderReport.ProductId">
+                           <button type="submit" class="btn btn-outline-danger">Вернуть средства</button>
+                       </form>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

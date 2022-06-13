@@ -22,13 +22,19 @@
                         <div class="row">
                             <div class="col-4">
                                 <form id="@Model.product.Id" asp-action="AddToCart" asp-controller="Cart" method="post">
-                                    <input type="hidden" asp-for="@Model.product.Id" name="productId"/>
+                                    <input type="hidden" name="Id" value="@Model.product.Id"/>
                                     <input type="hidden" name="returnUrl" value="@ViewContext.HttpContext.Request.PathAndQuery()"/>
                                     <button type="submit" class="btn btn-outline-danger pull-right">В корзину</button>
                                 </form>
                             </div>                            
                         </div>
                     }
+
+                    <form asp-action="ReportProduct" asp-controller="Report">
+                        <input type="hidden" asp-for="@Model.product.Id" value="@Model.product.Id"/>
+                        <button type="submit" class="btn btn-outline-danger mt-2">Пожаловаться</button>
+                    </form>
+
                 </div>              
             </div>        
                 <div class="col-4 mt-2">

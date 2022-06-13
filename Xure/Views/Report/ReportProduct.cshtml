@@ -1,0 +1,32 @@
+﻿@model ReportProductViewModel;
+@{
+    Layout = "_ClientLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8 offset-2">
+            
+<form asp-action="CreateOrderProduct" method="post">
+    Жалоба на продукт
+            
+        <input asp-for="@Model.ProductReport.ProductId" value="@Model.Product.Id"  type="hidden" class="custom-select"/>
+
+        <select asp-for="@Model.ProductReport.ReasonId">
+            <h2>Выберите причину</h2>
+            @foreach (var i in Model.Reasons)
+            {
+                <option value="@i.Id">@i.Name</option>
+            }
+        </select>
+        
+        <div class="form-group">
+            <label>Напишите комментарий</label>
+            <textarea asp-for="@Model.ProductReport.Commentary" rows="10" class="form-control form-control-sm"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-outline-danger">Отправить</button>    
+    </form>
+        </div>
+    </div>
+</div>

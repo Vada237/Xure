@@ -1,0 +1,37 @@
+﻿@model IEnumerable<OrderReport>
+@{
+    Layout = "_ClientLayout";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8 offset-2">
+            
+<table class="table table-bordered">
+    <thead class="thead thead-light">
+        <tr>
+            <th>Номер заявления</th>
+            <th>Клиент</th>
+            <th>Заказ</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach( var i in Model)
+        {
+            <tr>
+                <td>@i.OrderId</td>
+                @*<td>@i.OPOrder.Order.Client.UserInfo.Surname @i.OPOrder.Order.Client.UserInfo.UserName</td>
+                <td>@foreach(var j in i.OPOrder.Order.Products) { <p>@j.Name</p>}</td>*@
+                <td>
+                <form asp-action="ReturnOrder" method="post">                    
+                    <input type="hidden" name="answer" value="Средства возвращены">
+                    <button type="submit" class="btn-primary btn">Вернуть средства</button>
+                </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+        </div>
+    </div>
+</div>

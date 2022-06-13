@@ -45,9 +45,9 @@
                          </div>
 
                          <div class="col-6">
-                             <form method="get">     
+                             <form method="get" asp-action="FindProducts" asp-controller="Home">     
                                   <div class="input-group">
-                                       <input class="form-control input" placeholder="Введите товар">                            
+                                       <input class="form-control input" name="productName" placeholder="Введите товар">                            
                                        <button type="submit" class="btn btn-danger">Найти</button>                            
                                   </div>
                              </form> 
@@ -69,11 +69,19 @@
                                             <a asp-action="Profile" asp-controller="Account" class="nav-link">Профиль</a>
                                          </li>
 
+                                         @if (User.IsInRole("Покупатель")) {
                                          <li class="nav-item">
-                                              <a asp-action="" asp-controller="" class="nav-link">Заказы</a>                                                                                          
+                                              <a asp-action="OrderList" asp-controller="Client" class="nav-link">Заказы</a>                                                                                          
                                          </li>
+                                         }
+
+                                        @if (User.IsInRole("Поставщик")) {
                                          <li class="nav-item">
-                                              <a asp-action="index" asp-controller="Cart" class="nav-link">Корзина @await Component.InvokeAsync("CartSummary")</a>                              
+                                              <a asp-action="SellerOrderList" asp-controller="Seller" class="nav-link">Заказы</a>                                                                                          
+                                         </li>
+                                        }
+                                          <li class="nav-item">
+                                              <a asp-action="index" asp-controller="Cart" class="nav-link">Корзина</a>                              
                                           </li>
                                       </ul>
                                 </div>             
@@ -97,22 +105,22 @@
                 <div class="col-2 m-1">
                     <h5>Покупателям</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a asp-action="" asp-controller="" class="nav-link p-0 text-muted">Профиль</a></li>
-                        <li class="nav-item mb-2"><a asp-action="" asp-controller="" class="nav-link p-0  text-muted">Мои заказы</a></li>
-                        <li class="nav-item mb-2"><a asp-action="" asp-controller="" class="nav-link p-0  text-muted">Поиск товаров</a></li>
-                        <li class="nav-item mb-2"><a asp-action="" asp-controller="" class="nav-link p-0  text-muted">Корзина</a></li>
+                        <li class="nav-item mb-2"><a asp-action="Account" asp-controller="Profile" class="nav-link p-0 text-muted">Профиль</a></li>
+                        <li class="nav-item mb-2"><a asp-action="OrderList" asp-controller="Client" class="nav-link p-0  text-muted">Мои заказы</a></li>
+                        <li class="nav-item mb-2"><a asp-action="Index" asp-controller="Home" class="nav-link p-0  text-muted">Поиск товаров</a></li>
+                        <li class="nav-item mb-2"><a asp-action="index" asp-controller="Cart" class="nav-link p-0  text-muted">Корзина</a></li>
                     </ul>
                 </div>
 
                 <div class="col-2 m-1">
                     <h5>Поставщикам</h5>
                     <ul class="nav flex-column">
-                        <li class="nav-item mb-2"><a asp-action="" asp-controller="" class="nav-link p-0  text-muted">Войти</a></li>
-                        <li class="nav-item mb-2"><a asp-action="" asp-controller="" class="nav-link p-0  text-muted">Зарегистрироваться</a></li>
-                        <li class="nav-item mb-2"><a asp-action="" asp-controller="" class="nav-link p-0  text-muted">Профиль</a></li>
-                        <li class="nav-item mb-2"><a asp-action="" asp-controller="" class="nav-link p-0  text-muted">Заполнить каталог</a></li>
-                        <li class="nav-item mb-2"><a asp-action="" asp-controller="" class="nav-link p-0  text-muted">Просмотреть заказы</a></li>
-                        <li class="nav-item mb-2"><a asp-action="" asp-controller="" class="nav-link p-0  text-muted">Оформить доставку</a></li>
+                        <li class="nav-item mb-2"><a asp-action="Login" asp-controller="Account" class="nav-link p-0  text-muted">Войти</a></li>
+                        <li class="nav-item mb-2"><a asp-action="CreateClientAccount" asp-controller="Account" class="nav-link p-0  text-muted">Зарегистрироваться</a></li>
+                        <li class="nav-item mb-2"><a asp-action="Profile" asp-controller="Account" class="nav-link p-0  text-muted">Профиль</a></li>
+                        <li class="nav-item mb-2"><a asp-action="ProductList" asp-controller="Seller" class="nav-link p-0  text-muted">Заполнить каталог</a></li>
+                        <li class="nav-item mb-2"><a asp-action="SellerOrderList" asp-controller="Seller" class="nav-link p-0  text-muted">Просмотреть заказы</a></li>
+                        <li class="nav-item mb-2"><a asp-action="SellerOrderNoDeliveryList" asp-controller="Seller" class="nav-link p-0  text-muted">Оформить доставку</a></li>
                     </ul>
                 </div>
 

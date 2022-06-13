@@ -1,0 +1,33 @@
+﻿@model reportOrderModel;
+@{
+    Layout = "_ClientLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8 offset-2">
+            
+<form asp-action="CreateOrderReport" method="post">
+    Отправление заявления на возврат
+    
+        <input asp-for="@Model.orderReport.OrderId" value="@Model.orderProduct.OrderId"  type="hidden" class="custom-select"/>
+        <input asp-for="@Model.orderReport.ProductId" value="@Model.orderProduct.ProductId"  type="hidden" class="custom-select"/>
+
+        <select asp-for="@Model.orderReport.ReasonId">
+            <h2>Выберите причину</h2>
+            @foreach (var i in Model.Reasons)
+            {
+                <option value="@i.Id">@i.Name</option>
+            }
+        </select>
+        
+        <div class="form-group">
+            <label>Напишите комментарий</label>
+            <textarea asp-for="@Model.orderReport.Commentary" rows="10" class="form-control form-control-sm"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-outline-danger">Отправить</button>    
+    </form>
+        </div>
+    </div>
+</div>

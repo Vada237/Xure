@@ -10,16 +10,19 @@
                 <div class="col-8 mt-4 bg-light borderform">
                 <h3>Информация о заказе</h3>            
                 <p>Номер заказа: @Model.Order.Id</p>            
-                <p>Дата оформления: @Model.Order.OrderDate</p>
-                <p>Статус: @Model.Order.Status</p>
+                <p>Дата оформления: @Model.OrderDate</p>
+                <p>Статус: @Model.Status</p>
+                    @if(Model.TrackNumber != null)
+                    {
+                        <p>Код отслеживания: @Model.TrackNumber</p>
+                    }
                 </div>
             </div>
             <div class="row">
                 <div class="col-8 mt-4 bg-light borderform">
                 <h3>Информация о клиенте</h3>
                 <p>Клиент: @Model.Order.Client.UserInfo.Surname @Model.Order.Client.UserInfo.UserName @Model.Order.Client.UserInfo.MiddleName</p>
-                <p>Телефон: @Model.Order.Client.UserInfo.PhoneNumber</p>
-                <p>Пункт выдачи: @Model.Order.ReceptionPoint.Address</p>
+                <p>Телефон: @Model.Order.Client.UserInfo.PhoneNumber</p>                
                 </div>
             </div>
 
@@ -31,8 +34,12 @@
                 <p>ИНН: @Model.Product.Seller.Company.INN</p>
                 <p>ОГРН: @Model.Product.Seller.Company.OGRN</p>
                 <a asp-action="Messenger" asp-controller="Chat" class="btn btn-outline-danger">Связаться с продавцом</a>
-                @if (Model.Order.Status != "Доставлен") {
-                    <a asp-action="ReturnOrder" asp-controller="Order" class="btn btn-outline-danger">Запросить возврат</a>
+                @if (Model.Status != "Доставлен") {
+                    <form asp-action="returnOrder" asp-controller="Order" method="get">
+                        <input type="hidden" asp-for="@Model.OrderId" value="@Model.OrderId">
+                        <input type="hidden" asp-for="@Model.ProductId" value="@Model.ProductId">
+                        <button type="submit" class="btn btn-outline-danger">Запросить возврат</button>
+                    </form>                    
                 }    
                 </div>
             </div>
