@@ -25,15 +25,18 @@ namespace Xure.App.Controllers
         private IProductSpecificationsRepository productSpecificationsRepository { get; set; }
         private IProductSpecificationsValueRepository productSpecificationsValueRepository { get; set; }   
         private ISellerOrderRepository sellerOrderRepository { get; set; }
-        
+        private IOrderRepository orderRepository { get; set; }
         private IOrderProductRepository orderProductRepository { get; set; }
+        
+        private IDeliveryRepository deliveryRepository { get; set; }
 
         private int PageSize = 10;
         public SellerController(UserManager<AppUser> userManager, IProductRepository productRepository,
             ICategoryRepository categoryRepository, IBrandRepository brandRepository, IPriceHistoryRepository priceHistoryRepository
             , IPriceRepository priceRepository, ISellerRepository sellerRepository, IUnitRepository unitRepository,
             IProductSpecificationsRepository productSpecificationsRepository, IProductSpecificationsValueRepository productSpecificationsValueRepository,
-            ISellerOrderRepository sellerOrderRepository,IOrderProductRepository orderProductRepository)
+            ISellerOrderRepository sellerOrderRepository,IOrderProductRepository orderProductRepository,IOrderRepository orderRepository,
+            IDeliveryRepository deliveryRepository)
             {
                 UserManager = userManager;
                 ProductRepository = productRepository;
@@ -47,6 +50,8 @@ namespace Xure.App.Controllers
                 this.productSpecificationsValueRepository = productSpecificationsValueRepository;
                 this.sellerOrderRepository = sellerOrderRepository;
                 this.orderProductRepository = orderProductRepository;
+                this.orderRepository = orderRepository;
+                this.deliveryRepository = deliveryRepository;
             }
 
             [Authorize(Roles = "Поставщик,НеподтвержденныйПоставщик")]
@@ -225,10 +230,53 @@ namespace Xure.App.Controllers
             var vm = new SellerOrderViewModel
             {
                 OrderProducts = orderProductRepository.GetWithInclude(
-                    c => c.Product.Seller.Id == sellerId,c => c.Order.ReceptionPoint, c => c.Product.Brands, c => c.Product.Seller.UserInfo
+                    c => c.Product.Seller.Id == sellerId, c => c.Product.Brands, c => c.Product.Seller.UserInfo
                     , c => c.Product.Price.PriceHistory)
             };
                return View(vm);
             }
+
+            public IActionResult OrderProductInfo(string productId, string orderId)
+            {
+
+            var vm = new SellerOrderViewModel
+            {
+                sellerOrder = sellerOrderRepository.GetWithOrderIdAndProductId(long.Parse(orderId), long.Parse(productId)),
+                Product = orderProductRepository.GetByIds(long.Parse(orderId), long.Parse(productId)),
+                order = orderRepository.GetWithInclude(c => c.Id == orderProductRepository.GetByIds(long.Parse(orderId), long.Parse(productId)).OrderId
+                , c => c.Client.UserInfo).FirstOrDefault(),                   
+                };
+            return View(vm);
+            }            
+
+            [HttpPost]
+            public IActionResult CreateDelivery(SellerOrderViewModel model)
+            {
+            if (ModelState.ErrorCount < 4) {
+                
+                var delivery = new Delivery
+                {
+                    Address = model.Delivery.Address,
+                    ArrivalTime = model.Delivery.ArrivalTime,
+                    DepartTime = model.Delivery.DepartTime,
+                    ReceprtionPointId = model.Delivery.ReceprtionPointId
+                    };                
+
+                deliveryRepository.Create(delivery);
+
+                var sellerOrder = sellerOrderRepository.GetSellerOrder(model.sellerOrder.Id);
+                sellerOrder.DeliveryId = delivery.Id;
+                sellerOrderRepository.Update(sellerOrder);
+
+                var product = ProductRepository.GetById(model.Product.ProductId);
+                product.Сount -= model.Product.Quantity;
+                ProductRepository.Update(product);
+                
+                orderProductRepository.Update(model.Product);
+
+                return RedirectToAction("Profile","Account");
+            }
+                return View(model);
+            }        
         }
     }

@@ -24,11 +24,14 @@ namespace Xure.App.Controllers
 
         private IReceptionPointRepository _receptionPointRepository;
 
+        private IReasonRepository _reasonRepository;
+
+        private IOrderReportRepository _orderReportRepository;
         private Cart Cart { get; set; }
 
         public OrderController(IOrderRepository orderRepository, ISellerRepository sellerRepository,IReceptionPointRepository receptionPointRepository,
             IProductRepository productRepository, ISellerOrderRepository sellerOrderRepository, IClientRepository clientRepository,
-            IOrderProductRepository orderProductRepository, Cart cart)
+            IOrderProductRepository orderProductRepository,IReasonRepository reasonRepository,IOrderReportRepository reportRepository, Cart cart)
         {
             _orderRepository = orderRepository;
             _sellerOrderRepository = sellerOrderRepository;
@@ -37,7 +40,8 @@ namespace Xure.App.Controllers
             _sellerRepository = sellerRepository;
             _receptionPointRepository = receptionPointRepository;
             this.orderProductRepository = orderProductRepository;
-
+            this._reasonRepository = reasonRepository;
+            this._orderReportRepository = reportRepository;
             Cart = cart;
         }
 
@@ -53,31 +57,36 @@ namespace Xure.App.Controllers
 
         [HttpPost]
         public IActionResult CreateOrder(OrderViewModel model)
-        {
-            Cart cart = GetCart();            
+        {                 
 
-            if(cart.Lines.Count() == 0)
+                if(Cart.Lines.Count() == 0)
             {
                 ModelState.AddModelError("", "Корзина пуста");
             }
             
             if (ModelState.IsValid)
             {
-                model.Order.ClientId = _clientRepository.GetClientWithInclude(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value).Id;
+                Order order = new Order
+                {
+                    ClientId = _clientRepository.GetClientWithInclude(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value).Id
+                };                
                 
-                _orderRepository.Create(model.Order);
+                _orderRepository.Create(order);
 
                 var orderProduct = new OrderProduct
                 {
-                    OrderId = model.Order.Id
+                    OrderId = order.Id,
+                    ReceptionPointId = model.Product.ReceptionPointId,
+                    Status = model.Product.Status,
+                    OrderDate = model.Product.OrderDate
                 };
 
                 var sellerOrder = new SellerOrder
                 {
-                    OrderId = model.Order.Id
+                    OrderId = order.Id
                 };
 
-                foreach (var line in cart.Lines)
+                foreach (var line in Cart.Lines)
                 {
                     orderProduct.ProductId = line.Product.Id;
                     orderProduct.Quantity = line.Quantity;
@@ -96,11 +105,36 @@ namespace Xure.App.Controllers
             Cart.Clear();
             return View();
         }
-
-        private Cart GetCart()
+            
+        public IActionResult returnOrder(OrderProduct orderProduct)
         {
-            Cart cart = HttpContext.Session.GetJson<Cart>("Cart");
-            return cart;
-        }        
+            var vm = new reportOrderModel
+            {
+                orderProduct = orderProductRepository.GetByIds(orderProduct.OrderId,orderProduct.ProductId),
+                Reasons = _reasonRepository.GetWithInclude(c => c.Category == "Заказ")
+            };
+
+            return View(vm);
+        }
+
+        public IActionResult CreateOrderReport(reportOrderModel model)
+        {
+            var orderReport = new OrderReport
+            {
+                OrderId = model.orderReport.OrderId,                
+                ProductId = model.orderReport.ProductId,
+                ReasonId = model.orderReport.ReasonId,
+                Commentary = model.orderReport.Commentary
+            };
+
+            var orderProduct = orderProductRepository.GetByIds(orderReport.OrderId, orderReport.ProductId);
+            orderProduct.Status = "Подан запрос на возврат";
+
+            orderProductRepository.Update(orderProduct);
+
+            _orderReportRepository.Create(orderReport);            
+
+            return RedirectToAction("ReportList","Report");
+        } 
     }
 }

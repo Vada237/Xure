@@ -21,14 +21,14 @@ namespace Xure.App.Controllers
         public IActionResult OrderList()
         {
             IEnumerable<OrderProduct> orderProducts = _orderProductRepository.GetWithInclude(c => c.Order.ClientId ==
-            _clientRepository.GetClientWithInclude(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value).Id && c.Order.Id == c.OrderId, c => c.Order.ReceptionPoint, c => c.Product.Brands, c => c.Product.Price.PriceHistory);
+            _clientRepository.GetClientWithInclude(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value).Id && c.Order.Id == c.OrderId, c => c.Product.Brands, c => c.Product.Price.PriceHistory, c => c.ReceptionPoint, c => c.Order);
             return View(orderProducts);
         }
         
 
         public IActionResult OrderProductInfo(string orderId,string ProductId)
         { 
-            return View(_orderProductRepository.GetWithInclude(c=> c.OrderId == long.Parse(orderId) && c.ProductId == long.Parse(ProductId),c => c.Order.ReceptionPoint,
+            return View(_orderProductRepository.GetWithInclude(c=> c.OrderId == long.Parse(orderId) && c.ProductId == long.Parse(ProductId),
                 c => c.Product.Seller.UserInfo, c => c.Product.Seller.Company, c => c.Order.Client.UserInfo).FirstOrDefault());
         }
     }

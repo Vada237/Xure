@@ -8,10 +8,11 @@ using System.Threading.Tasks;
 using Xure.App.Models;
 using Xure.Data;
 using Xure.Api.Interfaces;
-using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Xure.App.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         
@@ -57,6 +58,28 @@ namespace Xure.App.Controllers
                 productSpecificationsValues = productSpecificationsValueRepository.GetWithInclude(c => c.ProductId == product2.Id, c => c.Unit, c => c.ProductSpecification)
             };            
             return View(vm);
+        }
+
+        [HttpGet]
+        public IActionResult FindProducts(string? productName, string? categoryName, string? brandName, string? minPrice, string? maxPrice, string? productSpecifications)
+        {
+            var ViewModel = new ProductMainViewModel
+            {
+                AllProducts = _productRepository.FindProducts(productName, categoryName, brandName, minPrice, maxPrice, productSpecifications),
+                Brands = _brandRepository.GetAll(),
+                Categories = _categoryRepository.GetAll(),
+            };
+
+
+            if (ViewModel.AllProducts.Count() == 0)
+            {
+                ViewBag.BodyTitle = "Товары не найдены";
+            }
+            else
+            {
+                ViewBag.BodyTitle = "Найдены следующие товары: ";
+            }
+            return View("Index", ViewModel);
         }
     }
 }

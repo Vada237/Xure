@@ -22,12 +22,13 @@ namespace Xure.App.Controllers
         private ISellerOrderRepository sellerOrderRepository { get; set; }
         private IOrderRepository OrderRepository { get; set; }
         private IClientRepository ClientRepository { get; set; }
-        
+        private IOrderProductRepository orderProductRepository { get; set; }
         private ICategoryRepository CategoryRepository { get; set; }
 
         public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager,RoleManager<IdentityRole> roleManager
             , ICompanyRepository companyRepository, ISellerRepository sellerRepository, IClientRepository clientRepository
-            , ISellerOrderRepository sellerOrderRepository, IOrderRepository orderRepository, ICategoryRepository categoryRepository)
+            , ISellerOrderRepository sellerOrderRepository, IOrderRepository orderRepository, ICategoryRepository categoryRepository,
+            IOrderProductRepository orderProductRepository)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -36,7 +37,8 @@ namespace Xure.App.Controllers
             SellerRepository = sellerRepository;
             ClientRepository = clientRepository;
             OrderRepository = orderRepository;
-            this.sellerOrderRepository = sellerOrderRepository;                        
+            this.sellerOrderRepository = sellerOrderRepository; 
+            this.orderProductRepository = orderProductRepository;
         }
 
         [AllowAnonymous]
@@ -165,10 +167,13 @@ namespace Xure.App.Controllers
                 Seller = SellerRepository.GetSellersWithInclude().Where(c => c.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value).FirstOrDefault(),
                 Client = ClientRepository.GetClientWithInclude(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value),
                 SellerForOrders = sellerOrderRepository.GetOrders()
-                .Where(C => C.Order.OrderProducts == C.Order.OrderProducts.Where(c => c.Product.Seller.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)),
-                CountSellerOrders = sellerOrderRepository.GetOrders()
-                .Where(C => C.Order.OrderProducts == C.Order.OrderProducts.Where(c => c.Product.Seller.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)).Count()                
+                .Where(C => C.Order.OrderProducts == C.Order.OrderProducts.Where(c => c.Product.Seller.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value)),                
             };            
+            if (vm.Seller != null)
+            {
+                vm.CountSellerOrders = orderProductRepository.GetWithInclude(
+                    c => c.Product.Seller.Id == SellerRepository.GetIdByUserId(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value), c => c.Product.Seller).Count();
+            };
             return View(vm);
         }
 
