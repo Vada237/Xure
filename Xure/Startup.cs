@@ -13,6 +13,7 @@ using Xure.Data;
 using Xure.Api.Services;
 using Xure.Api.Interfaces;
 using Microsoft.AspNetCore.Identity;
+using Xure.App.Models;
 
 namespace Xure.App
 {
@@ -65,8 +66,9 @@ namespace Xure.App
             services.AddTransient<IUserRepository, UserRepository>();
             services.AddTransient<ISellerRepository, SellerRepository>();
             services.AddTransient<IClientRepository, ClientRepository>();
-            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));            
-            services.AddScoped<Cart>();
+            services.AddTransient(typeof(IRepository<>), typeof(Repository<>));
+            services.AddTransient<Product>();
+            services.AddScoped<Cart>(c => SessionCart.GetCart(c));
             services.AddControllersWithViews();
             services.AddMemoryCache();
             services.AddSession();

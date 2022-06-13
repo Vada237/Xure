@@ -8,5 +8,7 @@ namespace Xure.Api.Interfaces
         SellerOrder GetSellerOrder(int id);
 
         IEnumerable<SellerOrder> GetOrders();
+
+        SellerOrder GetWithOrderIdAndProductId(long orderId,long productId);
     }
 }

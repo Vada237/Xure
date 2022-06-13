@@ -14,11 +14,15 @@ namespace Xure.Api.Services
             AppDbContext = context;
         }
 
-        public SellerOrder GetSellerOrder(int id)
+        public SellerOrder GetSellerOrder(int sellerOrderId)
         {
-            return GetAll().FirstOrDefault(x => x.Id == id);
+            return GetAll().FirstOrDefault(x => x.Id == sellerOrderId);
         }
 
+        public SellerOrder GetWithOrderIdAndProductId(long orderId,long productId)
+        {
+            return GetWithInclude(c => c.OrderId == orderId, c => c.Delivery).FirstOrDefault();
+        }
         public IEnumerable<SellerOrder> GetOrders()
         {
             var query = AppDbContext.SellerOrders.Include(x => x.Order).Include(x => x.Order.OrderProducts).ThenInclude(c => c.Product.Seller);                

@@ -6,6 +6,8 @@ namespace Xure.Api.Interfaces
 {
     public interface IUserRepository
     {
-        IEnumerable<IdentityUser> GetUsers();        
+        IEnumerable<IdentityUser> GetUsers();     
+        
+        IdentityUser GetUserById(string id); 
     }
 }

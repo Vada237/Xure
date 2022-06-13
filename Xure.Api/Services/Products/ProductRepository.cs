@@ -15,7 +15,7 @@ namespace Xure.Api.Services
         }
         public Product GetById(long id)
         {
-            return GetWithInclude(c => c.Id == id, c => c.Price.PriceHistory, c => c.Category, c => c.Brands, c=> c.ProductSpecificationsValues ).FirstOrDefault(x => x.Id == id);
+            return GetWithInclude(c => c.Id == id, c => c.Price.PriceHistory, c => c.Category, c => c.Brands, c=> c.ProductSpecificationsValues ).FirstOrDefault();
         }
 
         public void DeleteProduct(Product product)

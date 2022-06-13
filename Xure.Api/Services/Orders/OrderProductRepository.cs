@@ -15,7 +15,7 @@ namespace Xure.Api.Services
 
         public OrderProduct GetByIds(long orderId, long productId)
         {
-            return GetAll().FirstOrDefault(x => x.OrderId == orderId && x.ProductId == productId);
+            return GetWithInclude(x => x.OrderId == orderId && x.ProductId == productId, c => c.Product).FirstOrDefault();
         }
 
         public IEnumerable<OrderProduct> GetByOrderId(long id)

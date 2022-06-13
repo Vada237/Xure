@@ -100,3 +100,9 @@ C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Order\Com
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Client\OrderList.cshtml.g.cs
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Client\OrderProductInfo.cshtml.g.cs
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Seller\SellerOrderList.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Seller\OrderProductInfo.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Order\returnOrder.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Report\ReportList.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Report\ReportInfo.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Admin\ReportList.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Report\ReportProduct.cshtml.g.cs

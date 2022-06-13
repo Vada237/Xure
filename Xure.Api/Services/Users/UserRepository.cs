@@ -21,6 +21,11 @@ namespace Xure.Api.Services
                 return null;
             }
             return AppDbContext.Users;
-        }       
+        }
+
+        public IdentityUser GetUserById(string id)
+        {
+            return AppDbContext.Users.FirstOrDefault(s => s.Id == id);
+        }
     }
 }
