@@ -33,14 +33,21 @@ namespace Xure.Data
 
 
         public AppDbContext(DbContextOptions<AppDbContext> dbContextOptions) : base(dbContextOptions)
-        {
-                          
+        {            
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<OrderProduct>(
+                c =>
+                {
+                    c.HasOne(c => c.ReceptionPoint)
+                    .WithMany(c => c.OrderProducts)
+                    .HasForeignKey(c => c.ReceptionPointId)
+                    .OnDelete(DeleteBehavior.NoAction);
+                });
             builder.Entity<Product>(
             c => {
                 c.HasOne(c => c.Category)
@@ -80,25 +87,9 @@ namespace Xure.Data
                         .HasForeignKey(c => c.CompanyId)
                         .OnDelete(DeleteBehavior.NoAction);
                   });
-            builder.Entity<Message>(
-                c =>
-                {
-                    c.HasOne(c => c.Client)
-                    .WithMany(c => c.ClientMessages)
-                    .HasForeignKey(c => c.ClientId)
-                    .OnDelete(DeleteBehavior.NoAction);
-                    c.HasOne(c => c.Seller)
-                    .WithMany(c => c.SellerMessages)
-                    .HasForeignKey(c => c.SellerId)
-                    .OnDelete(DeleteBehavior.NoAction);
-                });
             builder.Entity<Order>(
                 c =>
-                {
-                    c.HasOne(c => c.ReceptionPoint)
-                    .WithMany(c => c.Orders)
-                    .HasForeignKey(c => c.ReceptionPointId)
-                    .OnDelete(DeleteBehavior.NoAction);
+                {                    
                     c.HasOne(c => c.Client)
                     .WithMany(c => c.Orders)
                     .HasForeignKey(c => c.ClientId)
@@ -113,7 +104,7 @@ namespace Xure.Data
                         c => c.HasOne(c => c.Order)
                         .WithMany(c => c.OrderProducts)
                         .HasForeignKey(c => c.OrderId)
-                        .OnDelete(DeleteBehavior.NoAction));                    
+                        .OnDelete(DeleteBehavior.NoAction));                                           
                 });            
                 
             builder.Entity<Reviews>(
@@ -131,14 +122,21 @@ namespace Xure.Data
                 c =>
                 {
                     c.HasOne(c => c.Order)
-                   .WithMany(c => c.OrderReports)
-                   .HasForeignKey(c => c.OrderId)
-                   .OnDelete(DeleteBehavior.NoAction);
+                    .WithMany(c => c.OrderReports)
+                    .HasForeignKey(c => c.OrderId)
+                    .OnDelete(DeleteBehavior.NoAction);
+
+                    c.HasOne(C => C.Product)
+                    .WithMany(c => c.OrderReports)
+                    .HasForeignKey(c => c.ProductId)
+                    .OnDelete(DeleteBehavior.NoAction);
+
                     c.HasOne(c => c.Reason)
                     .WithMany(c => c.OrderReports)
                     .HasForeignKey(c => c.ReasonId)
-                    .OnDelete(DeleteBehavior.NoAction);
+                    .OnDelete(DeleteBehavior.NoAction);                 
                 });
+
             builder.Entity<ProductReport>(
                 c =>
                 {
@@ -214,6 +212,20 @@ namespace Xure.Data
                 .HasForeignKey(c => c.ProductId)
                 .OnDelete(DeleteBehavior.NoAction)
                 );
+
+            builder.Entity<Message>(
+                c => {
+                    c.HasOne(c => c.Sender)
+                 .WithMany(c => c.senderMessages)
+                 .HasForeignKey(c => c.SenderId)
+                 .OnDelete(DeleteBehavior.NoAction);
+                   
+                    c.HasOne(c => c.Recipient)
+                    .WithMany(c => c.recipientMessages)
+                    .HasForeignKey(c => c.RecipientId)
+                    .OnDelete(DeleteBehavior.NoAction);
+                });
+
             //// Первичная инициализация данными
 
 
@@ -305,14 +317,27 @@ namespace Xure.Data
                     new ProductSpecifications { Id = 46, Name = "Высота", CategoryId = 8},
                     new ProductSpecifications { Id = 47, Name = "Материал", CategoryId = 9},
                 });
-            builder.Entity<ReceptionPoint>().HasData(
-                new ReceptionPoint[]
+
+            //builder.Entity<ReceptionPoint>().HasData(
+            //    new ReceptionPoint[]
+            //    {
+            //        new ReceptionPoint { id = 1, Address = "Москва, ул.Лестева, д.9"},
+            //        new ReceptionPoint { id = 2, Address = "Воронеж, ул.3 Интернационала, д.35"},
+            //        new ReceptionPoint { id = 3, Address = "Ростов-на-Дону, пер. Журавлева, д.127"},
+            //        new ReceptionPoint { id = 4, Address = "Ставрополь, ул. Ломоносова, д.30"}
+            //    });
+
+            builder.Entity<Reason>().HasData(
+                new Reason[]
                 {
-                    new ReceptionPoint { id = 1, Address = "Москва, ул.Лестева, д.9", OpenTime = new TimeSpan(7,30,30), CloseTime = new TimeSpan(20,30,00)},
-                    new ReceptionPoint { id = 2, Address = "Воронеж, ул.3 Интернационала, д.35", OpenTime = new TimeSpan(8,30,30), CloseTime = new TimeSpan(20,30,00)},
-                    new ReceptionPoint { id = 3, Address = "Ростов-на-Дону, пер. Журавлева, д.127", OpenTime = new TimeSpan(8,30,30), CloseTime = new TimeSpan(20,30,00)},
-                    new ReceptionPoint { id = 4, Address = "Ставрополь, ул. Ломоносова, д.30", OpenTime = new TimeSpan(7,30,30), CloseTime = new TimeSpan(20,30,00)},
-                });
+                    new Reason {Id = 1, Name = "Некачественный товар", Description = "Товар пришел в бракованном состоянии", Category = "Заказ"},
+                    new Reason {Id = 2, Name = "Товар отсутствует", Description = "Товар не был потерян в процессе доставки", Category = "Заказ"},
+                    new Reason {Id = 3, Name = "Меня не устраивает товар", Description = "Товар не соответствует своим характеристикам", Category = "Заказ"},
+                    new Reason {Id = 4, Name = "Неприличное содержание", Description = "В информации о товаре содержится нецензурная лексика", Category = "Товар"},
+                    new Reason {Id = 5, Name = "Запрещенный товар", Description = "Данный товар запрещен на территории страны", Category = "Товар"},
+                    new Reason {Id = 6, Name = "Продажа товаров без лицензии", Description = "Поставщик продает товары моей компании без лицензии на продажу", Category = "Товар"}
+                }
+                );
         }
 
         public static async Task CreateAccount(IServiceProvider serviceProvider, IConfiguration configuration)

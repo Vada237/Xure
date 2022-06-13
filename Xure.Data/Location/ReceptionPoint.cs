@@ -17,12 +17,13 @@ namespace Xure.Data
 
         [Required(ErrorMessage = "Введите время открытия")]
         [Timestamp]
-        public TimeSpan OpenTime { get; set; }
+        public TimeSpan? OpenTime { get; set; }
 
         [Required(ErrorMessage = "Введите время закрытия")]
         [Timestamp]
-        public TimeSpan CloseTime { get; set; }
-        public List<Order> Orders { get; set; }
+        public TimeSpan? CloseTime { get; set; }
+        
+        public List<OrderProduct> OrderProducts { get; set; }
         public List<Delivery> Deliveries   { get; set; }
     }
 }

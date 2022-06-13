@@ -54,5 +54,9 @@ namespace Xure.Data
         [JsonIgnore]
         [IgnoreDataMember]
         public List<ProductSpecificationsValue> ProductSpecificationsValues { get; set; }
+
+        [JsonIgnore]
+        [IgnoreDataMember]
+        public List<OrderReport> OrderReports { get; set; } 
     }
 }

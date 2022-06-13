@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Xure.Data.Migrations
 {
-    public partial class fxKeys : Migration
+    public partial class Init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -103,7 +103,8 @@ namespace Xure.Data.Migrations
                 {
                     Id = table.Column<byte>(type: "tinyint", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false)
+                    Description = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    Category = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -263,6 +264,33 @@ namespace Xure.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Messages",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Text = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
+                    SenderId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    RecipientId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    MessageTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Image = table.Column<byte[]>(type: "varbinary(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Messages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Messages_AspNetUsers_RecipientId",
+                        column: x => x.RecipientId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Messages_AspNetUsers_SenderId",
+                        column: x => x.SenderId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "ProductSpecifications",
                 columns: table => new
                 {
@@ -312,6 +340,7 @@ namespace Xure.Data.Migrations
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ReceprtionPointId = table.Column<int>(type: "int", nullable: false),
+                    Address = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     DepartTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -331,11 +360,7 @@ namespace Xure.Data.Migrations
                 {
                     Id = table.Column<long>(type: "bigint", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ClientId = table.Column<int>(type: "int", nullable: false),
-                    ReceptionPointId = table.Column<int>(type: "int", nullable: false),
-                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Status = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
-                    TrackNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ClientId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -344,63 +369,6 @@ namespace Xure.Data.Migrations
                         name: "FK_Orders_Clients_ClientId",
                         column: x => x.ClientId,
                         principalTable: "Clients",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Orders_ReceptionPoints_ReceptionPointId",
-                        column: x => x.ReceptionPointId,
-                        principalTable: "ReceptionPoints",
-                        principalColumn: "id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Messages",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Text = table.Column<string>(type: "nvarchar(1000)", maxLength: 1000, nullable: true),
-                    ClientId = table.Column<int>(type: "int", nullable: false),
-                    SellerId = table.Column<int>(type: "int", nullable: false),
-                    MessageTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Image = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Messages", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Messages_Clients_ClientId",
-                        column: x => x.ClientId,
-                        principalTable: "Clients",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_Messages_Sellers_SellerId",
-                        column: x => x.SellerId,
-                        principalTable: "Sellers",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "OrderReports",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderId = table.Column<long>(type: "bigint", nullable: false),
-                    ReasonId = table.Column<byte>(type: "tinyint", nullable: false),
-                    Commentary = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_OrderReports", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_OrderReports_Orders_OrderId",
-                        column: x => x.OrderId,
-                        principalTable: "Orders",
-                        principalColumn: "Id");
-                    table.ForeignKey(
-                        name: "FK_OrderReports_Reasons_ReasonId",
-                        column: x => x.ReasonId,
-                        principalTable: "Reasons",
                         principalColumn: "Id");
                 });
 
@@ -411,7 +379,7 @@ namespace Xure.Data.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     OrderId = table.Column<long>(type: "bigint", nullable: false),
-                    DeliveryId = table.Column<long>(type: "bigint", nullable: false)
+                    DeliveryId = table.Column<long>(type: "bigint", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -469,7 +437,11 @@ namespace Xure.Data.Migrations
                 {
                     ProductId = table.Column<long>(type: "bigint", nullable: false),
                     OrderId = table.Column<long>(type: "bigint", nullable: false),
-                    Quantity = table.Column<int>(type: "int", nullable: false)
+                    Quantity = table.Column<int>(type: "int", nullable: false),
+                    ReceptionPointId = table.Column<int>(type: "int", nullable: false),
+                    OrderDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Status = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: false),
+                    TrackNumber = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -483,6 +455,42 @@ namespace Xure.Data.Migrations
                         name: "FK_OrderProducts_Products_ProductId",
                         column: x => x.ProductId,
                         principalTable: "Products",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_OrderProducts_ReceptionPoints_ReceptionPointId",
+                        column: x => x.ReceptionPointId,
+                        principalTable: "ReceptionPoints",
+                        principalColumn: "id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderReports",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    OrderId = table.Column<long>(type: "bigint", nullable: false),
+                    ProductId = table.Column<long>(type: "bigint", nullable: false),
+                    ReasonId = table.Column<byte>(type: "tinyint", nullable: false),
+                    Commentary = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderReports", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderReports_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_OrderReports_Products_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "Products",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_OrderReports_Reasons_ReasonId",
+                        column: x => x.ReasonId,
+                        principalTable: "Reasons",
                         principalColumn: "Id");
                 });
 
@@ -623,14 +631,16 @@ namespace Xure.Data.Migrations
                 });
 
             migrationBuilder.InsertData(
-                table: "ReceptionPoints",
-                columns: new[] { "id", "Address","OpenTime","CloseTime"},
+                table: "Reasons",
+                columns: new[] { "Id", "Category", "Description", "Name" },
                 values: new object[,]
                 {
-                    { 4, "Ставрополь, ул. Ломоносова, д.30","7:30:00","20:00:00" },
-                    { 3, "Ростов-на-Дону, пер. Журавлева, д.127","7:30:00","20:00:00" },
-                    { 2, "Воронеж, ул.3 Интернационала, д.35","7:30:00","20:00:00" },
-                    { 1, "Москва, ул.Лестева, д.9","7:30:00","20:00:00" }
+                    { (byte)6, "Товар", "Поставщик продает товары моей компании без лицензии на продажу", "Продажа товаров без лицензии" },
+                    { (byte)5, "Товар", "Данный товар запрещен на территории страны", "Запрещенный товар" },
+                    { (byte)4, "Товар", "В информации о товаре содержится нецензурная лексика", "Неприличное содержание" },
+                    { (byte)3, "Заказ", "Товар не соответствует своим характеристикам", "Меня не устраивает товар" },
+                    { (byte)2, "Заказ", "Товар не был потерян в процессе доставки", "Товар отсутствует" },
+                    { (byte)1, "Заказ", "Товар пришел в бракованном состоянии", "Некачественный товар" }
                 });
 
             migrationBuilder.InsertData(
@@ -646,14 +656,14 @@ namespace Xure.Data.Migrations
                     { 12, "Шелк" },
                     { 11, "Лён" },
                     { 10, "Хлопок" },
-                    { 3, "Мл" },
+                    { 2, "Кг" },
                     { 8, "Упаковка" },
                     { 7, "Шт" },
                     { 6, "М" },
                     { 5, "См" },
                     { 4, "Л" },
+                    { 3, "Мл" },
                     { 18, "В" },
-                    { 2, "Кг" },
                     { 1, "Г" },
                     { 9, "mA" },
                     { 19, "Мм" }
@@ -772,14 +782,14 @@ namespace Xure.Data.Migrations
                 column: "ReceprtionPointId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_ClientId",
+                name: "IX_Messages_RecipientId",
                 table: "Messages",
-                column: "ClientId");
+                column: "RecipientId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Messages_SellerId",
+                name: "IX_Messages_SenderId",
                 table: "Messages",
-                column: "SellerId");
+                column: "SenderId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderProducts_ProductId",
@@ -787,9 +797,19 @@ namespace Xure.Data.Migrations
                 column: "ProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_OrderProducts_ReceptionPointId",
+                table: "OrderProducts",
+                column: "ReceptionPointId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_OrderReports_OrderId",
                 table: "OrderReports",
                 column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderReports_ProductId",
+                table: "OrderReports",
+                column: "ProductId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_OrderReports_ReasonId",
@@ -800,11 +820,6 @@ namespace Xure.Data.Migrations
                 name: "IX_Orders_ClientId",
                 table: "Orders",
                 column: "ClientId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Orders_ReceptionPointId",
-                table: "Orders",
-                column: "ReceptionPointId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_PriceHistories_ProductId",
@@ -913,10 +928,6 @@ namespace Xure.Data.Migrations
                 table: "Sellers");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Products_Sellers_SellerId",
-                table: "Products");
-
-            migrationBuilder.DropForeignKey(
                 name: "FK_PriceHistories_Products_ProductId",
                 table: "PriceHistories");
 
@@ -975,19 +986,13 @@ namespace Xure.Data.Migrations
                 name: "Orders");
 
             migrationBuilder.DropTable(
-                name: "Clients");
-
-            migrationBuilder.DropTable(
                 name: "ReceptionPoints");
 
             migrationBuilder.DropTable(
+                name: "Clients");
+
+            migrationBuilder.DropTable(
                 name: "AspNetUsers");
-
-            migrationBuilder.DropTable(
-                name: "Sellers");
-
-            migrationBuilder.DropTable(
-                name: "Companies");
 
             migrationBuilder.DropTable(
                 name: "Products");
@@ -1002,7 +1007,13 @@ namespace Xure.Data.Migrations
                 name: "Prices");
 
             migrationBuilder.DropTable(
+                name: "Sellers");
+
+            migrationBuilder.DropTable(
                 name: "PriceHistories");
+
+            migrationBuilder.DropTable(
+                name: "Companies");
         }
     }
 }

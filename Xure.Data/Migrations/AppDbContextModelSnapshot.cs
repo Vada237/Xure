@@ -394,17 +394,19 @@ namespace Xure.Data.Migrations
                         .HasColumnType("int")
                         .UseIdentityColumn();
 
-                    b.Property<int>("ClientId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Image")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<byte[]>("Image")
+                        .HasColumnType("varbinary(max)");
 
                     b.Property<DateTime>("MessageTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("SellerId")
-                        .HasColumnType("int");
+                    b.Property<string>("RecipientId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SenderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Text")
                         .HasMaxLength(1000)
@@ -412,9 +414,9 @@ namespace Xure.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("RecipientId");
 
-                    b.HasIndex("SellerId");
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Messages");
                 });
@@ -429,25 +431,9 @@ namespace Xure.Data.Migrations
                     b.Property<int>("ClientId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("OrderDate")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("ReceptionPointId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("nvarchar(40)");
-
-                    b.Property<string>("TrackNumber")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.HasIndex("ClientId");
-
-                    b.HasIndex("ReceptionPointId");
 
                     b.ToTable("Orders");
                 });
@@ -460,12 +446,28 @@ namespace Xure.Data.Migrations
                     b.Property<long>("ProductId")
                         .HasColumnType("bigint");
 
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
+
+                    b.Property<int>("ReceptionPointId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
+
+                    b.Property<string>("TrackNumber")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("OrderId", "ProductId");
 
                     b.HasIndex("ProductId");
+
+                    b.HasIndex("ReceptionPointId");
 
                     b.ToTable("OrderProducts");
                 });
@@ -483,12 +485,17 @@ namespace Xure.Data.Migrations
                     b.Property<long>("OrderId")
                         .HasColumnType("bigint");
 
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
                     b.Property<byte>("ReasonId")
                         .HasColumnType("tinyint");
 
                     b.HasKey("Id");
 
                     b.HasIndex("OrderId");
+
+                    b.HasIndex("ProductId");
 
                     b.HasIndex("ReasonId");
 
@@ -949,6 +956,11 @@ namespace Xure.Data.Migrations
                     b.Property<byte>("Id")
                         .HasColumnType("tinyint");
 
+                    b.Property<string>("Category")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(200)
@@ -962,6 +974,50 @@ namespace Xure.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Reasons");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = (byte)1,
+                            Category = "Заказ",
+                            Description = "Товар пришел в бракованном состоянии",
+                            Name = "Некачественный товар"
+                        },
+                        new
+                        {
+                            Id = (byte)2,
+                            Category = "Заказ",
+                            Description = "Товар не был потерян в процессе доставки",
+                            Name = "Товар отсутствует"
+                        },
+                        new
+                        {
+                            Id = (byte)3,
+                            Category = "Заказ",
+                            Description = "Товар не соответствует своим характеристикам",
+                            Name = "Меня не устраивает товар"
+                        },
+                        new
+                        {
+                            Id = (byte)4,
+                            Category = "Товар",
+                            Description = "В информации о товаре содержится нецензурная лексика",
+                            Name = "Неприличное содержание"
+                        },
+                        new
+                        {
+                            Id = (byte)5,
+                            Category = "Товар",
+                            Description = "Данный товар запрещен на территории страны",
+                            Name = "Запрещенный товар"
+                        },
+                        new
+                        {
+                            Id = (byte)6,
+                            Category = "Товар",
+                            Description = "Поставщик продает товары моей компании без лицензии на продажу",
+                            Name = "Продажа товаров без лицензии"
+                        });
                 });
 
             modelBuilder.Entity("Xure.Data.ReceptionPoint", b =>
@@ -975,49 +1031,21 @@ namespace Xure.Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<TimeSpan>("CloseTime")
+                    b.Property<TimeSpan?>("CloseTime")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("time");
 
-                    b.Property<TimeSpan>("OpenTime")
+                    b.Property<TimeSpan?>("OpenTime")
                         .IsConcurrencyToken()
+                        .IsRequired()
                         .ValueGeneratedOnAddOrUpdate()
                         .HasColumnType("time");
 
                     b.HasKey("id");
 
                     b.ToTable("ReceptionPoints");
-
-                    b.HasData(
-                        new
-                        {
-                            id = 1,
-                            Address = "Москва, ул.Лестева, д.9",
-                            CloseTime = new TimeSpan(0, 20, 30, 0, 0),
-                            OpenTime = new TimeSpan(0, 7, 30, 30, 0)
-                        },
-                        new
-                        {
-                            id = 2,
-                            Address = "Воронеж, ул.3 Интернационала, д.35",
-                            CloseTime = new TimeSpan(0, 20, 30, 0, 0),
-                            OpenTime = new TimeSpan(0, 8, 30, 30, 0)
-                        },
-                        new
-                        {
-                            id = 3,
-                            Address = "Ростов-на-Дону, пер. Журавлева, д.127",
-                            CloseTime = new TimeSpan(0, 20, 30, 0, 0),
-                            OpenTime = new TimeSpan(0, 8, 30, 30, 0)
-                        },
-                        new
-                        {
-                            id = 4,
-                            Address = "Ставрополь, ул. Ломоносова, д.30",
-                            CloseTime = new TimeSpan(0, 20, 30, 0, 0),
-                            OpenTime = new TimeSpan(0, 7, 30, 30, 0)
-                        });
                 });
 
             modelBuilder.Entity("Xure.Data.Reviews", b =>
@@ -1307,21 +1335,21 @@ namespace Xure.Data.Migrations
 
             modelBuilder.Entity("Xure.Data.Message", b =>
                 {
-                    b.HasOne("Xure.Data.Clients", "Client")
-                        .WithMany("ClientMessages")
-                        .HasForeignKey("ClientId")
+                    b.HasOne("Xure.Data.AppUser", "Recipient")
+                        .WithMany("recipientMessages")
+                        .HasForeignKey("RecipientId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Xure.Data.Sellers", "Seller")
-                        .WithMany("SellerMessages")
-                        .HasForeignKey("SellerId")
+                    b.HasOne("Xure.Data.AppUser", "Sender")
+                        .WithMany("senderMessages")
+                        .HasForeignKey("SenderId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.Navigation("Client");
+                    b.Navigation("Recipient");
 
-                    b.Navigation("Seller");
+                    b.Navigation("Sender");
                 });
 
             modelBuilder.Entity("Xure.Data.Order", b =>
@@ -1332,15 +1360,7 @@ namespace Xure.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Xure.Data.ReceptionPoint", "ReceptionPoint")
-                        .WithMany("Orders")
-                        .HasForeignKey("ReceptionPointId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
                     b.Navigation("Client");
-
-                    b.Navigation("ReceptionPoint");
                 });
 
             modelBuilder.Entity("Xure.Data.OrderProduct", b =>
@@ -1357,9 +1377,17 @@ namespace Xure.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Xure.Data.ReceptionPoint", "ReceptionPoint")
+                        .WithMany("OrderProducts")
+                        .HasForeignKey("ReceptionPointId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.Navigation("Order");
 
                     b.Navigation("Product");
+
+                    b.Navigation("ReceptionPoint");
                 });
 
             modelBuilder.Entity("Xure.Data.OrderReport", b =>
@@ -1370,6 +1398,12 @@ namespace Xure.Data.Migrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Xure.Data.Product", "Product")
+                        .WithMany("OrderReports")
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("Xure.Data.Reason", "Reason")
                         .WithMany("OrderReports")
                         .HasForeignKey("ReasonId")
@@ -1377,6 +1411,8 @@ namespace Xure.Data.Migrations
                         .IsRequired();
 
                     b.Navigation("Order");
+
+                    b.Navigation("Product");
 
                     b.Navigation("Reason");
                 });
@@ -1563,8 +1599,6 @@ namespace Xure.Data.Migrations
 
             modelBuilder.Entity("Xure.Data.Clients", b =>
                 {
-                    b.Navigation("ClientMessages");
-
                     b.Navigation("Orders");
 
                     b.Navigation("Reviews");
@@ -1603,6 +1637,8 @@ namespace Xure.Data.Migrations
                 {
                     b.Navigation("OrderProducts");
 
+                    b.Navigation("OrderReports");
+
                     b.Navigation("PriceHistories");
 
                     b.Navigation("ProductReports");
@@ -1628,14 +1664,12 @@ namespace Xure.Data.Migrations
                 {
                     b.Navigation("Deliveries");
 
-                    b.Navigation("Orders");
+                    b.Navigation("OrderProducts");
                 });
 
             modelBuilder.Entity("Xure.Data.Sellers", b =>
                 {
                     b.Navigation("Products");
-
-                    b.Navigation("SellerMessages");
                 });
 
             modelBuilder.Entity("Xure.Data.Units", b =>
@@ -1647,7 +1681,11 @@ namespace Xure.Data.Migrations
                 {
                     b.Navigation("Client");
 
+                    b.Navigation("recipientMessages");
+
                     b.Navigation("Seller");
+
+                    b.Navigation("senderMessages");
                 });
 #pragma warning restore 612, 618
         }

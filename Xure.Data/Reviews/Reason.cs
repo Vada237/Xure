@@ -21,6 +21,9 @@ namespace Xure.Data
         [MaxLength(200, ErrorMessage = "Название не должно превышать 200 символов")]
         public string Description { get; set; }
 
+        [Required]
+        [MaxLength(20, ErrorMessage = "Причина не должна быть длиннее 20 символов")]
+        public string Category { get; set; }
         public List<OrderReport> OrderReports { get; set; }
 
         public List<ProductReport> ProductReports { get; set; }

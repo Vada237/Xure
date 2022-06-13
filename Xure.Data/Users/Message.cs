@@ -16,16 +16,13 @@ namespace Xure.Data
         public string Text { get; set; }
         
         
-        public Clients Client { get; set; }
+        public AppUser Sender { get; set; }        
+        public string SenderId { get; set; }
+        public AppUser Recipient { get; set; }
 
-        [Required(ErrorMessage = "Отсутствует клиент")]
-        public int ClientId { get; set; }
-        public Sellers Seller { get; set; }
-
-        [Required(ErrorMessage = "Отсутствует поставщик")]
-        public int SellerId { get; set; }
+        public string RecipientId { get; set; }
         public DateTime MessageTime { get; set; }
 
-        public string Image { get; set; }
+        public byte[] Image { get; set; }
     }
 }

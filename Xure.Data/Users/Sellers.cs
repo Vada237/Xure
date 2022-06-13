@@ -17,8 +17,5 @@ namespace Xure.Data
         public long CompanyId { get; set; }
         [IgnoreDataMember]
         public List<Product> Products { get; set; }
-        [IgnoreDataMember]
-        public List<Message> SellerMessages { get; set; }
-
     }
 }

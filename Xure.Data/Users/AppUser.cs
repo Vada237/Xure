@@ -18,5 +18,7 @@ namespace Xure.Data
         
         public Sellers Seller { get; set; }        
         public Clients Client { get; set; }
+        public List<Message> senderMessages { get; set; }
+        public List<Message> recipientMessages { get; set; }
     }
 }

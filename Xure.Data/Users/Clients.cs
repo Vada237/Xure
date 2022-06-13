@@ -12,8 +12,7 @@ namespace Xure.Data
         public AppUser UserInfo { get; set; }
         public string UserId { get; set; }
 
-        public List<Reviews> Reviews { get; set; }
-        public List<Message> ClientMessages { get; set; }
+        public List<Reviews> Reviews { get; set; }        
         public List<Order> Orders { get; set; }
     }
 }
