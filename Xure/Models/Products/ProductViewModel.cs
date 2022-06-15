@@ -68,6 +68,10 @@ namespace Xure.App.Models
 
         public bool? locked { get; set; }
         public IEnumerable<ProductSpecificationsValue> productSpecificationsValues { get; set; }
-        public ProductSpecificationsValue productSpecificationsValue { get; set; }                
+        public ProductSpecificationsValue productSpecificationsValue { get; set; }   
+        
+        public IEnumerable<Reviews> Reviews { get; set; }
+             
+        public ProductReport? ProductReport { get; set; }
     }
 }
