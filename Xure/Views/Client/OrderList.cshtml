@@ -12,10 +12,10 @@
             </div>
             @foreach (var i in Model)
             {
-                <form asp-action="OrderProductInfo" asp-controller="Client" method="get">                                        
-                    <input type="hidden" value="@i.ProductId" name="productId">    
-                    <input type="hidden" value="@i.OrderId" name="orderId">    
-                    <div class="row border-dark m-3 p-3">
+                    <form asp-action="OrderProductInfo" asp-controller="Client" method="get">
+                        <input type="hidden" value="@i.ProductId" name="productId">
+                        <input type="hidden" value="@i.OrderId" name="orderId">
+                        <div class="row border-dark m-3 p-3">
                             <div class="col-4">
                                 <img class="goodInfoSettings" src="data:image/jpeg;base64,@(Convert.ToBase64String(@i.Product.Image))" />
                             </div>
@@ -25,10 +25,15 @@
                                 <h5>Количество: @i.Quantity</h5>
                                 <h5>Цена: @i.Product.Price.PriceHistory.Value</h5>
                                 <h5>Сумма: @(i.Quantity * i.Product.Price.PriceHistory.Value)</h5>
-                                <button type="submit" class="btn btn-outline-danger">Подробнее</button>
+                            @if (i.Status == "Подтвержден")
+                            {
+                                <a asp-action="CreateRating" asp-route-id="@i.ProductId" class="btn btn-outline-danger">Оставить отзыв</a>
+                            }
+                            <button type="submit" class="btn btn-outline-danger">Подробнее</button>
                             </div>
-                        </div>                                            
-                </form>
+                        </div>
+                    </form>
+            
             }
             <div class="row">
                 <div class="col-4 m-3 p-3">

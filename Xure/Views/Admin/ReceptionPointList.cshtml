@@ -1,0 +1,50 @@
+﻿@model ReceptionPointModel
+@{
+    Layout = "_AdminLayout";   
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 mt-4">
+            <h1>Информация о пунктах выдачи</h1>
+            @if(Model != null) {
+            <table class="table table-bordered">
+                <thead class="thead thead light">
+                    <tr>
+                        <th>Id</th>
+                        <th>Адрес</th>
+                        <th>Время открытия</th>
+                        <th>Время закрытия</th>
+                        <th colspan="2"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach(var i in Model.receptionPoints)
+                    {
+                        <tr>
+                            <td>@i.id</td>
+                            <td>@i.Address</td>
+                            <td>@i.OpenTime</td>
+                            <td>@i.CloseTime</td>
+                            <td><a asp-action="EditReceptionPoint" asp-controller="Admin" class="btn-primary btn" asp-route-id="@i.id">Изменить</a></td>
+                            <td><a asp-action="DeleteReceptionPoint" asp-controller="Admin" class="btn-primary btn" asp-route-id="@i.id">Удалить</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            }             
+
+        </div>
+        <div class="col-6 mt-4">
+            <form asp-action="CreateReceptionPoint" method="post">
+                <h1>Создать пункт выдачи</h1>
+                <input class="form-control mt-2" asp-for="@Model.ReceptionPoint.Address" placeholder="Адрес"/>
+                <input class="form-control mt-2" type="time" asp-for="@Model.ReceptionPoint.OpenTime" placeholder="Время открытия"/>
+                <input class="form-control mt-2" type="time" asp-for="@Model.ReceptionPoint.CloseTime" placeholder="Время закрытия"/>
+
+                <button type="submit" class="btn-primary mt-2 btn">Создать</button>
+            </form>
+        </div>
+    </div>
+</div>

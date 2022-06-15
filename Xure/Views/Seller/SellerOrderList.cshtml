@@ -5,13 +5,14 @@
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-8 offset-2 m-1 p-1">
+        <div class="col-2"></div>
+        <div class="col-8 m-1 p-1">
             <div class="m-3 p-3">
                 <h2>Мои заказы</h2>
             </div>
             @foreach (var i in Model.OrderProducts)
             {
-                @if (i.Status == "В сборке")
+                @if (i.Status != "Подан запрос на возврат")
                 {
                     <form asp-action="OrderProductInfo" asp-controller="Seller" method="get">
                         <input type="hidden" value="@i.ProductId" name="productId">
@@ -26,8 +27,9 @@
                                 <h5>Количество: @i.Quantity</h5>
                                 <h5>Статус: @i.Status</h5>
                                 <h5>Цена: @i.Product.Price.PriceHistory.Value</h5>
-                                <button type="submit" class="btn btn-outline-danger">Отправить заказ</button>
-
+                                @if(i.Status == "В сборке") {
+                                    <button type="submit" class="btn btn-outline-danger">Отправить заказ</button>
+                                }
                             </div>
                         </div>
                     </form>

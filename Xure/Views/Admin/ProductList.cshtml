@@ -1,0 +1,42 @@
+﻿@model IEnumerable<Product>
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8 offset-2 mt-4">
+            <div class="mt-4">
+                <h3>Информация о продуктах</h3>
+            </div>            
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Название</th>
+                        <th>Бренд</th>
+                        <th>Категория</th>
+                        <th>Цена</th>
+                        <th>Продавец</th>
+                        <th>Магазин</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach(var i in Model)
+                    {
+                        <tr>
+                            <td>@i.Id</td>
+                            <td>@i.Name</td>
+                            <td>@i.Brands.Name</td>
+                            <td>@i.Category.Name</td>
+                            <td>@i.Price.PriceHistory.Value</td>
+                            <td>@i.Seller.UserInfo.Surname @i.Seller.UserInfo.UserName @i.Seller.UserInfo.MiddleName</td>
+                            <td>@i.Seller.Company.Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

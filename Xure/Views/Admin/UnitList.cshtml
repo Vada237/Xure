@@ -1,0 +1,45 @@
+﻿@model UnitModel
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 mt-4">
+            <h1>Информация о пунктах выдачи</h1>
+            @if(Model != null) {
+            <table class="table table-bordered">
+                <thead class="thead thead light">
+                    <tr>
+                        <th>Id</th>
+                        <th>Название</th>                        
+                        <th colspan="2"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach(var i in Model.Units)
+                    {
+                        <tr>
+                            <td>@i.id</td>                            
+                            <td>@i.Name</td>                            
+                            <td><a asp-action="EditUnit" asp-controller="Admin" class="btn-primary btn" asp-route-id="@i.id">Изменить</a></td>
+                            <td><a asp-action="DeleteUnit" asp-controller="Admin" class="btn-primary btn" asp-route-id="@i.id">Удалить</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            }             
+
+        </div>
+        <div class="col-6 mt-4">
+            <form asp-action="CreateUnit" method="post">
+                <h1>Создать единицу измерения</h1>
+
+                <input class="form-control mt-2" asp-for="@Model.Unit.Name" placeholder="Название"/>                
+                <button type="submit" class="btn-primary mt-2 btn">Создать</button>
+
+            </form>
+        </div>
+    </div>
+</div>

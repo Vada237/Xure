@@ -1,0 +1,53 @@
+﻿@model ProductSpecificationsModel;
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 mt-4">
+            <h1>Информация о характеристиках товара</h1>
+            @if(Model != null) {
+            <table class="table table-bordered">
+                <thead class="thead thead light">
+                    <tr>
+                        <th>Id</th>
+                        <th>Название</th>
+                        <th>Категория</th>
+                        <th colspan="2"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach(var i in Model.ProductSpecifications)
+                    {
+                        <tr>
+                            <td>@i.Id</td>                            
+                            <td>@i.Name</td>                            
+                            <td>@i.Category.Name</td>
+                            <td><a asp-action="EditProductSpecification" asp-controller="Admin" class="btn-primary btn" asp-route-id="@i.Id">Изменить</a></td>
+                            <td><a asp-action="DeleteProductSpecification" asp-controller="Admin" class="btn-primary btn" asp-route-id="@i.Id">Удалить</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            }             
+
+        </div>
+        <div class="col-6 mt-4">
+            <form asp-action="CreateProductSpecification" method="post">
+                <h1>Создать Характеристику</h1>
+                <input class="form-control mt-2" asp-for="@Model.ProductSpecification.Name" placeholder="Название"/>                
+                <select asp-for="@Model.ProductSpecification.CategoryId" class="custom-select mt-2">
+                    <option disabled selected>Выберите категорию</option>
+                    @foreach(var i in Model.Categories)
+                    {
+                        <option value="@i.Id">@i.Name</option>
+                    }
+                </select>
+                <button type="submit" class="btn-primary mt-2 btn">Создать</button>
+
+            </form>
+        </div>
+    </div>
+</div>

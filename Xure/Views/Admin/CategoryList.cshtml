@@ -1,0 +1,45 @@
+﻿@model CategoryModel
+@{
+    Layout = "_AdminLayout";
+}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 mt-4">
+            <h1>Информация о категориях</h1>
+            @if(Model != null) {
+            <table class="table table-bordered">
+                <thead class="thead thead light">
+                    <tr>
+                        <th>Id</th>
+                        <th>Название</th>
+                        <th colspan="2"></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach(var i in Model.Categories)
+                    {
+                        <tr>
+                            <td>@i.Id</td>
+                            <td>@i.Name</td>
+                            <td><a asp-action="EditCategory" asp-controller="Admin" class="btn-primary btn" asp-route-id="@i.Id">Изменить</a></td>
+                            <td><a asp-action="DeleteCategory" asp-controller="Admin" class="btn-primary btn" asp-route-id="@i.Id">Удалить</a></td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            }             
+
+        </div>
+        <div class="col-6 mt-4">
+            <form asp-action="CreateCategory" method="post">
+                <h1>Создать категорию</h1>
+                <input class="form-control mt-2" asp-for="@Model.Category.Name" placeholder="Введите название"/>
+
+                <button type="submit" class="btn-primary mt-2 btn">Создать категорию</button>
+            </form>
+        </div>
+    </div>
+</div>

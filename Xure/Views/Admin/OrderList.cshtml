@@ -1,0 +1,48 @@
+﻿@model IEnumerable<OrderProduct>
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col mt-4">
+            <h1>Информация о заказах</h1>
+            @if(Model != null) {
+            <table class="table table-bordered">
+                <thead class="thead thead light">
+                    <tr>
+                        <th>Заказ</th>
+                        <th>Продукт</th>
+                        <th>Дата заказа</th>
+                        <th>Код отслеживания</th>
+                        <th>Магазин</th>
+                        <th>Продавец</th>
+                        <th>Клиент</th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach(var i in Model)
+                    {
+                        <tr>
+                            <td>@i.OrderId</td>
+                            <td>@i.Product.Name</td>
+                            <td>@i.OrderDate</td>
+                            <td>@i.TrackNumber</td>
+                            <td>@i.Product.Seller.Company.Name</td>
+                            <td>@i.Product.Seller.UserInfo.UserName @i.Product.Seller.UserInfo.Surname @i.Product.Seller.UserInfo.MiddleName</td>
+                            <td>@i.Order.Client.UserInfo.UserName @i.Order.Client.UserInfo.Surname </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            } else 
+            {
+                <h2>Закказов нет</h2>
+            }
+
+        </div>
+    </div>
+</div>

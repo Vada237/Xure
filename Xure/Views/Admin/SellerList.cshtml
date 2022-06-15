@@ -1,0 +1,52 @@
+﻿@model List<Sellers>
+
+@{
+    Layout = "_AdminLayout";
+}
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col mt-3">
+        
+            <h3>Информация о поставщиках</h3>
+
+            <table class="table table-bordered">
+                <thead class="thead thead-light">
+                    <tr>
+                        <th>Id</th>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Отчество</th>
+                        <th>Дата рождения</th>
+                        <th>Телефон</th>
+                        <th>Почта</th>
+                        <th>Магазин</th>
+                        <th>Описание</th>
+                        <th>ИНН</th>
+                        <th>ОГРН</th>
+                        <th>Зарегистрировался</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model)
+                    {
+                        <tr>
+                            <th>@i.UserInfo.Id</th>
+                            <th>@i.UserInfo.UserName</th>
+                            <th>@i.UserInfo.Surname</th>
+                            <th>@i.UserInfo.MiddleName</th>
+                            <th>@i.UserInfo.Birthday.ToShortDateString()</th>
+                            <th>@i.UserInfo.PhoneNumber</th>
+                            <th>@i.UserInfo.Email</th>
+                            <th>@i.Company.Name</th>
+                            <th>@i.Company.Description</th>
+                            <th>@i.Company.INN</th>
+                            <th>@i.Company.OGRN</th>
+                            <th>@i.Company.DateRegistration</th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>               
+    </div>
+</div>

@@ -1,0 +1,37 @@
+﻿@model List<AppUser>
+
+@{
+    Layout = "_AdminLayout";
+}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8 offset-2 mt-3">
+        
+            <h3>Информация о клиентах</h3>
+
+            <table class="table table-bordered">
+                <thead class="thead thead-light">
+                    <tr>
+                        <th>Id</th>
+                        <th>Имя</th>
+                        <th>Фамилия</th>
+                        <th>Телефон</th>
+                        <th>Почта</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var i in Model)
+                    {
+                        <tr>
+                            <th>@i.Id</th>
+                            <th>@i.UserName</th>
+                            <th>@i.Surname</th>
+                            <th>@i.PhoneNumber</th>
+                            <th>@i.Email</th>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

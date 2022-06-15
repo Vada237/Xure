@@ -10,34 +10,29 @@
 
             <table class="table table-bordered">
                 <thead class="thead">
-                    <tr>
-                        <th>Номер заявления</th>
+                    <tr>                        
+                        <th>Номер жалобы</th>
                         <th>Продукт</th>
                         <th>Причина</th>
                         <th>Комментарий</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>                       
+                <tbody>                                           
                         @foreach(var i in Model.orderReports)
                         {
+                            <tr>
                             <td>@i.Id</td>                
-                            <td>
-                                @foreach(var j in i.Order.Products)
-                                {
-                                    <p>@j.Name</p>
-                                }
-                            </td>
+                            <td>@i.Product.Name</td>
                             <td>@i.Reason.Name</td>
                             <td>@i.Commentary</td>                            
                             <td>
-                            <form asp-action="ReportInfo" asp-controller="Report">
+                            <form asp-action="ReportInfo" asp-controller="Admin">
                                 <input asp-for="@Model.OrderReport.Id" value="@i.Id" type="hidden">                                
                                 <button type="submit" class="btn btn-sm btn-outline-danger">Подробнее</button>
                             </form>
                             </td>
-                        }
-                    </tr>
+                            </tr>
+                        }                    
                 </tbody>
             </table>
         </div>
