@@ -20,6 +20,6 @@ namespace Xure.Data
         public byte ReasonId { get; set; }
         public string Commentary { get; set; }
 
-
+        public string Status { get; set; }
     }
 }

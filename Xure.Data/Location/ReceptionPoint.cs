@@ -11,16 +11,13 @@ namespace Xure.Data
     {
         public int id { get; set; }               
 
-        [Required(ErrorMessage = "Введите адрес")]
-        [RegularExpression(@"^г.\w*,\w*.\w*,\d+$")]
+        [Required(ErrorMessage = "Введите адрес")]       
         public string Address { get; set; }
 
-        [Required(ErrorMessage = "Введите время открытия")]
-        [Timestamp]
+        [Required(ErrorMessage = "Введите время открытия")]        
         public TimeSpan? OpenTime { get; set; }
 
-        [Required(ErrorMessage = "Введите время закрытия")]
-        [Timestamp]
+        [Required(ErrorMessage = "Введите время закрытия")]        
         public TimeSpan? CloseTime { get; set; }
         
         public List<OrderProduct> OrderProducts { get; set; }
