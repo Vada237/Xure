@@ -1,0 +1,39 @@
+﻿@model ReceptionPoint
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col mt-4">
+
+            <form asp-action="EditReceptionPoint" method="post">
+
+                <div class="form-group">
+                    <input asp-for="@Model.id" type="hidden" />                    
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.Address">Адрес</label>
+                    <input asp-for="@Model.Address" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.OpenTime">Время открытия</label>
+                    <input asp-for="@Model.OpenTime" class="form-control" />
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.CloseTime">Время закрытия</label>
+                    <input asp-for="@Model.CloseTime" class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Изменить
+                </button>
+                <a asp-action="ReceptionPointList" class="btn btn-danger">Вернуться</a>
+            </form>
+
+        </div>
+    </div>
+</div>

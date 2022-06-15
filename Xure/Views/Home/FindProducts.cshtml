@@ -1,0 +1,80 @@
+﻿@model ProductMainViewModel;
+
+@{
+    Layout = "_ClientLayout";
+}
+
+@if (Model != null)
+{
+    <div class="container-fluid">
+        <div class="row m-2 p-2">
+            <div class="col-8 offset-1">
+                <h3 class="Text-dark">@ViewBag.BodyTitle</h3>
+                <div class="row">
+                    @foreach (var i in Model.AllProducts)
+                    {
+                        <div class="col-3 m-4 goodsSettings">
+                            <a asp-action="productInfo" asp-route-id="@i.Id" class="nav-link text-dark">
+                                <img class="goodSettings" src="data:image/jpeg;base64,@(Convert.ToBase64String(i.Image))" />
+                                <h4>@i.Name</h4>
+                                <h6>Остаток: @i.Сount</h6>
+                                <h6>@i.Price.PriceHistory.Value</h6>
+                            </a>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="col-2 borderform mt-3"> 
+                
+                <form method="Get" asp-action="FindProducts" asp-controller="Home">
+
+                    <div class="form-group">
+                        <label>Поиск товаров</label>                        
+                        <input name="productName" class="form-control form-control-sm" placeholder="Поиск">
+                    </div>
+
+                    <select name="categoryName" class="custom-select custom-select-sm mt-2">
+                        <option selected hidden value="@null">Категория</option>
+                        @foreach (var item in Model.Categories)
+                        {
+                            <option value="@item.Name">@item.Name</option>
+                        }
+                    </select>
+
+                    <select name="brandName" class="custom-select custom-select-sm mt-2">
+                        <option selected hidden value="@null">Бренд</option>
+                        @foreach (var item in Model.Brands)
+                        {
+                            <option value="@item.Name">@item.Name</option>
+                        }
+                    </select>
+
+                    <div class="row">
+
+                        <div class="col-6 mt-2">
+                            <input name="minPrice" class="form-control form-control-sm" placeholder="Цена, от">
+                        </div>
+
+                        <div class="col-6 mt-2">
+                            <input name="MaxPrice" class="form-control form-control-sm" placeholder="Цена, до">
+                        </div>
+
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-3 mt-2">
+                            <button type="submit" class="btn btn-sm btn-outline-danger mb-1">Найти</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+}
+else
+{
+    <div>
+        Товаров нет
+    </div>
+}

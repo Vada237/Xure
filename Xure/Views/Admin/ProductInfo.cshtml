@@ -1,0 +1,43 @@
+﻿@model ProductInfoViewModel;
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="row mt-2">
+        <div class="col-10 offset-1">
+            <div class="row mt-2">
+                <div class="col-4">
+                    <img class="goodInfoSettings" src="data:image/jpeg;base64,@(Convert.ToBase64String(@Model.product.Image))" />
+                </div>
+
+                <div class="col-5 mt-2">
+                    <h2>@Model.product.Name</h2>
+                    <h2>Магазин: @Model.product.Seller.Company.Name</h2>
+                    <h6>@Model.product.Description</h6>
+                    <h6>Цена: @Model.product.Price.PriceHistory.Value</h6>
+                    <h6>Остаток: @Model.product.Сount</h6>
+                </div>
+
+                <div class="col-3 mt-2">
+                    <a asp-action="DeleteProduct" asp-route-id="@Model.product.Id" class="nav-link text-danger">Удалить</a>
+                    <a asp-action="DeleteProductReport" asp-route-id="@Model.ProductReport.Id" class="nav-link text-danger">Отклонить заявление</a>
+                    <a asp-action="AdminProfile" class="nav-link">Вернуться</a>                    
+                </div>                
+            </div>
+            <div class="col-4 mt-2">
+                <h2>Характеристики</h2>
+                <h6>Категория: @Model.product.Category.Name</h6>
+                <h6>Бренд: @Model.product.Brands.Name</h6>
+                <h6>Страна производитель: @Model.product.Brands.Country</h6>
+                @if (Model.productSpecificationsValues != null)
+                {
+                    @foreach (var i in Model.productSpecificationsValues)
+                    {
+                        <h6>@i.ProductSpecification.Name: @i.Value @i.Unit.Name</h6>
+                    }
+                }
+            </div>
+        </div>
+    </div>
+</div>

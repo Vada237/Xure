@@ -1,0 +1,32 @@
+﻿@model RatingViewModel;
+
+@{
+    Layout = "_ClientLayout";
+}
+
+<div class="container-fluid">
+    <div class="row">  
+        <div class="col-2"></div>
+        <div class="col-8 m-2 p-2">
+            <h3>Оставить отзыв</h3>
+
+            <form asp-action="CreateReview" method="post">
+            <input type="hidden" asp-for="@Model.Review.ClientId" value="@Model.Client.Id"/>
+            <input type="hidden" asp-for="@Model.Review.ProductId" value="@Model.Product.Id" />
+
+            <select asp-for="@Model.Review.Rating" class="custom-select-sm custom-select">
+                <option selected disabled>Оцените заказ</option>
+                @for(byte i = 1; i<=5;i++)
+                {
+                    <option value="@i">@i</option>
+                }
+            </select>
+
+            <textarea class="form-control z-depth-1 mt-2" asp-for="@Model.Review.Commentary" rows="3" placeholder="Напишите отзыв..."></textarea>
+            <button type="submit" class="btn btn-outline-danger mt-2">
+                Отправить
+            </button>
+        </form>
+        </div>        
+    </div>
+</div>

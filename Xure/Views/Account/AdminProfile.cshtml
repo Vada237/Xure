@@ -1,0 +1,116 @@
+﻿@model AdminViewModel
+
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container-fluid">
+    <div class="row mt-3">
+        <div class="col-6 mt-2">
+            <h3>Заявления на подтверждение поставщика</h3>
+            <table class="table table-bordered">
+                <thead class="thead thead-light">
+                    <tr>
+                        <th>Продавец</th>
+                        <th>Дата рождения</th>
+                        <th>Паспорт</th>
+                        <th>Магазин</th>
+                        <th>Описание магазина</th>
+                        <th>ИНН</th>
+                        <th>ОРГН</th>
+                        <th>Дата создания заявления</th>
+                        <th colspan="2">Действия</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        @foreach (var i in Model.sellers)
+                        {
+                            <td>@i.UserInfo.Surname @i.UserInfo.UserName @i.UserInfo.MiddleName</td>
+                            <td>@i.UserInfo.Birthday.ToShortDateString()</td>
+                            <td>@i.UserInfo.Passport</td>
+                            <td>@i.Company.Name</td>
+                            <td>@i.Company.Description</td>
+                            <td>@i.Company.INN</td>
+                            <td>@i.Company.OGRN</td>
+                            <td>@i.Company.DateRegistration</td>
+                            <td><a asp-action="" asp-controller="" class="btn btn-outline-primary" asp-route-id="@i.Id">Удалить</a></td>
+                            <td><a asp-action="ConfirmSeller" asp-controller="Account" class="btn btn-outline-primary" asp-route-id="@i.Id">Подтвердить</a></td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Заявления на возврат</h3>
+            <table class="table table-bordered">
+                <thead class="thead-light thead">
+                    <tr>
+                        <th>Номер жалобы</th>
+                        <th>Заказ</th>
+                        <th>Продукт</th>
+                        <th>Продавец</th>
+                        <th>Клиент</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        @foreach (var i in Model.orderReports)
+                        {
+                            <td>@i.Id</td>
+                            <td>@i.OrderId</td>
+                            <td>@i.Product.Name</td>
+                            <td>@i.Product.Seller.UserInfo.UserName @i.Product.Seller.UserInfo.Surname @i.Product.Seller.UserInfo.MiddleName</td>
+                            <td>@i.Order.Client.UserInfo.UserName @i.Order.Client.UserInfo.Surname @i.Order.Client.UserInfo.MiddleName</td>
+                            <td>
+                                <form asp-action="ReportInfo" asp-controller="Admin">
+                                    <input asp-for="@Model.orderReport.Id" value="@i.Id" type="hidden">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Подробнее</button>
+                                </form>
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>Жалобы на продукт</h3>
+            <table class="table table-bordered">
+                <thead class="thead-light thead">
+                    <tr>
+                        <th>Номер жалобы</th>
+                        <th>Продукт</th>
+                        <th>Продавец</th>                        
+                        <th>Причина</th>
+                        <th>Комментарий</th>
+                        <th></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        @foreach (var i in Model.productReports)
+                        {
+                            <td>@i.Id</td>
+                            <td>@i.Product.Name</td>
+                            <td>@i.Product.Seller.UserInfo.UserName @i.Product.Seller.UserInfo.Surname @i.Product.Seller.UserInfo.MiddleName</td>                            
+                            <td>@i.Reason.Name</td>
+                            <td>@i.Commentary</td>                            
+
+                            <td>
+                                <form asp-action="ProductInfo" asp-controller="Admin">
+                                    <input asp-for="@Model.productReport.Id" value="@i.Id" type="hidden">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger">Подробнее</button>
+                                </form>
+                            </td>
+                        }
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+</div>
+
+

@@ -33,17 +33,28 @@
                 <p>Магазин: @Model.Product.Seller.Company.Name</p>                
                 <p>ИНН: @Model.Product.Seller.Company.INN</p>
                 <p>ОГРН: @Model.Product.Seller.Company.OGRN</p>
-                <a asp-action="Messenger" asp-controller="Chat" class="btn btn-outline-danger">Связаться с продавцом</a>
                 @if (Model.Status != "Доставлен") {
                     <form asp-action="returnOrder" asp-controller="Order" method="get">
                         <input type="hidden" asp-for="@Model.OrderId" value="@Model.OrderId">
                         <input type="hidden" asp-for="@Model.ProductId" value="@Model.ProductId">
-                        <button type="submit" class="btn btn-outline-danger">Запросить возврат</button>
+                        <div>                            
+                            <button type="submit" class="btn btn-outline-danger mt-2 mb-2">Запросить возврат</button>
+                        </div>
                     </form>                    
                 }    
                 </div>
             </div>
-            <a asp-action="OrderList" asp-controller="Client" class="btn mt-2 btn-outline-primary">Вернуться</a>
+
+            <div class="mt-2">
+            <form asp-action="CompleteOrder" method="post">
+                <input type="hidden" asp-for="@Model.ProductId" value="@Model.ProductId"/>
+                <input type="hidden" asp-for="@Model.OrderId" value="@Model.OrderId"/>
+                @if(Model.Status != "Подтвержден") {
+                <button type="submit" class="btn-outline-primary btn">Подтвердить заказ</button>
+                }
+                <a asp-action="OrderList" asp-controller="Client" class="btn btn-outline-primary">Вернуться</a>
+            </form>
+            </div>
         </div>
     </div>
 </div>

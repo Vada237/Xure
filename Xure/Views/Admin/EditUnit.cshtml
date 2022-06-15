@@ -1,0 +1,26 @@
+﻿@model Units;
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col mt-4">
+
+            <form asp-action="EditUnit" method="post">
+
+                <div class="form-group">
+                    <input asp-for="@Model.id" type="hidden" />
+                    <label asp-for="@Model.Name">Название</label>
+                    <input asp-for="@Model.Name" class="form-control" />
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Изменить
+                </button>
+                <a asp-action="UnitList" class="btn btn-danger">Вернуться</a>
+            </form>
+
+        </div>
+    </div>
+</div>

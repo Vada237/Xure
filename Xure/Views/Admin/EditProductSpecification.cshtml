@@ -1,0 +1,38 @@
+﻿@model ProductSpecificationsModel;
+@{
+    Layout = "_AdminLayout";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col mt-4">
+
+            <form asp-action="EditProductSpecification" method="post">
+
+                <div class="form-group">
+                    <input asp-for="@Model.ProductSpecification.Id" type="hidden" />                    
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="@Model.ProductSpecification.Name">Название</label>
+                    <input asp-for="@Model.ProductSpecification.Name" class="form-control" />
+                </div>
+
+                <select asp-for="@Model.ProductSpecification.CategoryId" class="custom-select mt-2 mb-2">
+                    <option selected disabled>Выберите категорию</option>
+                    @foreach(var i in Model.Categories)
+                    {
+                        <option value="@i.Id">@i.Name</option>
+                    }
+
+                </select>
+                
+                <button type="submit" class="btn btn-primary">
+                    Изменить
+                </button>
+                <a asp-action="ProductSpecificationList" class="btn btn-danger">Вернуться</a>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+﻿<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link rel="stylesheet" type="text/css" asp-href-include="lib/bootstrap/dist/css/*.css" />
+    <link rel="icon" type="image/x-icon" asp-href-include="favicon.ico" />
+    <link rel="stylesheet" type="text/css" asp-href-include="css/*.css" />
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.min.js"></script>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-dark text-light">
+        <a class="navbar-brand text-light" asp-action="AdminProfile" asp-controller="Account">Xure.Admin</a>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item dropdown">
+                    <a class="nav-link text-light" asp-action="ProductList" asp-controller="Admin">Товары</a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" asp-action="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Заказы</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" asp-controller="Admin" asp-action="OrderList" asp-route-id="1">В сборке</a>
+                        <a class="dropdown-item" asp-controller="Admin" asp-action="OrderList" asp-route-id="2">Отправленные</a>
+                        <a class="dropdown-item" asp-controller="Admin" asp-action="OrderList" asp-route-id="3">Подтвержденные</a>
+                        <a class="dropdown-item" asp-controller="Admin" asp-action="OrderList" asp-route-id="4">Доставленные</a>
+                        <a class="dropdown-item" asp-controller="Admin" asp-action="OrderList" asp-route-id="5">Оспоренные</a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" asp-action="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Пользователи</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" asp-controller="Admin" asp-action="ClientList">Клиент</a>
+                        <a class="dropdown-item" asp-controller="Admin" asp-action="SellerList">Поставщики</a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-light" asp-action="" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Прочее</a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" asp-controller="Admin" asp-action="ReceptionPointList">Пункты выдачи</a>
+                        <a class="dropdown-item" asp-controller="Admin" asp-action="CategoryList">Категории товаров</a>
+                        <a class="dropdown-item" asp-controller="Admin" asp-action="UnitList">Единицы измерения</a>
+                        <a class="dropdown-item" asp-controller="Admin" asp-action="ProductSpecificationList">Характеристики товаров</a>                        
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link text-light" asp-action="Roles" asp-controller="Admin">Роли</a>
+                </li>
+
+                <li class="nav-item">
+                    @if (User?.Identity?.IsAuthenticated ?? false)
+                    {
+                        <a asp-controller="Account" asp-action="Logout" class="nav-link text-light">Выйти</a>
+                    }
+                    else
+                    {
+                        <a class="nav-link text-light" asp-action="Login" asp-controller="Account">Войти</a>
+                    }
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    @RenderBody()
+</body>
+</html>
