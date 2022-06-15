@@ -40,8 +40,15 @@ using Xure.App.Infrastructure;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\denis\OneDrive\Desktop\Xure\Xure\Views\_ViewImports.cshtml"
+using System.Security.Claims;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"65481c799e9b36d455640210b517cb27899b2961", @"/Views/Home/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d3f7859f03052d3269795b3029a26278f259eca4", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a1db5bdf7ffa3e64d42da7d13d4ee674430ed9a3", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Views_Home_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<ProductMainViewModel>
     #nullable disable
@@ -105,7 +112,7 @@ using Xure.App.Infrastructure;
 #line hidden
 #nullable disable
             WriteLiteral("                        <div class=\"col-3 m-4 goodsSettings\">\r\n                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "65481c799e9b36d455640210b517cb27899b29616126", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "65481c799e9b36d455640210b517cb27899b29616305", async() => {
                 WriteLiteral("\r\n                                <img class=\"goodSettings\"");
                 BeginWriteAttribute("src", " src=\"", 654, "\"", 717, 2);
                 WriteAttributeValue("", 660, "data:image/jpeg;base64,", 660, 23, true);
@@ -180,7 +187,7 @@ WriteAttributeValue("", 683, Convert.ToBase64String(i.Image), 683, 34, false);
 #line hidden
 #nullable disable
             WriteLiteral("            </div>\r\n            </div>\r\n            <div class=\"col-2 borderform mt-3\">                 \r\n                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "65481c799e9b36d455640210b517cb27899b296110038", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "65481c799e9b36d455640210b517cb27899b296110217", async() => {
                 WriteLiteral(@"
 
                     <div class=""form-group"">
@@ -190,7 +197,7 @@ WriteAttributeValue("", 683, Convert.ToBase64String(i.Image), 683, 34, false);
 
                     <select name=""categoryName"" class=""custom-select custom-select-sm mt-2"">
                         ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "65481c799e9b36d455640210b517cb27899b296110691", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "65481c799e9b36d455640210b517cb27899b296110870", async() => {
                     WriteLiteral("Категория");
                 }
                 );
@@ -230,7 +237,7 @@ WriteAttributeValue("", 683, Convert.ToBase64String(i.Image), 683, 34, false);
 #line hidden
 #nullable disable
                 WriteLiteral("                            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "65481c799e9b36d455640210b517cb27899b296113324", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "65481c799e9b36d455640210b517cb27899b296113503", async() => {
 #nullable restore
 #line 39 "C:\Users\denis\OneDrive\Desktop\Xure\Xure\Views\Home\Index.cshtml"
                                                   Write(item.Name);
@@ -269,7 +276,7 @@ WriteAttributeValue("", 683, Convert.ToBase64String(i.Image), 683, 34, false);
 #line hidden
 #nullable disable
                 WriteLiteral("                    </select>\r\n\r\n                    <select name=\"brandName\" class=\"custom-select custom-select-sm mt-2\">\r\n                        ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "65481c799e9b36d455640210b517cb27899b296115539", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "65481c799e9b36d455640210b517cb27899b296115718", async() => {
                     WriteLiteral("Бренд");
                 }
                 );
@@ -309,7 +316,7 @@ WriteAttributeValue("", 683, Convert.ToBase64String(i.Image), 683, 34, false);
 #line hidden
 #nullable disable
                 WriteLiteral("                            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "65481c799e9b36d455640210b517cb27899b296118164", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "65481c799e9b36d455640210b517cb27899b296118343", async() => {
 #nullable restore
 #line 47 "C:\Users\denis\OneDrive\Desktop\Xure\Xure\Views\Home\Index.cshtml"
                                                   Write(item.Name);

@@ -15,6 +15,6 @@ namespace Xure.Api.Interfaces
         public IEnumerable<Product> FindProductBySeller(string SellerId);
 
         public List<Product> FindProductByCategory(string CategoryName);
-        public IEnumerable<Product> FindProducts(string productName, string categoryName, string brandName, string minPrice, string maxPrice, string productSpecifications);
+        public List<Product> FindProducts(string productName, string categoryName, string brandName, string minPrice, string maxPrice, string productSpecifications);
     }
 }

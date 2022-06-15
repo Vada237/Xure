@@ -9,6 +9,7 @@ using Xure.App.Models;
 using Xure.Data;
 using Xure.Api.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 
 namespace Xure.App.Controllers
 {
@@ -22,17 +23,23 @@ namespace Xure.App.Controllers
         private readonly IUnitRepository _unitRepository;
         private readonly IProductSpecificationsRepository _productSpecificationsRepository;
         private readonly IProductSpecificationsValueRepository productSpecificationsValueRepository;
-        public HomeController(ILogger<HomeController> logger,AppDbContext appDbContext,IProductRepository repository
-            ,ICategoryRepository categoryRepository, IBrandRepository brandRepository,IUnitRepository unitRepository,
-            IProductSpecificationsRepository productSpecificationsRepository, IProductSpecificationsValueRepository productSpecificationsValueRepository)
-        {            
+        private readonly IReviewsRepository _reviewsRepository;
+        private UserManager<AppUser> userManager;
+        private RoleManager<IdentityRole> roleManager;
+        public HomeController(ILogger<HomeController> logger, AppDbContext appDbContext, IProductRepository repository
+            , ICategoryRepository categoryRepository, IBrandRepository brandRepository, IUnitRepository unitRepository,
+            IProductSpecificationsRepository productSpecificationsRepository, IProductSpecificationsValueRepository productSpecificationsValueRepository
+            , UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager,IReviewsRepository reviewsRepository)
+        {
             _productRepository = repository;
             _categoryRepository = categoryRepository;
             _brandRepository = brandRepository;
             _unitRepository = unitRepository;
             _productSpecificationsRepository = productSpecificationsRepository;
             this.productSpecificationsValueRepository = productSpecificationsValueRepository;
-            
+            this.userManager = userManager;
+            this.roleManager = roleManager;
+            _reviewsRepository = reviewsRepository;
         }
 
         public IActionResult Index()
@@ -41,9 +48,14 @@ namespace Xure.App.Controllers
             {
                 Categories = _categoryRepository.GetAll(),
                 Brands = _brandRepository.GetAll(),
-                NewProducts = _productRepository.GetWithInclude(c => c.Seller.Id == c.SellerId, c => c.Seller.Company, c => c.Category, c => c.Brands, c => c.Price.PriceHistory)
-                .OrderByDescending(c => c.Seller.Company.DateRegistration).Take(4)
+                NewProducts = _productRepository.GetWithInclude(c => c.Seller.Id == c.SellerId
+                , c => c.Seller.Company, c => c.Category, c => c.Brands, c => c.Price.PriceHistory)
+                .OrderByDescending(c => c.Seller.Company.DateRegistration).Take(6)
+                ,
             };
+            
+                
+            
             return View(vm);                       
         }
 
@@ -55,7 +67,8 @@ namespace Xure.App.Controllers
                 product = product2,
                 Units = _unitRepository.GetAll(),
                 productSpecifications = _productSpecificationsRepository.GetWithInclude(c => product2.Category.Id == c.CategoryId),
-                productSpecificationsValues = productSpecificationsValueRepository.GetWithInclude(c => c.ProductId == product2.Id, c => c.Unit, c => c.ProductSpecification)
+                productSpecificationsValues = productSpecificationsValueRepository.GetWithInclude(c => c.ProductId == product2.Id, c => c.Unit, c => c.ProductSpecification),
+                Reviews = _reviewsRepository.GetWithInclude(c => c.ProductId == product2.Id, c => c.Client.UserInfo)
             };            
             return View(vm);
         }
@@ -79,7 +92,7 @@ namespace Xure.App.Controllers
             {
                 ViewBag.BodyTitle = "Найдены следующие товары: ";
             }
-            return View("Index", ViewModel);
+            return View("FindProducts", ViewModel);
         }
     }
 }

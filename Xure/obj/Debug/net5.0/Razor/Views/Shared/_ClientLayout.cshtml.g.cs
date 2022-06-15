@@ -40,8 +40,15 @@ using Xure.App.Infrastructure;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\denis\OneDrive\Desktop\Xure\Xure\Views\_ViewImports.cshtml"
+using System.Security.Claims;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"14a374f4a46a553be9add1b96d6095fa36bbd986", @"/Views/Shared/_ClientLayout.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d3f7859f03052d3269795b3029a26278f259eca4", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a1db5bdf7ffa3e64d42da7d13d4ee674430ed9a3", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Views_Shared__ClientLayout : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     #nullable disable
@@ -125,7 +132,7 @@ using Xure.App.Infrastructure;
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
         {
             WriteLiteral("<!DOCTYPE html>\r\n\r\n<html>\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98619884", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("head", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98620063", async() => {
                 WriteLiteral("\r\n    <meta name=\"viewport\" content=\"width=device-width\" />\r\n    <title>");
 #nullable restore
 #line 6 "C:\Users\denis\OneDrive\Desktop\Xure\Xure\Views\Shared\_ClientLayout.cshtml"
@@ -135,7 +142,7 @@ using Xure.App.Infrastructure;
 #line hidden
 #nullable disable
                 WriteLiteral("</title>\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "14a374f4a46a553be9add1b96d6095fa36bbd98620455", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "14a374f4a46a553be9add1b96d6095fa36bbd98620634", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_LinkTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.LinkTagHelper>();
@@ -152,7 +159,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "14a374f4a46a553be9add1b96d6095fa36bbd98621802", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "14a374f4a46a553be9add1b96d6095fa36bbd98621981", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_LinkTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.LinkTagHelper>();
@@ -169,7 +176,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "14a374f4a46a553be9add1b96d6095fa36bbd98623149", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("link", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "14a374f4a46a553be9add1b96d6095fa36bbd98623328", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_LinkTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.LinkTagHelper>();
@@ -190,7 +197,7 @@ using Xure.App.Infrastructure;
     <script src=""https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"" integrity=""sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"" crossorigin=""anonymous""></script>
     <script src=""/lib/jquery/dist/jquery.min.js""></script>
     ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98624964", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98625143", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -204,7 +211,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98626064", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("script", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98626243", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
@@ -230,7 +237,7 @@ using Xure.App.Infrastructure;
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98627868", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("body", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98628047", async() => {
                 WriteLiteral(@"   
     <header>
          <nav class=""navbar navbar-expand-lg navbar-light m-2 p-2"">
@@ -241,7 +248,7 @@ using Xure.App.Infrastructure;
 
                          <div class=""col-1"">
                              ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98628530", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98628709", async() => {
                     WriteLiteral("Xure");
                 }
                 );
@@ -266,7 +273,7 @@ using Xure.App.Infrastructure;
                              <ul class=""navbar-nav"">                 
                                   <li class=""nav-item dropdown"">
                                        ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98630315", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98630494", async() => {
                     WriteLiteral("Каталог");
                 }
                 );
@@ -287,7 +294,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                                       <div class=dropdown-menu aria-labeledby=\"navbardropdown\">                                        \r\n                                            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98632164", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98632343", async() => {
                     WriteLiteral("Продукты питания");
                 }
                 );
@@ -312,7 +319,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                                            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98634280", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98634459", async() => {
                     WriteLiteral("Одежда");
                 }
                 );
@@ -337,7 +344,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                                            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98636386", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98636565", async() => {
                     WriteLiteral("Техника");
                 }
                 );
@@ -362,7 +369,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                                            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98638493", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98638672", async() => {
                     WriteLiteral("Спорт");
                 }
                 );
@@ -387,7 +394,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                                            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98640598", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98640777", async() => {
                     WriteLiteral("Образование");
                 }
                 );
@@ -412,7 +419,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                                            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98642709", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98642888", async() => {
                     WriteLiteral("Бытовые товары");
                 }
                 );
@@ -437,7 +444,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                                            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98644823", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98645002", async() => {
                     WriteLiteral("Медицина");
                 }
                 );
@@ -462,7 +469,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                                            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98646931", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98647110", async() => {
                     WriteLiteral("Мебель");
                 }
                 );
@@ -487,7 +494,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("\r\n                                            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98649037", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98649216", async() => {
                     WriteLiteral("Аксессуары");
                 }
                 );
@@ -519,7 +526,7 @@ using Xure.App.Infrastructure;
 
                          <div class=""col-6"">
                              ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98651461", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98651640", async() => {
                     WriteLiteral(@"     
                                   <div class=""input-group"">
                                        <input class=""form-control input"" name=""productName"" placeholder=""Введите товар"">                            
@@ -562,7 +569,7 @@ using Xure.App.Infrastructure;
 #line hidden
 #nullable disable
                 WriteLiteral("                                             ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98654509", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98654688", async() => {
                     WriteLiteral("Выйти");
                 }
                 );
@@ -589,7 +596,7 @@ using Xure.App.Infrastructure;
 #line hidden
 #nullable disable
                 WriteLiteral("                                             ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98656322", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98656501", async() => {
                     WriteLiteral("Войти");
                 }
                 );
@@ -616,7 +623,7 @@ using Xure.App.Infrastructure;
 #line hidden
 #nullable disable
                 WriteLiteral("                                         </li>\r\n\r\n                                         <li class=\"nav-item\">\r\n                                            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98658290", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98658469", async() => {
                     WriteLiteral("Профиль");
                 }
                 );
@@ -643,7 +650,7 @@ using Xure.App.Infrastructure;
 #line hidden
 #nullable disable
                 WriteLiteral("                                         <li class=\"nav-item\">\r\n                                              ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98660255", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98660434", async() => {
                     WriteLiteral("Заказы");
                 }
                 );
@@ -678,7 +685,7 @@ using Xure.App.Infrastructure;
 #line hidden
 #nullable disable
                 WriteLiteral("                                         <li class=\"nav-item\">\r\n                                              ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98662543", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98662722", async() => {
                     WriteLiteral("Заказы");
                 }
                 );
@@ -705,7 +712,7 @@ using Xure.App.Infrastructure;
 #line hidden
 #nullable disable
                 WriteLiteral("                                          <li class=\"nav-item\">\r\n                                              ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98664559", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98664738", async() => {
                     WriteLiteral("Корзина");
                 }
                 );
@@ -756,7 +763,7 @@ using Xure.App.Infrastructure;
                     <h5>Покупателям</h5>
                     <ul class=""nav flex-column"">
                         <li class=""nav-item mb-2"">");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98667108", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98667287", async() => {
                     WriteLiteral("Профиль");
                 }
                 );
@@ -775,7 +782,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</li>\r\n                        <li class=\"nav-item mb-2\">");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98668692", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98668871", async() => {
                     WriteLiteral("Мои заказы");
                 }
                 );
@@ -794,7 +801,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</li>\r\n                        <li class=\"nav-item mb-2\">");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98670279", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98670458", async() => {
                     WriteLiteral("Поиск товаров");
                 }
                 );
@@ -813,7 +820,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</li>\r\n                        <li class=\"nav-item mb-2\">");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98671869", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98672048", async() => {
                     WriteLiteral("Корзина");
                 }
                 );
@@ -832,7 +839,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</li>\r\n                    </ul>\r\n                </div>\r\n\r\n                <div class=\"col-2 m-1\">\r\n                    <h5>Поставщикам</h5>\r\n                    <ul class=\"nav flex-column\">\r\n                        <li class=\"nav-item mb-2\">");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98673655", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98673834", async() => {
                     WriteLiteral("Войти");
                 }
                 );
@@ -851,7 +858,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</li>\r\n                        <li class=\"nav-item mb-2\">");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98675237", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98675416", async() => {
                     WriteLiteral("Зарегистрироваться");
                 }
                 );
@@ -870,7 +877,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</li>\r\n                        <li class=\"nav-item mb-2\">");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98676832", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98677011", async() => {
                     WriteLiteral("Профиль");
                 }
                 );
@@ -889,7 +896,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</li>\r\n                        <li class=\"nav-item mb-2\">");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98678416", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98678595", async() => {
                     WriteLiteral("Заполнить каталог");
                 }
                 );
@@ -908,7 +915,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</li>\r\n                        <li class=\"nav-item mb-2\">");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98680010", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98680189", async() => {
                     WriteLiteral("Просмотреть заказы");
                 }
                 );
@@ -927,7 +934,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</li>\r\n                        <li class=\"nav-item mb-2\">");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98681605", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98681784", async() => {
                     WriteLiteral("Оформить доставку");
                 }
                 );
@@ -946,7 +953,7 @@ using Xure.App.Infrastructure;
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("</li>\r\n                    </ul>\r\n                </div>\r\n\r\n                <div class=\"col-3\">                    \r\n                    ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98683287", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "14a374f4a46a553be9add1b96d6095fa36bbd98683466", async() => {
                     WriteLiteral(@"
                         <h5>Подпишитесь на рассылку</h5>
                         <p>Получите выгодные предложения и акции <br /> первыми </p>                        

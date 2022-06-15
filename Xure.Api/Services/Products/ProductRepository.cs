@@ -36,7 +36,7 @@ namespace Xure.Api.Services
         {
             return GetWithInclude(c => c.Category.Name.Contains(CategoryName), c => c.Category, c => c.Price.PriceHistory).ToList();
         }
-        public IEnumerable<Product> FindProducts(string? productName, string? categoryName, string? brandName,string? minPrice, string? maxPrice,string? productSpecifications)
+        public List<Product> FindProducts(string? productName, string? categoryName, string? brandName,string? minPrice, string? maxPrice,string? productSpecifications)
         {
             IEnumerable<Product> products = GetWithInclude(c => c.Category,c => c.Price.PriceHistory, c => c.Brands, c => c.ProductSpecificationsValues);
 
@@ -44,7 +44,7 @@ namespace Xure.Api.Services
             .Where(c => categoryName == null || c.Category.Name.Contains(categoryName))
             .Where(C => brandName == null || C.Brands.Name.Contains(brandName))
             .Where(c => minPrice == null || c.Price.PriceHistory.Value > Convert.ToDecimal(minPrice))
-            .Where(c => maxPrice == null || c.Price.PriceHistory.Value < Convert.ToDecimal(maxPrice));
+            .Where(c => maxPrice == null || c.Price.PriceHistory.Value < Convert.ToDecimal(maxPrice)).ToList();
         }
     }
 }

@@ -124,7 +124,8 @@ namespace Xure.App.Controllers
                 OrderId = model.orderReport.OrderId,                
                 ProductId = model.orderReport.ProductId,
                 ReasonId = model.orderReport.ReasonId,
-                Commentary = model.orderReport.Commentary
+                Commentary = model.orderReport.Commentary,
+                Status = "Активен"                
             };
 
             var orderProduct = orderProductRepository.GetByIds(orderReport.OrderId, orderReport.ProductId);

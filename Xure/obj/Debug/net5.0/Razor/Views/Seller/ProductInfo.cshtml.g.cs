@@ -40,8 +40,15 @@ using Xure.App.Infrastructure;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\denis\OneDrive\Desktop\Xure\Xure\Views\_ViewImports.cshtml"
+using System.Security.Claims;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"5f98d8402fbd1e01909da0cdb63a4e89c0a3170d", @"/Views/Seller/ProductInfo.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d3f7859f03052d3269795b3029a26278f259eca4", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a1db5bdf7ffa3e64d42da7d13d4ee674430ed9a3", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Views_Seller_ProductInfo : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<ProductInfoViewModel>
     #nullable disable
@@ -151,7 +158,7 @@ WriteAttributeValue("", 309, Convert.ToBase64String(@Model.product.Image), 309, 
 #line hidden
 #nullable disable
             WriteLiteral("                <div class=\"col-3\">\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5f98d8402fbd1e01909da0cdb63a4e89c0a3170d9883", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5f98d8402fbd1e01909da0cdb63a4e89c0a3170d10062", async() => {
                 WriteLiteral("Добавить характеристики");
             }
             );
@@ -183,7 +190,7 @@ WriteAttributeValue("", 309, Convert.ToBase64String(@Model.product.Image), 309, 
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("            \r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5f98d8402fbd1e01909da0cdb63a4e89c0a3170d12183", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5f98d8402fbd1e01909da0cdb63a4e89c0a3170d12363", async() => {
                 WriteLiteral("Удалить");
             }
             );
@@ -215,7 +222,7 @@ WriteAttributeValue("", 309, Convert.ToBase64String(@Model.product.Image), 309, 
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5f98d8402fbd1e01909da0cdb63a4e89c0a3170d14453", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5f98d8402fbd1e01909da0cdb63a4e89c0a3170d14633", async() => {
                 WriteLiteral("Вернуться");
             }
             );
@@ -232,9 +239,9 @@ WriteAttributeValue("", 309, Convert.ToBase64String(@Model.product.Image), 309, 
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                    <div class=\"nav-link\">\r\n                        <h6>Остаток товаров</h6>\r\n                    </div>\r\n                    ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5f98d8402fbd1e01909da0cdb63a4e89c0a3170d15845", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "5f98d8402fbd1e01909da0cdb63a4e89c0a3170d16025", async() => {
                 WriteLiteral("\r\n                        <div class=\"row\">\r\n                            <div class=\"col-7 ml-3\">\r\n                                ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "5f98d8402fbd1e01909da0cdb63a4e89c0a3170d16241", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "5f98d8402fbd1e01909da0cdb63a4e89c0a3170d16421", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper>();
@@ -257,7 +264,7 @@ __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper.For = ModelExpressionProvid
                 Write(__tagHelperExecutionContext.Output);
                 __tagHelperExecutionContext = __tagHelperScopeManager.End();
                 WriteLiteral("                                \r\n                                ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "5f98d8402fbd1e01909da0cdb63a4e89c0a3170d18003", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("input", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "5f98d8402fbd1e01909da0cdb63a4e89c0a3170d18183", async() => {
                 }
                 );
                 __Microsoft_AspNetCore_Mvc_TagHelpers_InputTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.InputTagHelper>();

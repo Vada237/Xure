@@ -166,6 +166,10 @@ namespace Xure.App.Controllers
             OrderProduct.Status = "Средства возвращены";
             _orderProductRepository.Update(OrderProduct);
 
+            var orderReport = _orderReportRepository.GetWithInclude(c => c.OrderId == model.OrderReport.OrderId && c.ProductId == model.OrderReport.ProductId).FirstOrDefault();
+            orderReport.Status = "Завершен";
+            _orderReportRepository.Update(orderReport);
+            
             return RedirectToAction("Index", "Home");
         }
 

@@ -40,8 +40,15 @@ using Xure.App.Infrastructure;
 #line default
 #line hidden
 #nullable disable
+#nullable restore
+#line 5 "C:\Users\denis\OneDrive\Desktop\Xure\Xure\Views\_ViewImports.cshtml"
+using System.Security.Claims;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"214eab5f1280235734151215a8fb08d96a4c2726", @"/Views/Seller/ProductList.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d3f7859f03052d3269795b3029a26278f259eca4", @"/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"a1db5bdf7ffa3e64d42da7d13d4ee674430ed9a3", @"/Views/_ViewImports.cshtml")]
     #nullable restore
     public class Views_Seller_ProductList : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<ProductListViewModel>
     #nullable disable
@@ -115,7 +122,7 @@ using Xure.App.Infrastructure;
 #line hidden
 #nullable disable
             WriteLiteral("                        <div class=\"col-3 m-4 goodsSettings\">\r\n                            ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "214eab5f1280235734151215a8fb08d96a4c27267346", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "214eab5f1280235734151215a8fb08d96a4c27267525", async() => {
                 WriteLiteral("\r\n                                <img class=\"goodSettings\"");
                 BeginWriteAttribute("src", " src=\"", 608, "\"", 671, 2);
                 WriteAttributeValue("", 614, "data:image/jpeg;base64,", 614, 23, true);
@@ -190,7 +197,7 @@ WriteAttributeValue("", 637, Convert.ToBase64String(i.Image), 637, 34, false);
 #line hidden
 #nullable disable
             WriteLiteral("                </div>\r\n            </div>\r\n            <div class=\"col-2 borderform mt-3\"> \r\n                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "214eab5f1280235734151215a8fb08d96a4c272611398", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("a", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "214eab5f1280235734151215a8fb08d96a4c272611577", async() => {
                 WriteLiteral("<h5>Добавить продукт</h5>");
             }
             );
@@ -207,7 +214,7 @@ WriteAttributeValue("", 637, Convert.ToBase64String(i.Image), 637, 34, false);
             Write(__tagHelperExecutionContext.Output);
             __tagHelperExecutionContext = __tagHelperScopeManager.End();
             WriteLiteral("\r\n                ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "214eab5f1280235734151215a8fb08d96a4c272612672", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "214eab5f1280235734151215a8fb08d96a4c272612851", async() => {
                 WriteLiteral(@"
 
                     <div class=""form-group"">
@@ -217,7 +224,7 @@ WriteAttributeValue("", 637, Convert.ToBase64String(i.Image), 637, 34, false);
 
                     <select name=""categoryName"" class=""custom-select custom-select-sm mt-2"">
                         ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "214eab5f1280235734151215a8fb08d96a4c272613325", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "214eab5f1280235734151215a8fb08d96a4c272613504", async() => {
                     WriteLiteral("Категория");
                 }
                 );
@@ -257,7 +264,7 @@ WriteAttributeValue("", 637, Convert.ToBase64String(i.Image), 637, 34, false);
 #line hidden
 #nullable disable
                 WriteLiteral("                            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "214eab5f1280235734151215a8fb08d96a4c272615974", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "214eab5f1280235734151215a8fb08d96a4c272616153", async() => {
 #nullable restore
 #line 39 "C:\Users\denis\OneDrive\Desktop\Xure\Xure\Views\Seller\ProductList.cshtml"
                                                   Write(item.Name);
@@ -296,7 +303,7 @@ WriteAttributeValue("", 637, Convert.ToBase64String(i.Image), 637, 34, false);
 #line hidden
 #nullable disable
                 WriteLiteral("                    </select>\r\n\r\n                    <select name=\"brandName\" class=\"custom-select custom-select-sm mt-2\">\r\n                        ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "214eab5f1280235734151215a8fb08d96a4c272618213", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "214eab5f1280235734151215a8fb08d96a4c272618392", async() => {
                     WriteLiteral("Бренд");
                 }
                 );
@@ -336,7 +343,7 @@ WriteAttributeValue("", 637, Convert.ToBase64String(i.Image), 637, 34, false);
 #line hidden
 #nullable disable
                 WriteLiteral("                            ");
-                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "214eab5f1280235734151215a8fb08d96a4c272620854", async() => {
+                __tagHelperExecutionContext = __tagHelperScopeManager.Begin("option", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "214eab5f1280235734151215a8fb08d96a4c272621033", async() => {
 #nullable restore
 #line 47 "C:\Users\denis\OneDrive\Desktop\Xure\Xure\Views\Seller\ProductList.cshtml"
                                                   Write(item.Name);
