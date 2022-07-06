@@ -31,7 +31,6 @@ namespace Xure.Api.Controllers
             {
                 return Ok(_deliveryRepository.GetAll());
             }
-
         }
 
         [HttpGet]

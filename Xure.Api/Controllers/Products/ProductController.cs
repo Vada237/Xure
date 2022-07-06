@@ -32,16 +32,28 @@ namespace Xure.Api.Controllers
             {
                 return Ok(_ProductRepository.GetAll());
             }
-
         }
-                
+
         [HttpGet]
-        [Route("{Id}")]
+        [Route("Id={Id}")]
         [Authorize(Roles = "Покупатель,Поставщик,Модератор,Администратор")]
         public IActionResult Get(int Id)
         {
             if (_ProductRepository.GetById(Id) == null) return NotFound("Продукт не найден");
             else return Ok(_ProductRepository.GetById(Id));
+        }
+
+        [HttpGet]
+        [Route("Name={name}")]
+        [Authorize(Roles = "Покупатель,Поставщик,Модератор,Администратор")]
+
+        public IActionResult GetByName(string name)
+        {
+            if (_ProductRepository.FindProductsByName(name).FirstOrDefault() != null)
+            {
+                return Ok(_ProductRepository.GetWithInclude(c => c.Name == name).FirstOrDefault());
+            }
+            else return NotFound();
         }
 
         [HttpPost]

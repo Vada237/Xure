@@ -56,7 +56,7 @@ namespace Xure.Api.Controllers
 
         [HttpPost]
         [AllowAnonymous]        
-
+        [Route("Login")]
         public async Task<IActionResult> Login (LoginModel model)
         {
             if (ModelState.IsValid)

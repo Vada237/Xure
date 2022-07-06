@@ -337,7 +337,7 @@ namespace Xure.Data
                     new Reason {Id = 5, Name = "Запрещенный товар", Description = "Данный товар запрещен на территории страны", Category = "Товар"},
                     new Reason {Id = 6, Name = "Продажа товаров без лицензии", Description = "Поставщик продает товары моей компании без лицензии на продажу", Category = "Товар"}
                 }
-                );
+            );
         }
 
         public static async Task CreateAccount(IServiceProvider serviceProvider, IConfiguration configuration)
