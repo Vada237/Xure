@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Reviews>
+@{
+    Layout = "_ClientLayout";
+}
+
+<div class="container-fluid">
+    <div class="col-2 offset-1 mt-2 mb-2">
+        <h3>Мои отзывы</h3>
+    </div>
+    <div class="row">            
+            @foreach(var i in Model)
+            {
+                <div class="col-2 mt-2 shadow offset-1">
+                    <p>@i.Product.Name</p>
+                </div>
+
+                <div class="col-6 mt-2 offset-1 shadow">
+                    <p>@i.Commentary</p>
+                </div>
+            }                
+    </div>
+</div>

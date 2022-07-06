@@ -13,7 +13,8 @@
             @foreach (var i in Model.OrderProducts)
             {
                 @if (i.Status != "Подан запрос на возврат")
-                {
+                {   
+                    <div class="box-shadow m-1">
                     <form asp-action="OrderProductInfo" asp-controller="Seller" method="get">
                         <input type="hidden" value="@i.ProductId" name="productId">
                         <input type="hidden" value="@i.OrderId" name="orderId">
@@ -33,6 +34,7 @@
                             </div>
                         </div>
                     </form>
+                    </div>
                 }
                 @if (i.Status == "Подан запрос на возврат")
                 {

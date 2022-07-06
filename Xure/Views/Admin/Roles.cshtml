@@ -4,8 +4,11 @@
     ViewBag.Title = "Роли";
 }
 
-<div class="m-1 p-1"><h4>Роли</h4></div>
 
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6 offset-1">
+            <div class="m-1 p-1"><h4>Роли</h4></div>
 <table class="table table-sm table-bordered table-striped"> 
     <tr>
         <th>Id</th>
@@ -33,3 +36,6 @@
     }
 </table>
 <a class="btn btn-primary" asp-action="CreateRole">Создать роль</a>
+        </div>
+    </div>
+</div>

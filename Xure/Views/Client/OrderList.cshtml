@@ -12,6 +12,7 @@
             </div>
             @foreach (var i in Model)
             {
+                <div class="shadow">
                     <form asp-action="OrderProductInfo" asp-controller="Client" method="get">
                         <input type="hidden" value="@i.ProductId" name="productId">
                         <input type="hidden" value="@i.OrderId" name="orderId">
@@ -33,7 +34,7 @@
                             </div>
                         </div>
                     </form>
-            
+                </div>
             }
             <div class="row">
                 <div class="col-4 m-3 p-3">

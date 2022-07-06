@@ -3,14 +3,17 @@
     Layout = "_AdminLayout";
     ViewBag.Title = "Редaктирование";
 }
-<div class="m-1 p-1"><h4>Изменение ролей</h4></div>
+<div class="m-2 p-2"><h4>Изменение ролей </h4></div>
 
-<div asp-validation-summary="All" class="text-danger"></div>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-6">
+            <div asp-validation-summary="All" class="text-danger"></div>
 <form asp-action="EditRole" method="post">
     <input type="hidden" name="roleName" value="@Model.Role.Name"/>
     <input type="hidden" name="roleId" value="@Model.Role.Name"/>
 
-    <h6 class="bg-info p-1 text-white">Добавить в "@Model.Role.Name"</h6>
+    <h6 class="bg-secondary p-1 text-white">Добавить в "@Model.Role.Name"</h6>
     <table class="table table-bordered table-sm">
         @if (Model.NonMembers.Count() == 0) {
             <tr>
@@ -28,7 +31,7 @@
         }
     </table>
 
-    <h6 class="bg-info p-1 text-white">Удалить с "@Model.Role.Name"</h6>
+    <h6 class="bg-secondary p-1 text-white">Удалить с "@Model.Role.Name"</h6>
     <table class="table table-bordered table-sm">
         @if (Model.Members.Count() == 0) {
             <tr><td colspan="2">Нет пользователей</td></tr>
@@ -44,3 +47,6 @@
     <button type="submit" class="btn btn-primary">Сохранить</button>
     <a asp-action="Roles" class="btn btn-secondary">Отмена</a>
 </form>
+        </div>
+    </div>
+</div>
