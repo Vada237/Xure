@@ -12,8 +12,11 @@ namespace Xure.App.Controllers
     public class ClientController : Controller
     {
         private IOrderProductRepository _orderProductRepository;
+
         private IClientRepository _clientRepository;
+
         private IProductRepository _productRepository;
+
         private IReviewsRepository _reviewsRepository;
 
         public ClientController(IOrderProductRepository orderProductRepository, IClientRepository clientRepository,IProductRepository productRepository
@@ -63,6 +66,20 @@ namespace Xure.App.Controllers
         {            
             _reviewsRepository.Create(model.Review);
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult OrderDeliveryList()
+        {
+            IEnumerable<OrderProduct> orderProducts = _orderProductRepository.GetWithInclude(c => c.Order.ClientId ==
+           _clientRepository.GetClientWithInclude(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value).Id && c.Order.Id == c.OrderId && c.Status == "Отправлен", c => c.Product.Brands
+           , c => c.Product.Price.PriceHistory, c => c.ReceptionPoint, c => c.Order, c => c.Product.Reviews);
+            return View("OrderList",orderProducts);
+        }
+
+        public IActionResult ReviewClientList()
+        {
+            return View(_reviewsRepository.GetWithInclude(c => c.Client.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
+            , c=> c.Client.UserInfo, c => c.Product));
         }
     }
 }

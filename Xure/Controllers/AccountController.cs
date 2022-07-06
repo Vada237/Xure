@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 using System.Linq;
 using System.Collections.Generic;
+using Xure.App.Infrastructure;
 
 namespace Xure.App.Controllers
 {
@@ -27,9 +28,7 @@ namespace Xure.App.Controllers
         private ICategoryRepository CategoryRepository { get; set; }
         private IProductReportRepository ProductReportRepository { get; set; }
         private IOrderReportRepository OrderReportRepository { get; set; }
-
         private IUnitRepository UnitRepository { get; set; }
-
         private IProductSpecificationsValueRepository ProductSpecificationsValueRepository { get; set; }
 
         private IProductSpecificationsRepository ProductSpecificationsRepository { get; set; }
@@ -64,7 +63,7 @@ namespace Xure.App.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateClientAccount(CreateClientViewModel model, string returnUrl)
+        public async Task<IActionResult> CreateClientAccount(CreateClientViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -88,10 +87,46 @@ namespace Xure.App.Controllers
                         UserId = user.Id
                     });
 
-                    return RedirectToAction("Login", "Account");
+                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
+
+                    var callbackUrl = Url.Action(
+                        "ConfirmEmail",
+                        "Account",
+                        new { userId = user.Id, code = code },
+                        protocol: HttpContext.Request.Scheme);
+
+                    EmailService emailService = new EmailService();
+                    await emailService.SendEmailAsync(model.Email, "Confirm your account",
+                        $"Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>Ссылка</a>");
+
+                    return View("Confirm");
                 }
             }
             return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+
+        public async Task<IActionResult> ConfirmEmail(string userId, string code)
+        {
+            if (userId == null || code == null)
+            {
+                return View("Error");
+            }
+
+            var user = await UserManager.FindByIdAsync(userId);
+            if (user == null)
+            {
+                return View("Error");
+            }
+
+            var result = await UserManager.ConfirmEmailAsync(user, code);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            return View("Error");
         }
 
         [HttpPost]
@@ -143,9 +178,90 @@ namespace Xure.App.Controllers
                         UserId = user.Id,
                         CompanyId = company.Id
                     });
-                    return RedirectToAction("Login", "Account");
+
+                    var code = await UserManager.GenerateEmailConfirmationTokenAsync(user);
+
+                    var callbackUrl = Url.Action(
+                        "ConfirmEmail",
+                        "Account",
+                        new { userId = user.Id, code = code },
+                        protocol: HttpContext.Request.Scheme);
+
+                    EmailService emailService = new EmailService();
+                    await emailService.SendEmailAsync(model.User.Email, "Confirm your account",
+                        $"Подтвердите регистрацию, перейдя по ссылке: <a href='{callbackUrl}'>Ссылка</a>");
+
+                    return View("Confirm");
+
                 }
             }
+            return View(model);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ForgotPassword() => View();
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.FindByEmailAsync(model.Email);
+                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user)))
+                {
+                    return View("ForgotPasswordConfirmation");
+                }
+
+                var code = await UserManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new
+                {
+                    userId = user.Id,
+                    code = code
+                }
+                , protocol: HttpContext.Request.Scheme);
+
+                EmailService emailService = new EmailService();
+                await emailService.SendEmailAsync(model.Email, "Сброс пароля", $"Для сброса пароля пройдите по ссылке: <a href='{callbackUrl}'>Ссылка для сброса пароля</a>");
+                return View("ForgotPasswordConfirmation");
+            }
+            return View(model);
+        }        
+        
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult ResetPassword(string code = null)
+        {
+            return code == null ? View("Error") : View();
+        }
+
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {                            
+                var user = await UserManager.FindByEmailAsync(model.Email);
+                
+                if (user == null)
+                {
+                    return View("ResetPasswordConfirmation");
+                }
+                var result = await UserManager.ResetPasswordAsync(user, model.Code, model.Password);
+
+                if (result.Succeeded)
+                {
+                    return View("ResetPasswordConfirmation");
+                }
+                foreach (var error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error.Description);
+                }
+            }            
             return View(model);
         }
 
@@ -160,7 +276,7 @@ namespace Xure.App.Controllers
             if (ModelState.IsValid)
             {
                 AppUser user = await UserManager.FindByEmailAsync(details.Email);
-                
+
                 if (user != null)
                 {
                     await SignInManager.SignOutAsync();
@@ -212,9 +328,9 @@ namespace Xure.App.Controllers
                 orderReports = OrderReportRepository.GetWithInclude(c => c.Status == "Активен"
                 , c => c.Order.Client.UserInfo, c => c.Product.Seller.UserInfo, c => c.Product.Price.PriceHistory),
                 productReports = ProductReportRepository.GetWithInclude(c => c.Product.Category, c => c.Product.Price.PriceHistory, c => c.Product.Seller.UserInfo
-                , c => c.Reason,c => c.Product.Category.ProductSpecifications, C=>C.Product.ProductSpecificationsValues),
+                , c => c.Reason, c => c.Product.Category.ProductSpecifications, C => C.Product.ProductSpecificationsValues),
                 Units = UnitRepository.GetAll()
-            };            
+            };
 
             if (role != null)
             {

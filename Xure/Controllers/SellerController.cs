@@ -27,7 +27,8 @@ namespace Xure.App.Controllers
         private ISellerOrderRepository sellerOrderRepository { get; set; }
         private IOrderRepository orderRepository { get; set; }
         private IOrderProductRepository orderProductRepository { get; set; }
-        
+
+        private IReviewsRepository reviewsRepository { get; set; }
         private IDeliveryRepository deliveryRepository { get; set; }
 
         private int PageSize = 10;
@@ -36,7 +37,7 @@ namespace Xure.App.Controllers
             , IPriceRepository priceRepository, ISellerRepository sellerRepository, IUnitRepository unitRepository,
             IProductSpecificationsRepository productSpecificationsRepository, IProductSpecificationsValueRepository productSpecificationsValueRepository,
             ISellerOrderRepository sellerOrderRepository,IOrderProductRepository orderProductRepository,IOrderRepository orderRepository,
-            IDeliveryRepository deliveryRepository)
+            IDeliveryRepository deliveryRepository, IReviewsRepository reviewsRepository)
             {
                 UserManager = userManager;
                 ProductRepository = productRepository;
@@ -52,6 +53,7 @@ namespace Xure.App.Controllers
                 this.orderProductRepository = orderProductRepository;
                 this.orderRepository = orderRepository;
                 this.deliveryRepository = deliveryRepository;
+                this.reviewsRepository = reviewsRepository;
             }
 
             [Authorize(Roles = "Поставщик,НеподтвержденныйПоставщик")]
@@ -277,6 +279,25 @@ namespace Xure.App.Controllers
                 return RedirectToAction("Profile","Account");
             }
                 return View(model);
-            }        
+            }
+        
+            public IActionResult SellerOrderDeliveryList()
+            {
+            var sellerId = sellerRepository.GetIdByUserId(HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value);
+            var vm = new SellerOrderViewModel
+            {
+                OrderProducts = orderProductRepository.GetWithInclude(
+                    c => c.Product.Seller.Id == sellerId && c.Status == "В сборке", c => c.Product.Brands, c => c.Product.Seller.UserInfo
+                    , c => c.Product.Price.PriceHistory)
+            };
+
+            return View("SellerOrderList", vm);
+            }
+
+            public IActionResult SellerReviewList()
+            {
+            return View(reviewsRepository.GetWithInclude(c => c.Product.Seller.UserId == HttpContext.User.FindFirst(ClaimTypes.NameIdentifier).Value
+            , c => c.Client.UserInfo, c => c.Product.Seller.UserInfo));
+            }
         }
     }

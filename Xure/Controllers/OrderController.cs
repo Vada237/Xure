@@ -117,6 +117,7 @@ namespace Xure.App.Controllers
             return View(vm);
         }
 
+        [HttpPost]
         public IActionResult CreateOrderReport(reportOrderModel model)
         {
             var orderReport = new OrderReport
