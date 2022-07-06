@@ -13,8 +13,7 @@
 
                 <div class="text-center">
                     <h3>Вход</h3>
-                </div>
-                <form asp-action="Login" method="post">
+                </div>                
                     <input type="hidden" name="returnUrl" value="@ViewBag.returnUrl" />
                     <div class="form-group">
                         <label asp-for="Email"></label>
@@ -27,8 +26,8 @@
                     </div>
 
                     <button class="btn btn-primary" type="submit">Вход</button>
-                    <a class="p-1 text-dark" asp-action="CreateClientAccount">Зарегистрироваться</a>                    
-                </form>
+                    <a class="p-1 text-dark" asp-action="CreateClientAccount">Зарегистрироваться</a>     
+                    <a class="p-1 text-dark" asp-action="ForgotPassword">Забыли пароль?</a>                     
             </form>
         </div>
     </div>
