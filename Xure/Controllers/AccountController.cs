@@ -10,6 +10,7 @@ using System.Security.Claims;
 using System.Linq;
 using System.Collections.Generic;
 using Xure.App.Infrastructure;
+using System.Diagnostics;
 
 namespace Xure.App.Controllers
 {
@@ -30,7 +31,7 @@ namespace Xure.App.Controllers
         private IOrderReportRepository OrderReportRepository { get; set; }
         private IUnitRepository UnitRepository { get; set; }
         private IProductSpecificationsValueRepository ProductSpecificationsValueRepository { get; set; }
-
+        
         private IProductSpecificationsRepository ProductSpecificationsRepository { get; set; }
         public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager
             , ICompanyRepository companyRepository, ISellerRepository sellerRepository, IClientRepository clientRepository
@@ -281,8 +282,14 @@ namespace Xure.App.Controllers
                 {
                     await SignInManager.SignOutAsync();
                     Microsoft.AspNetCore.Identity.SignInResult result = await SignInManager.PasswordSignInAsync(user, details.Password, false, false);
-                    if (result.Succeeded)
+
+                    if (result.RequiresTwoFactor)
                     {
+                        return RedirectToAction("LoginTwoStep", user);
+                    }
+
+                    if (result.Succeeded)
+                    {                       
                         return RedirectToAction(returnUrl ?? "Profile", "Account");
                     }
                 }
@@ -291,7 +298,84 @@ namespace Xure.App.Controllers
             }
             return View(details);
         }
+        
+        [AllowAnonymous]
+        [HttpGet]        
+        public async Task<IActionResult> LoginTwoStep(AppUser user) {            
+            var authentificatorKey = await UserManager.GetAuthenticatorKeyAsync(user);
+            return View("LoginTwoStep" ,new LoginTwoStepModel { Token = authentificatorKey });
+        }
 
+        [AllowAnonymous]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> LoginTwoStep(LoginTwoStepModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var result = await SignInManager.TwoFactorAuthenticatorSignInAsync(model.Token, true, false);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction(model.ReturnUrl ?? "Profile", "Account");
+                }               
+            }
+            ModelState.AddModelError("", "Ошибка");
+            return View(model);
+        }
+
+        [HttpGet]        
+        public async Task<IActionResult> TwoFactorAuthentificatonSetupPage()
+        {
+            var user = await UserManager.GetUserAsync(User);
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Account");
+            } else
+            {
+                var authentificatorKey = await UserManager.GetAuthenticatorKeyAsync(user);
+                if (authentificatorKey == null)
+                {
+                    await UserManager.ResetAuthenticatorKeyAsync(user);
+                    authentificatorKey = await UserManager.GetAuthenticatorKeyAsync(user);
+                }                
+                return View(new TwoFactorAuthentificatorModel { AuthenticatorKey = authentificatorKey });
+            }
+        } 
+
+        public async Task<IActionResult> TwoFactorEnable()
+        {
+            var user = await UserManager.GetUserAsync(User);
+            if (User.IsInRole("Администратор"))
+            {
+                var result = await UserManager.SetTwoFactorEnabledAsync(user, true);
+                if (result.Succeeded)
+                {
+                    return Content("Двухэтапная аутентификация включена");
+                }
+            }
+            return View("AdminProfile");
+        }
+
+        [HttpPost]        
+        public async Task<IActionResult> TwoFactorAuthentificatonSetupPage(TwoFactorAuthentificatorModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await UserManager.GetUserAsync(User);
+                bool isValidCode = await UserManager.VerifyTwoFactorTokenAsync(user, UserManager.Options.Tokens.AuthenticatorTokenProvider, model.Code);
+                if (isValidCode)
+                {
+                    await UserManager.SetTwoFactorEnabledAsync(user, true);
+                    return RedirectToAction("Index", "Home");
+                } else
+                {
+                    ModelState.AddModelError("", "Ошибка приложения");
+                    return View(model);
+                }                
+            }
+            ModelState.AddModelError("", "Генеральная ошибка");
+            return View(model);
+        }
 
         public IActionResult Profile()
         {
