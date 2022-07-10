@@ -1,0 +1,28 @@
+﻿@model TwoFactorAuthentificatorModel
+@{
+    Layout = "_SignInOutLayout";
+}
+
+<div class="container-fluid bg-light signin">
+    <div class="row">
+
+        <div class="col-4 offset-4 bg-white pt-4 pb-5 borderform">
+            <div class="text-center">
+                <h5 class="text-dark">Двойная аутентификация</h5>
+            </div>
+            <form class="px-4 py-3" asp-action="TwoFactorAuthentificatonSetupPage" method="post" id="frmLogin">
+                <div asp-validation-summary="All" class="text-danger"></div>
+
+                <div class="mb-1 mt-1">
+                    <h4>Введите сгенерированный код</h4>
+                </div>
+                <input type="hidden" asp-for="AuthenticatorKey" />
+                <div class="form-group">
+                    <input class="form-control" asp-for="Code" />
+                </div>
+
+                <button type="submit" class="btn-primary btn">Отправить</button>
+            </form>
+        </div>
+    </div>
+</div>
