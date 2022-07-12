@@ -9,5 +9,6 @@
     public class LoginTwoStepModel { 
         public string ReturnUrl { get; set; }
         public string Token { get; set; }        
-    }
+        public string Code { get; set; }
+    }    
 }
