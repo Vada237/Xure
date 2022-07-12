@@ -4,12 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Xure.Data
 {
     public class AppUser : IdentityUser
-    {        
+    {       
+        
+        [Required]
+        public string Name { get; set; }
+
+        [Required]        
         public string Surname { get; set; }
+
         public string MiddleName { get; set; }
         public DateTime Birthday { get; set; }
         public string Passport { get; set; }
