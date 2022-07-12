@@ -42,7 +42,7 @@ namespace Xure.App
 
             services.Configure<IdentityOptions>(options =>
             {
-                options.User.AllowedUserNameCharacters = "éöóêåíãøùçõúôûâàïğîëäæıÿ÷ñìèòüáşÉÖÓÊÅÍÃØÙÇÕÚÔÛÂÀÏĞÎËÄÆİß×ÑÌÈÒÜÁŞabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";                
+                options.User.AllowedUserNameCharacters = "éöóêåíãøùçõúôûâàïğîëäæıÿ÷ñìèòüáşÉÖÓÊÅÍÃØÙÇÕÚÔÛÂÀÏĞÎËÄÆİß×ÑÌÈÒÜÁŞabcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+ ";                        
             });
             services.AddTransient<ICategoryRepository, CategoryRepository>();
             services.AddTransient<IUnitRepository, UnitRepository>();

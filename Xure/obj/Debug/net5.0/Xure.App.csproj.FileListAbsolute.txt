@@ -214,3 +214,4 @@ C:\Users\denis\OneDrive\Desktop\Xure\Xure\bin\Debug\net5.0\zh-Hant\Microsoft.Cod
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\bin\Debug\net5.0\runtimes\win-arm\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\bin\Debug\net5.0\runtimes\win-arm64\lib\net5.0\dotnet-aspnet-codegenerator-design.exe
 C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Account\LoginTwoStep.cshtml.g.cs
+C:\Users\denis\OneDrive\Desktop\Xure\Xure\obj\Debug\net5.0\Razor\Views\Account\ProfileSettings.cshtml.g.cs

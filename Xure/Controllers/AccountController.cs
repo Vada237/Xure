@@ -26,12 +26,11 @@ namespace Xure.App.Controllers
         private IOrderRepository OrderRepository { get; set; }
         private IClientRepository ClientRepository { get; set; }
         private IOrderProductRepository orderProductRepository { get; set; }
-        private ICategoryRepository CategoryRepository { get; set; }
         private IProductReportRepository ProductReportRepository { get; set; }
         private IOrderReportRepository OrderReportRepository { get; set; }
         private IUnitRepository UnitRepository { get; set; }
         private IProductSpecificationsValueRepository ProductSpecificationsValueRepository { get; set; }
-        
+
         private IProductSpecificationsRepository ProductSpecificationsRepository { get; set; }
         public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager, RoleManager<IdentityRole> roleManager
             , ICompanyRepository companyRepository, ISellerRepository sellerRepository, IClientRepository clientRepository
@@ -70,8 +69,8 @@ namespace Xure.App.Controllers
             {
                 AppUser user = new AppUser()
                 {
-
-                    UserName = model.Name,
+                    UserName = model.Email,
+                    Name = model.Name,
                     Surname = model.Surname,
                     Email = model.Email,
                     PhoneNumber = model.PhoneNumber
@@ -139,8 +138,8 @@ namespace Xure.App.Controllers
             {
                 AppUser user = new AppUser()
                 {
-
-                    UserName = model.User.Name,
+                    UserName = model.User.Email,
+                    Name = model.User.Name,
                     Surname = model.User.Surname,
                     MiddleName = model.User.MiddleName,
                     Birthday = model.User.Birthday,
@@ -230,8 +229,8 @@ namespace Xure.App.Controllers
                 return View("ForgotPasswordConfirmation");
             }
             return View(model);
-        }        
-        
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)
@@ -245,9 +244,9 @@ namespace Xure.App.Controllers
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
             if (ModelState.IsValid)
-            {                            
+            {
                 var user = await UserManager.FindByEmailAsync(model.Email);
-                
+
                 if (user == null)
                 {
                     return View("ResetPasswordConfirmation");
@@ -262,7 +261,7 @@ namespace Xure.App.Controllers
                 {
                     ModelState.AddModelError(string.Empty, error.Description);
                 }
-            }            
+            }
             return View(model);
         }
 
@@ -285,11 +284,14 @@ namespace Xure.App.Controllers
 
                     if (result.RequiresTwoFactor)
                     {
-                        return RedirectToAction("LoginTwoStep", user);
+                        return RedirectToAction("LoginTwoStep", "Account", new
+                        {
+                            userId = user.Id
+                        });
                     }
 
                     if (result.Succeeded)
-                    {                       
+                    {
                         return RedirectToAction(returnUrl ?? "Profile", "Account");
                     }
                 }
@@ -298,12 +300,14 @@ namespace Xure.App.Controllers
             }
             return View(details);
         }
-        
+
         [AllowAnonymous]
         [HttpGet]        
-        public async Task<IActionResult> LoginTwoStep(AppUser user) {            
+        public async Task<IActionResult> LoginTwoStep(string userId)
+        {            
+            var user = await UserManager.FindByIdAsync(userId);
             var authentificatorKey = await UserManager.GetAuthenticatorKeyAsync(user);
-            return View("LoginTwoStep" ,new LoginTwoStepModel { Token = authentificatorKey });
+            return View("LoginTwoStep", new LoginTwoStepModel { Token = authentificatorKey });
         }
 
         [AllowAnonymous]
@@ -313,50 +317,38 @@ namespace Xure.App.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await SignInManager.TwoFactorAuthenticatorSignInAsync(model.Token, true, false);
+
+                var result = await SignInManager.TwoFactorAuthenticatorSignInAsync(model.Code, true, false);
                 if (result.Succeeded)
                 {
                     return RedirectToAction(model.ReturnUrl ?? "Profile", "Account");
-                }               
+                }
             }
-            ModelState.AddModelError("", "Ошибка");
+            ModelState.AddModelError("", "Неверный код");
             return View(model);
         }
 
-        [HttpGet]        
+        [HttpGet]
         public async Task<IActionResult> TwoFactorAuthentificatonSetupPage()
         {
             var user = await UserManager.GetUserAsync(User);
             if (user == null)
             {
                 return RedirectToAction("Login", "Account");
-            } else
+            }
+            else
             {
                 var authentificatorKey = await UserManager.GetAuthenticatorKeyAsync(user);
                 if (authentificatorKey == null)
                 {
                     await UserManager.ResetAuthenticatorKeyAsync(user);
                     authentificatorKey = await UserManager.GetAuthenticatorKeyAsync(user);
-                }                
+                }
                 return View(new TwoFactorAuthentificatorModel { AuthenticatorKey = authentificatorKey });
             }
-        } 
+        }       
 
-        public async Task<IActionResult> TwoFactorEnable()
-        {
-            var user = await UserManager.GetUserAsync(User);
-            if (User.IsInRole("Администратор"))
-            {
-                var result = await UserManager.SetTwoFactorEnabledAsync(user, true);
-                if (result.Succeeded)
-                {
-                    return Content("Двухэтапная аутентификация включена");
-                }
-            }
-            return View("AdminProfile");
-        }
-
-        [HttpPost]        
+        [HttpPost]
         public async Task<IActionResult> TwoFactorAuthentificatonSetupPage(TwoFactorAuthentificatorModel model)
         {
             if (ModelState.IsValid)
@@ -365,15 +357,16 @@ namespace Xure.App.Controllers
                 bool isValidCode = await UserManager.VerifyTwoFactorTokenAsync(user, UserManager.Options.Tokens.AuthenticatorTokenProvider, model.Code);
                 if (isValidCode)
                 {
+                    if (user.TwoFactorEnabled == false) { 
                     await UserManager.SetTwoFactorEnabledAsync(user, true);
-                    return RedirectToAction("Index", "Home");
-                } else
-                {
-                    ModelState.AddModelError("", "Ошибка приложения");
-                    return View(model);
+                    } else
+                    {
+                    await UserManager.SetTwoFactorEnabledAsync(user, false);
+                    }
+                    return RedirectToAction("Profile", "Account");
                 }                
             }
-            ModelState.AddModelError("", "Генеральная ошибка");
+            ModelState.AddModelError("", "Неверный код");
             return View(model);
         }
 
@@ -408,6 +401,7 @@ namespace Xure.App.Controllers
 
             var vm = new AdminViewModel
             {
+                Admin = await UserManager.GetUserAsync(User),
                 sellers = new List<Sellers>(),
                 orderReports = OrderReportRepository.GetWithInclude(c => c.Status == "Активен"
                 , c => c.Order.Client.UserInfo, c => c.Product.Seller.UserInfo, c => c.Product.Price.PriceHistory),
@@ -451,5 +445,53 @@ namespace Xure.App.Controllers
 
         [AllowAnonymous]
         public IActionResult AccessDenied() => View();
+
+        public async Task<IActionResult> ProfileSettings()
+        {
+            var user = await UserManager.GetUserAsync(User);
+
+            return View(new EditProfileViewModel
+            {
+                User = user
+            });
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EditProfile(EditProfileViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user1 = await UserManager.GetUserAsync(User);
+
+                user1.Name = model.User.Name;
+                user1.Surname = model.User.Surname;
+
+                if (User.IsInRole("Поставщик") || User.IsInRole("НеподтвержденныйПоставщик"))
+                {
+                    user1.MiddleName = model.User.MiddleName;
+                    user1.Birthday = model.User.Birthday;
+                    user1.Passport = model.User.Passport;
+
+                    if (model.Avatar != null)
+                    {
+                        byte[] data = null;
+                        using (var binaryReader = new BinaryReader(model.Avatar.OpenReadStream()))
+                        {
+                            data = binaryReader.ReadBytes((int)model.Avatar.Length);
+                        }
+
+                        user1.Avatar = data;
+                    }
+                }
+
+                var result = await UserManager.UpdateAsync(user1);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Profile", "Account");
+                }
+                return View("ProfileSettings", model);
+            }
+            return View("ProfileSettings", model);
+        }
     }
 }
