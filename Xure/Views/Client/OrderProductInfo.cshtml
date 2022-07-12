@@ -1,6 +1,7 @@
 ﻿@model OrderProduct;
 @{
     Layout = "_ClientLayout";
+    ViewBag.Title = "Информация о заказе";
 }
 
 <div class="container-fluid">
@@ -21,7 +22,7 @@
             <div class="row">
                 <div class="col-8 mt-4 bg-light borderform">
                 <h3>Информация о клиенте</h3>
-                <p>Клиент: @Model.Order.Client.UserInfo.Surname @Model.Order.Client.UserInfo.UserName @Model.Order.Client.UserInfo.MiddleName</p>
+                <p>Клиент: @Model.Order.Client.UserInfo.Surname @Model.Order.Client.UserInfo.Name @Model.Order.Client.UserInfo.MiddleName</p>
                 <p>Телефон: @Model.Order.Client.UserInfo.PhoneNumber</p>                
                 </div>
             </div>
@@ -29,7 +30,7 @@
             <div class="row">
                 <div class="col-8 mt-4 bg-light borderform">
                 <h3>Информация о продавце</h3>
-                <p>Продавец: @Model.Product.Seller.UserInfo.Surname @Model.Product.Seller.UserInfo.UserName @Model.Product.Seller.UserInfo.MiddleName</p>
+                <p>Продавец: @Model.Product.Seller.UserInfo.Surname @Model.Product.Seller.UserInfo.Name @Model.Product.Seller.UserInfo.MiddleName</p>
                 <p>Магазин: @Model.Product.Seller.Company.Name</p>                
                 <p>ИНН: @Model.Product.Seller.Company.INN</p>
                 <p>ОГРН: @Model.Product.Seller.Company.OGRN</p>

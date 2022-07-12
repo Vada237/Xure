@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<Reviews>
 @{
     Layout = "_ClientLayout";
+    ViewBag.Title = "Отзывы покупателей";
 }
 
 
@@ -16,7 +17,7 @@
                 </div>
 
                 <div class="col-6 mt-2 offset-1 shadow">
-                    <p>@i.Client.UserInfo.Surname @i.Client.UserInfo.UserName - @i.Commentary</p>
+                    <p>@i.Client.UserInfo.Surname @i.Client.UserInfo.Name - @i.Commentary</p>
                 </div>
             }                
     </div>

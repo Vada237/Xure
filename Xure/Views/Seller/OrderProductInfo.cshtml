@@ -1,31 +1,32 @@
 ﻿@model SellerOrderViewModel;
 @{
     Layout = "_ClientLayout";
+    ViewBag.Title = "Информация о заказе";
 }
 
 <div class="container-fluid">
     <div class="row">
         <div class="col-8 offset-2">
             <div class="row">
-                <div class="col mt-4 bg-light">
+                <div class="col mt-4 bg-light borderform">
                     <h3>Информация о продукте</h3>
-                    <p>Название @Model.Product.Product.Name</p>                
-                    <p>Количество @Model.Product.Quantity</p>
+                    <p>Название: @Model.Product.Product.Name</p>                
+                    <p>Количество: @Model.Product.Quantity</p>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col mt-4 bg-light">
+                <div class="col mt-4 bg-light borderform">
                     <h3>Информация о заказе</h3>
-                    <p>Клиент @Model.order.Client.UserInfo.Surname @Model.order.Client.UserInfo.UserName @Model.order.Client.UserInfo.MiddleName</p>
+                    <p>Клиент: @Model.order.Client.UserInfo.Surname @Model.order.Client.UserInfo.Name @Model.order.Client.UserInfo.MiddleName</p>
                     <p>Контактные данные: @Model.order.Client.UserInfo.PhoneNumber</p>
                     <p>Почта: @Model.order.Client.UserInfo.Email</p>
                     <a asp-action="MessageList" asp-controller="Messenger" asp-route-id="@Model.order.Client.Id">Написать</a>
                 </div>
             </div>
 
-            <div class="row mt-4 bg-light">
-                <div class="col">
+            <div class="row mt-4 bg-light borderform">
+                <div class="col mt-2 mb-4">
                      <form asp-action="CreateDelivery" method="post">
                          <div class="form-group">
                              <label>Укажите адрес приема заказа</label>
@@ -55,9 +56,11 @@
                          <input type="hidden" asp-for="@Model.Product.Quantity" value="@Model.Product.Quantity"/>
                          <input type="hidden" asp-for="@Model.Product.OrderId" value="@Model.Product.OrderId" />
                          <input type="hidden" asp-for="@Model.Product.Status" value="Отправлен"/>
+                         
                          <button type="submit" class="btn btn-sm btn-outline-danger">
                              Отправить
                          </button>
+
                      </form>
                 </div>
             </div>

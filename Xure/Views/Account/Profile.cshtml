@@ -1,6 +1,7 @@
 ﻿@model ProfileViewModel;
 @{
     Layout = "_ClientLayout";
+    ViewBag.Title = "Профиль";
 }
 
 <div class="container-fluid">
@@ -10,11 +11,11 @@
             {
                 <div class="row">
                     <div class="col-6 offset-2 m-2 p-2">
-                        <h2>@Model.Client.UserInfo.UserName @Model.Client.UserInfo.Surname</h2>
+                        <h2>@Model.Client.UserInfo.Name @Model.Client.UserInfo.Surname</h2>
                         <h5>@Model.Client.UserInfo.Email</h5>
                         <h5>@Model.Client.UserInfo.PhoneNumber</h5>
                         <h5>Статус: Покупатель</h5>
-                        <a asp-action="" asp-controller="" class="nav-item text-primary">Редактировать профиль</a>
+                        <a asp-action="" class="nav-item text-primary">Редактировать профиль</a>
                     </div>
                 </div>
             }
@@ -27,7 +28,7 @@
                     </div>
 
                     <div class="col-8 m-2 p-2">
-                        <h3>@Model.Seller.UserInfo.Surname @Model.Seller.UserInfo.UserName @Model.Seller.UserInfo.MiddleName</h3>
+                        <h3>@Model.Seller.UserInfo.Surname @Model.Seller.UserInfo.Name @Model.Seller.UserInfo.MiddleName</h3>
                         <h6>@Model.Seller.Company.Name</h6>
                         <h6>Дней в системе: @Math.Round((DateTime.Now - Model.Seller.Company.DateRegistration).TotalDays)</h6>
                         <h6>Всего заказов: @Model.CountSellerOrders</h6>
@@ -39,7 +40,7 @@
                         {
                             <h6>Статус: На проверке</h6>
                         }
-                        <a asp-action="" asp-controller="" class="nav-item text-primary">Редактировать профиль</a>
+                        <a asp-action="ProfileSettings" class="nav-item text-primary">Редактировать профиль</a>
                     </div>
                 </div>
             }

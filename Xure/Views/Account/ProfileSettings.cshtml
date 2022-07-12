@@ -1,0 +1,98 @@
+﻿@model EditProfileViewModel
+@{
+    Layout = "_ClientLayout";
+    ViewBag.Title = "Настройки аккаунта";
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-8 offset-2">
+
+
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active" data-toggle="tab" href="#description">Настройки профиля</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-toggle="tab" href="#characteristics">Безопасность</a>
+                </li>
+            </ul>
+
+            <div class="tab-content">
+
+                <div class="tab-pane fade show active  mt-4" id="description">
+                    <form asp-action="EditProfile" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <div class="form-group row">
+                            <label class="col-sm-1">Имя:</label>
+                            <div class="col-sm-3">
+                                <input class="form-control form-control-sm" asp-for="@Model.User.Name" type="text" />
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-sm-1">Фамилия:</label>
+                            <div class="col-sm-3">
+                                <input class="form-control form-control-sm" asp-for="@Model.User.Surname" type="text" />
+                            </div>
+                        </div>
+
+                        @if (User.IsInRole("Поставщик") || User.IsInRole("НеподтвержденныйПоставщик"))
+                        {
+                            <div class="form-group row">
+                                <label class="col-sm-1">Отчество:</label>
+                                <div class="col-sm-3">
+                                    <input class="form-control form-control-sm" asp-for="@Model.User.MiddleName" type="text" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-1">Дата рождения:</label>
+                                <div class="col-sm-3">
+                                    <input class="form-control form-control-sm" asp-for="@Model.User.Birthday" type="date" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-1">Паспорт:</label>
+                                <div class="col-sm-3">
+                                    <input class="form-control form-control-sm" asp-for="@Model.User.Passport" type="text" />
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label class="col-sm-1">Аватар:</label>
+                                <div class="col-sm-3">
+                                    <input class="form-control-file form-control-sm" asp-for="@Model.Avatar" type="file" />
+                                </div>
+                            </div>
+                        }
+
+                        <button type="submit" class="btn btn-sm btn-outline-danger">Изменить</button>
+                    </form>
+                </div>
+
+                <div class="tab-pane fade mt-4" id="characteristics">
+                    Двухэтапная аутентификация: @if (Model.User.TwoFactorEnabled == true)
+                    {
+                        <text>Включена</text>
+                    }
+                    else
+                    {
+                        <text>Отключена</text>
+                    }
+                    <form method="Get" asp-action="TwoFactorAuthentificatonSetupPage">
+                        <div class="mt-2">
+                            @if (Model.User.TwoFactorEnabled == false) {
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Включить двухэтапную аутентификацию</button>
+                            } else
+                            {
+                                <button type="submit" class="btn btn-sm btn-outline-danger">Выключить двухэтапную аутентификацию</button>
+                            }
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

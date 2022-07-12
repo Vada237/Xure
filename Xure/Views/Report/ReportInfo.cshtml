@@ -1,6 +1,7 @@
 ﻿@model ReportInfoViewModel;
 @{
     Layout = "_ClientLayout";
+    ViewBag.Title = "Обсуждение жалобы";
 }
 
 <div class="container-fluid">
@@ -15,7 +16,7 @@
                         @foreach (var i in Model.Messages)
                         {
                             <div class="borderform bg-light m-2 p-2">
-                                <p><b>@i.Sender.UserName @i.Sender.Surname</b>    @i.MessageTime.ToShortDateString() - @i.MessageTime.ToShortTimeString()</p>
+                                <p><b>@i.Sender.Name @i.Sender.Surname</b>    @i.MessageTime.ToShortDateString() - @i.MessageTime.ToShortTimeString()</p>
                                 <p>@i.Text</p>    
                                 @if (i.Image != null)
                                 {

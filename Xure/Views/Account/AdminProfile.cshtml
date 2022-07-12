@@ -2,6 +2,7 @@
 
 @{
     Layout = "_AdminLayout";
+    ViewBag.Title = "Панель администратора";
 }
 
 <div class="container-fluid">
@@ -23,11 +24,11 @@
                     </tr>
                 </thead>
 
-                <tbody>
-                    <tr>
+                <tbody>                    
                         @foreach (var i in Model.sellers)
                         {
-                            <td>@i.UserInfo.Surname @i.UserInfo.UserName @i.UserInfo.MiddleName</td>
+                            <tr>
+                            <td>@i.UserInfo.Surname @i.UserInfo.Name @i.UserInfo.MiddleName</td>
                             <td>@i.UserInfo.Birthday.ToShortDateString()</td>
                             <td>@i.UserInfo.Passport</td>
                             <td>@i.Company.Name</td>
@@ -37,8 +38,8 @@
                             <td>@i.Company.DateRegistration</td>
                             <td><a asp-action="" asp-controller="" class="btn btn-outline-primary" asp-route-id="@i.Id">Удалить</a></td>
                             <td><a asp-action="ConfirmSeller" asp-controller="Account" class="btn btn-outline-primary" asp-route-id="@i.Id">Подтвердить</a></td>
+                            </tr>
                         }
-                    </tr>
                 </tbody>
             </table>
 
@@ -55,23 +56,23 @@
                     </tr>
                 </thead>
 
-                <tbody>
-                    <tr>
+                <tbody>                    
                         @foreach (var i in Model.orderReports)
                         {
+                            <tr>
                             <td>@i.Id</td>
                             <td>@i.OrderId</td>
                             <td>@i.Product.Name</td>
-                            <td>@i.Product.Seller.UserInfo.UserName @i.Product.Seller.UserInfo.Surname @i.Product.Seller.UserInfo.MiddleName</td>
-                            <td>@i.Order.Client.UserInfo.UserName @i.Order.Client.UserInfo.Surname @i.Order.Client.UserInfo.MiddleName</td>
+                            <td>@i.Product.Seller.UserInfo.Name @i.Product.Seller.UserInfo.Surname @i.Product.Seller.UserInfo.MiddleName</td>
+                            <td>@i.Order.Client.UserInfo.Name @i.Order.Client.UserInfo.Surname @i.Order.Client.UserInfo.MiddleName</td>
                             <td>
                                 <form asp-action="ReportInfo" asp-controller="Admin">
                                     <input asp-for="@Model.orderReport.Id" value="@i.Id" type="hidden">
                                     <button type="submit" class="btn btn-sm btn-outline-danger">Подробнее</button>
                                 </form>
                             </td>
+                            </tr>
                         }
-                    </tr>
                 </tbody>
             </table>
 
@@ -89,12 +90,12 @@
                 </thead>
 
                 <tbody>
-                    <tr>
                         @foreach (var i in Model.productReports)
                         {
+                            <tr>
                             <td>@i.Id</td>
                             <td>@i.Product.Name</td>
-                            <td>@i.Product.Seller.UserInfo.UserName @i.Product.Seller.UserInfo.Surname @i.Product.Seller.UserInfo.MiddleName</td>                            
+                            <td>@i.Product.Seller.UserInfo.Name @i.Product.Seller.UserInfo.Surname @i.Product.Seller.UserInfo.MiddleName</td>                            
                             <td>@i.Reason.Name</td>
                             <td>@i.Commentary</td>                            
 
@@ -104,15 +105,19 @@
                                     <button type="submit" class="btn btn-sm btn-outline-danger">Подробнее</button>
                                 </form>
                             </td>
-                        }
-                    </tr>
+                            </tr>
+                        }                    
                 </tbody>
             </table>
 
         </div>
     </div>
 
-    <a asp-action="TwoFactorEnable" asp-controller="Account" class="btn btn-outline-danger">Включить двухэтапную аутентификацию</a>
+    @if(Model.Admin.TwoFactorEnabled == false) {
+    <a asp-action="TwoFactorAuthentificatonSetupPage" asp-controller="Account" class="btn btn-outline-danger">Включить двухэтапную аутентификацию</a>
+    } else {
+        <a asp-action="TwoFactorAuthentificatonSetupPage" asp-controller="Account" class="btn btn-outline-danger">Выключить двухэтапную аутентификацию</a>
+    }
 </div>
 
 

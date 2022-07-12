@@ -1,6 +1,7 @@
 ﻿@model LoginTwoStepModel
 @{
     Layout = "_SignInOutLayout";
+    ViewBag.Title = "Двухфакторная аутнентификация";
 }
 
 <div class="container-fluid bg-light signin">
@@ -14,14 +15,16 @@
             <p>Введите сгенерированный код в приложение Google Authentificator <br/> Ваш код: @Model.Token</p>
 
             <form class="px-4 py-3" asp-action="LoginTwoStep" method="post" id="frmLogin">
-                <div asp-validation-summary="All" class="text-danger"></div>
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="mb-1 mt-1">
                     <h4>Введите сгенерированный код</h4>
                 </div>
+
                 <input type="hidden" asp-for="ReturnUrl" />
+
                 <div class="form-group">
-                    <input class="form-control" asp-for="Token" placeholder="Введите код"/>
+                    <input class="form-control" asp-for="@Model.Code" placeholder="Введите код"/>
                 </div>
 
                 <button type="submit" class="btn-primary btn">Отправить</button>
